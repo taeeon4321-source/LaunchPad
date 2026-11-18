@@ -439,6 +439,8 @@ body.public #storageBanner:not(:empty){max-width:1160px;margin:12px auto 0;paddi
 .lp-dim{color:var(--muted)}
 .lp-h2{font-size:clamp(1.9rem,4vw,3rem);line-height:1.04;letter-spacing:-.045em;font-weight:700;margin:0 0 40px;max-width:18ch}
 .lp-fine{font-size:.78rem;color:var(--faint);margin:14px 0 0}
+.lp-ex-tag{display:inline-block;font-size:.72rem;font-weight:500;color:var(--faint);border:1px solid var(--border);border-radius:99px;padding:2px 9px;margin-left:auto;white-space:nowrap}
+.lp-deck .lp-ex-tag{margin:-28px 0 24px}
 .lp-sec{padding:clamp(72px,9vw,120px) 0;scroll-margin-top:64px;outline:none}
 .lp-alt{background:var(--surface);border-block:1px solid var(--border)}
 /* nav */
@@ -484,44 +486,37 @@ body.public #storageBanner:not(:empty){max-width:1160px;margin:12px auto 0;paddi
 .lp-listing{font-size:.95rem;line-height:1.55;border:1px solid var(--border);background:var(--bg);border-radius:10px;padding:14px;margin:0 0 14px}
 .lp-art2{position:relative;max-width:560px}.lp-thumb{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:12px;display:block;border:1px solid var(--border)}
 .lp-icon{position:absolute;right:14px;bottom:-16px;width:68px;height:68px;border-radius:16px;border:3px solid var(--surface);box-shadow:var(--shadow-md)}
-/* pricing */
-.pz{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(24px,4vw,56px);align-items:start}
-.pz-pick{position:sticky;top:84px}
-.pz-toggle{position:relative;display:inline-grid;grid-template-columns:1fr 1fr;border:1px solid var(--border);border-radius:999px;padding:4px;background:var(--bg);margin-bottom:18px}
-.pz-toggle button{position:relative;z-index:1;border:0;background:none;padding:9px 18px;border-radius:999px;font:600 .9rem var(--font-body);color:var(--muted);cursor:pointer;transition:color .25s;white-space:nowrap}
-.pz-toggle button em{font-style:normal;font-weight:500;font-size:.74rem;opacity:.75;margin-left:4px}
+/* pricing: three plans + comparison */
+.pz{max-width:1120px}
+.pz-head{display:flex;justify-content:center;margin-bottom:26px}
+.pz-toggle{position:relative;display:inline-grid;grid-template-columns:1fr 1fr;border:1px solid var(--border);border-radius:999px;padding:4px;background:var(--surface)}
+.pz-toggle button{position:relative;z-index:1;border:0;background:none;padding:9px 22px;border-radius:999px;font:600 .9rem var(--font-body);color:var(--muted);cursor:pointer;transition:color .25s;white-space:nowrap}
 .pz-toggle button[aria-checked="true"]{color:var(--bg)}
 .pz-pill{position:absolute;top:4px;bottom:4px;left:4px;width:calc(50% - 4px);border-radius:999px;background:var(--text);transition:transform .5s cubic-bezier(.34,1.35,.64,1)}
 .pz[data-int="year"] .pz-pill{transform:translateX(100%)}
-.pz-cards{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.pz-card{position:relative;display:flex;flex-direction:column;gap:6px;background:var(--surface);border:1.5px solid var(--border);border-radius:18px;padding:22px;cursor:pointer;transition:border-color .2s,transform .35s cubic-bezier(.34,1.4,.64,1),box-shadow .25s}
-.pz-card:hover{border-color:var(--border-strong)}
-.pz-card.picked{border-color:var(--text);transform:translateY(-3px);box-shadow:var(--shadow-md)}
-.pz-max{background:var(--charcoal);color:var(--cream);border-color:var(--charcoal)}
-.pz-max .pz-who,.pz-max .pz-note,.pz-max .pz-price span{color:#B5B1A7}
-.pz-max.picked{border-color:var(--cream);box-shadow:0 0 0 3px var(--charcoal),var(--shadow-lg)}
-.pz-max .pz-cta{background:var(--cream)!important;color:var(--charcoal)!important;border-color:var(--cream)!important}
-.pz-top{display:flex;justify-content:space-between;align-items:center;gap:8px}.pz-top h3{margin:0;font-size:1.3rem;letter-spacing:-.03em}
-.pz-badge{font-size:.7rem;font-weight:700;letter-spacing:.02em;border:1px solid currentColor;border-radius:99px;padding:3px 9px;opacity:0;transform:scale(.85);transition:opacity .2s,transform .35s cubic-bezier(.34,1.5,.64,1)}
+.pz-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:stretch}
+.pz-card{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:26px 24px}
+.pz-max{border:1.5px solid var(--text);box-shadow:0 18px 40px -28px rgba(41,42,39,.45)}
+.pz-top{display:flex;justify-content:space-between;align-items:center;gap:8px;min-height:28px}.pz-top h3{margin:0;font-size:1.25rem;letter-spacing:-.03em}
+.pz-label{font-size:.72rem;font-weight:600;background:var(--text);color:var(--bg);border-radius:99px;padding:4px 10px}
+.pz-badge{font-size:.72rem;font-weight:600;border:1px solid var(--border-strong);border-radius:99px;padding:3px 9px;opacity:0;transform:scale(.9);transition:opacity .2s,transform .35s cubic-bezier(.34,1.5,.64,1)}
 .pz[data-int="year"] .pz-badge{opacity:1;transform:none}
-.pz-max .pz-badge{background:var(--cream);color:var(--charcoal);border-color:var(--cream)}
-.pz-who{margin:0;font-size:.86rem;color:var(--muted)}
-.pz-price{margin:10px 0 0;display:flex;align-items:baseline;gap:6px}.pz-price b{font-size:2.4rem;letter-spacing:-.05em;font-variant-numeric:tabular-nums}.pz-price span{color:var(--muted);font-size:.9rem}
-.pz-note{margin:0;font-size:.82rem;color:var(--muted);min-height:3.4em}
-.pz-cta{margin-top:auto;width:100%;justify-content:center}
-.pz-trust{list-style:none;padding:0;margin:16px 0 0;display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.8rem;color:var(--muted)}.pz-trust li{display:flex;gap:6px;align-items:center}
-.pz-value{list-style:none;padding:0;margin:0 0 20px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.pz-value li{display:flex;gap:10px;align-items:center;font-weight:600;font-size:.9rem;border:1px solid var(--border);border-radius:12px;padding:12px;background:var(--bg)}
-.pz-compare th[scope="row"]{font-weight:600;color:var(--text);background:none;font-size:.86rem}
-.pz-compare td,.pz-compare th{padding:10px 12px;font-size:.84rem}
-.pz-full,.pz-faq details{border-bottom:1px solid var(--border);padding:12px 0}
-.pz-full summary,.pz-faq summary{cursor:pointer;font-weight:600;font-size:.92rem;list-style:none;display:flex;justify-content:space-between}
-.pz-full summary::after,.pz-faq summary::after{content:"+";color:var(--muted);transition:transform .3s cubic-bezier(.34,1.5,.64,1)}
-.pz-full[open] summary::after,.pz-faq details[open] summary::after{transform:rotate(45deg)}
-.pz-full ul{list-style:none;padding:0;margin:10px 0 0;font-size:.84rem}.pz-full li{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px dashed var(--border)}
-.pz-faq p{margin:8px 0 0;font-size:.88rem;color:var(--muted)}
-.pz-legal{font-size:.76rem;color:var(--faint);margin:14px 0 0}
-.pz-bar{display:none}
+.pz-who{margin:6px 0 0;font-size:.88rem;color:var(--muted);min-height:2.6em}
+.pz-price{margin:18px 0 0;display:flex;align-items:baseline;gap:6px}.pz-price b{font-size:2.5rem;letter-spacing:-.05em;font-variant-numeric:tabular-nums;line-height:1}.pz-price span{color:var(--muted);font-size:.9rem}
+.pz-note{margin:8px 0 18px;font-size:.82rem;color:var(--muted);min-height:2.8em}
+.pz-cta{width:100%;justify-content:center}
+.pz-feats{list-style:none;padding:18px 0 0;margin:20px 0 0;border-top:1px solid var(--border);display:grid;gap:9px;font-size:.88rem}
+.pz-feats li{display:flex;gap:9px;align-items:flex-start}.pz-feats .ic{flex:0 0 auto;margin-top:2px}
+.pz-compare{margin-top:40px;border-top:1px solid var(--border)}
+.pz-row{display:grid;grid-template-columns:1.1fr 1fr 1fr 1fr;gap:16px;padding:14px 4px;border-bottom:1px solid var(--border);font-size:.88rem;align-items:start}
+.pz-row-head{font-size:.8rem;font-weight:600;color:var(--muted)}.pz-row-head span:first-child{color:var(--text)}
+.pz-feat{font-weight:600}
+.pz-legal{font-size:.78rem;color:var(--faint);margin:18px 0 0;max-width:80ch}
+@media (max-width:900px){.pz-cards{grid-template-columns:1fr;max-width:520px;margin:0 auto}.pz-who,.pz-note{min-height:0}}
+/* phones: each comparison row becomes a small card with labelled plan values, so feature names are never clipped */
+@media (max-width:700px){.pz-row-head{display:none}.pz-row{grid-template-columns:1fr;gap:6px;padding:16px 0}
+  .pz-row [role="cell"]{display:grid;grid-template-columns:64px 1fr;gap:10px;font-size:.86rem}
+  .pz-row [role="cell"]::before{content:attr(data-plan);color:var(--muted);font-size:.78rem;font-weight:600}}
 /* horizontal track */
 .lp-track{position:relative;padding:clamp(72px,9vw,110px) 0;scroll-margin-top:64px;outline:none}
 .lp-track.pinned{height:300vh;padding:0}
@@ -613,7 +608,6 @@ body.public #storageBanner:not(:empty){max-width:1160px;margin:12px auto 0;paddi
 @media (prefers-reduced-motion:reduce){.lp-kinetic>span>span{animation:none}.lp-draw .chart path,.lp-draw .chart polyline{stroke-dasharray:none!important}.lp-steps2 i{transition:none;width:var(--w)}.pz-pill,.lp-tab-ind,.pz-card{transition:none}}
 :root[data-motion="reduce"] .lp-kinetic>span>span{animation:none}
 /* responsive */
-@media (max-width:1040px){.pz{grid-template-columns:1fr}.pz-pick{position:static}}
 @media (max-width:980px){.lp-story-in,.lp-ex,.lp-dgrid{grid-template-columns:1fr}.lp-foot-grid{grid-template-columns:1fr 1fr 1fr}.lp-foot-brand{grid-column:1/-1}}
 @media (max-width:880px){.lp-burger{display:inline-grid}
   .lp-links{display:none;position:absolute;left:0;right:0;top:64px;background:var(--bg);border-bottom:1px solid var(--border);flex-direction:column;align-items:stretch;padding:12px 16px 20px;gap:4px;max-height:calc(100vh - 64px);overflow:auto}
@@ -623,10 +617,8 @@ body.public #storageBanner:not(:empty){max-width:1160px;margin:12px auto 0;paddi
   .lp-dd button[aria-expanded="true"]+.lp-menu{display:grid}
   .lp-nav-cta{margin:12px 0 0;flex-direction:column}.lp-nav-cta .btn{width:100%}
   .lp-track-head{flex-direction:column;align-items:flex-start}.lp-track-ctl{margin-bottom:20px}
-  .lp-dcard{position:relative;top:auto}
-  .pz-bar:not([hidden]){display:flex;position:fixed;left:12px;right:12px;bottom:12px;z-index:60;align-items:center;gap:10px;background:var(--charcoal);color:var(--cream);border-radius:14px;padding:10px 10px 10px 16px;box-shadow:var(--shadow-lg);animation:lpSwap .3s ease}
-  .pz-bar .pz-bar-txt{flex:1;font-size:.9rem}.pz-bar .btn{background:var(--cream)!important;color:var(--charcoal)!important;border-color:var(--cream)!important}.pz-bar .icon-btn{color:var(--cream)}.pz-bar .icon-btn .ic{color:var(--cream)}}
-@media (max-width:640px){.pz-cards,.pz-value{grid-template-columns:1fr}.lp-srow{grid-template-columns:96px 1fr 24px}.lp-steps2 li{grid-template-columns:100px 1fr 56px}.lp-foot-grid{grid-template-columns:1fr 1fr}.lp-cta-row .btn{flex:1 1 100%}.lp-chrome em{display:none}.lp-blueprint text{font-size:13px}}
+  .lp-dcard{position:relative;top:auto}}
+@media (max-width:640px){.lp-srow{grid-template-columns:96px 1fr 24px}.lp-steps2 li{grid-template-columns:100px 1fr 56px}.lp-foot-grid{grid-template-columns:1fr 1fr}.lp-cta-row .btn{flex:1 1 100%}.lp-chrome em{display:none}.lp-blueprint text{font-size:13px}}
 /* ===== DESIGN SYSTEM v2: shared tokens, type scale and motion for public and signed-in pages ===== */
 :root{--font-mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;--dur-1:120ms;--dur-2:200ms;--dur-3:360ms;--ease-out:cubic-bezier(.16,1,.3,1);
   --s-1:4px;--s-2:8px;--s-3:12px;--s-4:16px;--s-5:24px;--s-6:32px;--s-7:48px;--s-8:64px;--r-xl:16px;--ring:0 0 0 3px color-mix(in srgb,var(--text) 18%,transparent)}
@@ -659,13 +651,28 @@ a.card:hover,.card.hoverable:hover,.game-card:hover{border-color:var(--border-st
 @media (prefers-reduced-motion:reduce){.btn,.card,.modal,.modal-wrap{transition:none;animation:none}.btn:hover{transform:none}}
 :root[data-motion="reduce"] .btn:hover,:root[data-motion="reduce"] .card:hover{transform:none}
 
+/* first-run tour: spotlight + anchored card */
+.tour{position:fixed;inset:0;z-index:200}
+.tour-shade{position:absolute;inset:0;transition:background .3s}.tour-shade.dim{background:rgba(20,20,20,.42)}
+.tour-spot{position:absolute;border-radius:12px;box-shadow:0 0 0 2px var(--cream),0 0 0 9999px rgba(20,20,20,.42);pointer-events:none;transition:left .45s cubic-bezier(.16,1,.3,1),top .45s cubic-bezier(.16,1,.3,1),width .45s cubic-bezier(.16,1,.3,1),height .45s cubic-bezier(.16,1,.3,1),opacity .2s}
+.tour-pop{position:absolute;max-width:calc(100vw - 24px);background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow-lg);padding:18px 18px 14px;transition:left .45s cubic-bezier(.16,1,.3,1),top .45s cubic-bezier(.16,1,.3,1);outline:none}
+.tour-pop h2{font-size:1.08rem;margin:10px 0 6px;letter-spacing:-.02em}.tour-pop p{margin:0 0 8px;font-size:.9rem;line-height:1.5}
+.tour-note{color:var(--muted);font-size:.8rem!important}
+.tour-list{margin:4px 0 10px;padding-left:18px;font-size:.86rem;display:grid;gap:3px}
+.tour-prog{display:flex;align-items:center;gap:5px}.tour-prog i{height:4px;width:14px;border-radius:9px;background:var(--border);transition:width .35s cubic-bezier(.34,1.4,.64,1),background .2s}
+.tour-prog i.done{background:var(--muted)}.tour-prog i.on{width:26px;background:var(--text)}.tour-prog span{margin-left:auto;font-size:.74rem;color:var(--muted)}
+.tour-act{display:flex;align-items:center;gap:8px;margin-top:12px}.tour-act .tour-skip{margin-right:auto;border:0;background:none;color:var(--muted);font:500 .84rem var(--font-body);cursor:pointer;padding:6px 2px}
+.tour-act .tour-skip:hover{color:var(--text)}
+.tour-done{display:grid;place-items:center;margin:0 0 12px}.tour-done circle,.tour-done path{fill:none;stroke:var(--text);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.tour-done circle{stroke-dasharray:151;stroke-dashoffset:151;animation:tourDraw .6s cubic-bezier(.65,0,.35,1) forwards}.tour-done path{stroke-dasharray:36;stroke-dashoffset:36;animation:tourDraw .35s .45s ease-out forwards}
+@keyframes tourDraw{to{stroke-dashoffset:0}}
+.hint{display:flex;align-items:center;gap:14px;justify-content:space-between;flex-wrap:wrap;border:1px dashed var(--border-strong);border-radius:14px;padding:14px 16px;margin-bottom:20px;font-size:.9rem}
+@media (prefers-reduced-motion:reduce){.tour-spot,.tour-pop,.tour-prog i{transition:none}.tour-done circle,.tour-done path{animation:none;stroke-dashoffset:0}}
+:root[data-motion="reduce"] .tour-spot,:root[data-motion="reduce"] .tour-pop{transition:none}
+
 /* plans, settings tabs, studio sync */
-.plan-toggle{margin:0 0 18px}.plan-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;max-width:920px}.plan{display:flex;flex-direction:column;gap:6px}.plan .btn{margin-top:8px;align-self:flex-start}
-.plan.featured{border:2px solid var(--text)}.plan-badge{background:var(--text);color:var(--bg);border-color:var(--text);font-weight:700;letter-spacing:.02em}.plan-price{margin:6px 0 0}.plan-price b{font-size:2rem;letter-spacing:-.02em}
-.plan-feats{list-style:none;padding:0;margin:12px 0 0}.plan-feats li{display:flex;gap:8px;align-items:flex-start;margin-bottom:7px;font-size:.92rem}.plan-note{max-width:920px;margin:16px 0}.plan-compare{max-width:920px}
 .tabs{display:flex;gap:4px;flex-wrap:wrap;border-bottom:1px solid var(--border);margin-bottom:8px}.tabs a{padding:9px 14px;border-radius:10px 10px 0 0;color:var(--muted);text-decoration:none;font-weight:600;font-size:.92rem}.tabs a[aria-current]{color:var(--text);box-shadow:inset 0 -2px 0 var(--text)}
 .sync-steps{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:14px}.sync-step{display:flex;gap:12px;align-items:flex-start}.sync-n{flex:0 0 28px;height:28px;border-radius:50%;border:1.5px solid var(--border);display:grid;place-items:center;font-weight:700;font-size:.85rem}.sync-step.done .sync-n{background:var(--text);color:var(--bg);border-color:var(--text)}
-@media (max-width:760px){.plan-grid{grid-template-columns:1fr}}
 /* modal + toast */
 .modal-wrap{position:fixed;inset:0;background:rgba(20,20,20,.38);display:grid;place-items:center;padding:16px;z-index:80;animation:fade .15s}
 .modal{background:var(--surface);border:1px solid var(--border);border-radius:16px;width:min(560px,100%);max-height:calc(100vh - 32px);overflow:auto;box-shadow:var(--shadow-lg);animation:pop .2s var(--ease)}
@@ -1086,7 +1093,7 @@ function gameArt(g) {
 }
 const tip = text => `<span class="tip"><button type="button" aria-label="More info: ${esc(text)}">${icon('info', 15)}</button><span role="tooltip">${esc(text)}</span></span>`;
 const simChip = () => `<span class="chip sim" title="Rule-based simulated analysis. No AI model is connected yet.">${icon('star', 13)} Simulated analysis</span>`;
-const sampleChip = x => x && x.sample ? '<span class="chip sample">Demo data</span>' : '';
+const sampleChip = x => x && x.sample ? '<span class="chip sample">Example</span>' : '';
 
 /* ===== GEOMETRY ===== */
 // LaunchPad's visual language: four/eight-point stars, concentric circles and orbiting dots.
@@ -1862,7 +1869,7 @@ function renderResults(id, r, ctx) {
   return `<div class="card"><div class="score-head">${scoreRing(r.score, 112, OPT[id].name + ' score')}<div style="flex:1;min-width:220px"><p class="eyebrow">Here's what we found</p><h2 style="margin-bottom:4px">${scoreWord(r.score)}</h2><p class="muted small" style="margin:0 0 8px">${SCORE_EXPLAIN[id]}</p><div class="row" style="gap:6px">${simChip()}${r.confidence ? `<span class="chip sim" title="${r.confidence.missing.length ? 'Not enough information for: ' + esc(r.confidence.missing.join(', ')) : 'Every category had enough information'}">Confidence: ${r.confidence.level} · ${r.confidence.known}/${r.confidence.total} categories</span>` : ''}${rep ? `<span class="chip">${fmtDateTime(rep.createdAt)}</span>${sampleChip(rep)}` : ''}</div></div>${live ? `<div class="no-print"><button class="btn" data-act="save">${icon('download', 18)} Save report</button></div>` : ''}</div>
   <hr><div class="grid g2"><div><h3>Category scores</h3>${catBars(r.categories)}</div><div><h3>What's working (keep it)</h3><ul class="list-plain">${r.strengths.map(li).join('') || '<li class="small muted">No standout strengths yet in what was entered.</li>'}</ul><h3 style="margin-top:20px">Room to grow</h3><ul class="list-plain">${r.weaknesses.map(li).join('') || '<li class="small muted">Every scored category is already strong.</li>'}</ul>${r.confidence && r.confidence.missing.length ? `<p class="small muted" style="margin-top:14px"><b>Not scored (insufficient data):</b> ${esc(r.confidence.missing.join(', '))}. Missing information lowers confidence, not the score.</p>` : ''}</div></div>
   ${rep && rep.evidence ? `<h3 style="margin-top:18px">Evidence</h3><ul class="list-plain small">${rep.evidence.map(x => `<li class="row" style="gap:8px;padding:3px 0"><span class="chip sm ${x.source === SRC.none ? 'warn' : x.source === SRC.est ? 'sim' : ''}">${esc(x.source)}</span>${esc(x.what)}</li>`).join('')}</ul>` : ''}
-  <p class="tiny faint" style="margin:18px 0 0">Sources: ${rep && rep.studio ? 'a read-only LaunchPad Studio scan, your answers, and results calculated from them' : `developer-provided inputs, calculated results from those inputs${rep && rep.sample ? ', and simulated demo data' : ''}`}. Popularity and player counts are never used as a quality score. LaunchPad scores are its own assessment of the information you entered. They aren't an official Roblox ranking, and a higher score doesn't guarantee more players. Real growth shows up in your real game data.</p></div>
+  <p class="tiny faint" style="margin:18px 0 0">Sources: ${rep && rep.studio ? 'a read-only LaunchPad Studio scan, your answers, and results calculated from them' : `developer-provided inputs, calculated results from those inputs${rep && rep.sample ? ', and example data' : ''}`}. Popularity and player counts are never used as a quality score. LaunchPad scores are its own assessment of the information you entered. They aren't an official Roblox ranking, and a higher score doesn't guarantee more players. Real growth shows up in your real game data.</p></div>
   <section class="section"><div class="section-title"><h2>${r.score >= 85 ? 'Refinements' : 'Recommendations'}</h2><span class="muted small" ${rep ? `data-reccount="${rep.id}"` : ''}>${rep ? recProgressHTML(done, recs.length) : `${plural(recs.length, 'thing')} worth improving. Save the report to track them.`}</span></div>${recs.length ? recs.map(x => recCard(x, rep && rep.id)).join('') : '<div class="card flat">Nothing major to fix here. Nice work.</div>'}</section>
   ${r.extras.scan ? `<div class="card flat small muted">${esc(r.extras.note)}</div>` : EXTRAS[id](r, ctx)}`;
 }
@@ -2177,7 +2184,7 @@ function gameModal(game, after) {
         if ($('[aria-invalid="true"]', m)) { $('[aria-invalid="true"]', m).focus(); return; }
         Object.assign(g, { name, url, genre: $('#f_gGenre', m).value, description: $('#f_gDesc', m).value.trim(), loop: $('#f_gLoop', m).value.trim() });
         if (game) { Object.assign(gameById(game.id), g); S().reports.forEach(r => { if (r.gameId === game.id) r.gameName = g.name; }); logActivity(`Edited ${g.name}`, '#/games'); toast('Game updated'); }
-        else { g.id = uid('game'); g.createdAt = Date.now(); S().games.push(g); S().selectedGameId = g.id; logActivity(`Added ${g.name}`, '#/games'); toast(`${g.name} added and selected`); }
+        else { if (isAuthed() && !ownGames().length) track('first_game_added'); g.id = uid('game'); g.createdAt = Date.now(); S().games.push(g); S().selectedGameId = g.id; logActivity(`Added ${g.name}`, '#/games'); toast(`${g.name} added and selected`); }
         save(); closeModal(); renderSidebar(); after ? after() : route();
       };
       $('#gSave', m).onclick = submit; $('#gForm', m).onsubmit = e => { e.preventDefault(); submit(); };
@@ -2213,7 +2220,7 @@ function pageHome() {
   const steps = [['Analyze', ran.length > 0], ['Review', ran.length === OPTIMIZERS.length], ['Optimize', rp.done > 0], ['Complete', rp.total > 0 && rp.done === rp.total]];
   const stat = (ic, val, lbl) => `<div class="card stat-card">${icon(ic, 28)}<div><b>${val}</b><span>${lbl}</span></div></div>`;
   const scoreCard = (o, r) => `<a class="card card-hover score-card" href="${r ? '#/reports/' + r.id : '#/optimizers/' + o.id}"><span class="lbl">${o.name}</span><span class="big">${r ? r.score : '—'}${r ? '<small> / 100</small>' : ''}</span>${statusBadge(r ? r.score : null)}</a>`;
-  $('#view').innerHTML = `<header class="page-head row between"><div><p class="eyebrow">${acct ? `Welcome back, ${esc(acct.name)}` : 'Welcome to LaunchPad'}</p><h1>Dashboard</h1><p class="lede" style="margin:0">Your scores, your gaps and what to fix next, all in one place.</p></div><div class="row" style="gap:10px"><button class="btn ghost" data-addgame>${icon("plus", 18)} New Game</button><a class="btn" href="#/studio">${icon("play", 18)} Scan from Studio</a></div></header>${S().games.some(x => x.studio) ? "" : `<div class="card sunk row between" style="margin-bottom:20px;gap:12px"><div style="min-width:0;flex:1"><b>Skip the forms: scan your game in Roblox Studio</b><p class="small muted" style="margin:2px 0 0">The read-only plugin finds your listing, saves, rewards and prices, then scores all five areas in about two minutes.</p></div><a class="btn sm" href="#/studio">Set it up</a></div>`}
+  $('#view').innerHTML = `<header class="page-head row between"><div><p class="eyebrow">${acct ? `Welcome back, ${esc(acct.name)}` : 'Welcome to LaunchPad'}</p><h1>Dashboard</h1><p class="lede" style="margin:0">Your scores, your gaps and what to fix next, all in one place.</p></div><div class="row" style="gap:10px"><button class="btn ghost" data-addgame>${icon("plus", 18)} New Game</button><a class="btn" href="#/studio">${icon("play", 18)} Scan from Studio</a></div></header>${ME && ME.entitlement.features.includes('studio_plugin') && !ME.roblox ? `<div class="hint"><span>Connect Roblox Studio to enable the automatic scanning features available on your plan.</span><a class="btn sm" href="#/studio">Connect Studio</a></div>` : S().games.some(x => x.studio) ? "" : `<div class="card sunk row between" style="margin-bottom:20px;gap:12px"><div style="min-width:0;flex:1"><b>Skip the forms: scan your game in Roblox Studio</b><p class="small muted" style="margin:2px 0 0">The read-only plugin finds your listing, saves, rewards and prices, then scores all five areas in about two minutes.</p></div><a class="btn sm" href="#/studio">Set it up</a></div>`}
   <div class="grid g4">${stat('games', S().games.length, plural(S().games.length, 'Game').replace(/^\d+ /, ''))}${stat('bars', S().reports.length, 'Saved reports')}${stat('trend', avgScore ?? '—', 'Avg. latest score')}${stat('staro', g ? rp.total - rp.done : 0, 'Needs work')}</div>
   ${g ? `<section class="section split"><div class="card gcard"><a class="gcard-top" href="#/games/${g.id}"><div class="game-art" style="width:64px;height:64px;border-radius:14px">${gameArt(g)}</div><div style="min-width:0;flex:1"><div class="row" style="gap:8px"><h3 style="margin:0;font-size:1.15rem">${esc(g.name)}</h3>${sampleChip(g)}</div><span class="muted">${esc(GENRES[g.genre]?.label || g.genre)}</span></div>${icon('chev', 20)}</a>
     <div class="gcard-stats"><div>${icon('bars', 24)}<div><b>${avgScore ?? '—'}</b><span>Avg. score</span></div></div><div>${icon('layers', 24)}<div><b>${ran.length}/${OPTIMIZERS.length}</b><span>Optimizers run</span></div></div><div>${icon('trend', 24)}<div><b>${rp.done}/${rp.total}</b><span>Recs done</span></div></div></div></div>
@@ -2227,8 +2234,9 @@ function pageHome() {
 }
 function pageGames() {
   const games = S().games, sel = S().selectedGameId;
+  const hint = isAuthed() && !ownGames().length ? `<div class="hint"><span>Your games will appear here once you add your first Roblox experience.</span><button class="btn sm" data-addgame>${icon('plus', 16)} Add your first game</button></div>` : '';
   $('#view').innerHTML = `<header class="page-head row between"><div><p class="eyebrow">Workspace</p><h1>My Games</h1><p class="lede">Every report and score is saved under a game, so you can see how it improves over time.</p></div><button class="btn" data-addgame>${icon('plus', 18)} Add game</button></header>
-  ${games.length ? `<div class="grid g2">${games.map(g => { const rp = recProgress(g.id), n = reportsFor(g.id).length; return `<article class="card game-card ${g.id === sel ? 'selected' : ''}"><div class="row" style="gap:14px;flex-wrap:nowrap;align-items:flex-start"><div class="game-art" style="width:64px;height:64px;border-radius:14px">${gameArt(g)}</div><div style="min-width:0;flex:1"><div class="row" style="gap:6px"><h3 style="margin:0"><a href="#/games/${g.id}" style="text-decoration:none">${esc(g.name)}</a></h3>${sampleChip(g)}${g.id === sel ? '<span class="chip good">Selected</span>' : ''}</div><p class="tiny muted" style="margin:4px 0 0">${esc(GENRES[g.genre]?.label || '')} · added ${fmtDate(g.createdAt)}${g.url ? ` · <a href="${esc(g.url)}" target="_blank" rel="noopener noreferrer">Roblox page</a>` : ''}</p></div></div>
+  ${hint}${games.length ? `<div class="grid g2">${games.map(g => { const rp = recProgress(g.id), n = reportsFor(g.id).length; return `<article class="card game-card ${g.id === sel ? 'selected' : ''}"><div class="row" style="gap:14px;flex-wrap:nowrap;align-items:flex-start"><div class="game-art" style="width:64px;height:64px;border-radius:14px">${gameArt(g)}</div><div style="min-width:0;flex:1"><div class="row" style="gap:6px"><h3 style="margin:0"><a href="#/games/${g.id}" style="text-decoration:none">${esc(g.name)}</a></h3>${sampleChip(g)}${g.id === sel ? '<span class="chip good">Selected</span>' : ''}</div><p class="tiny muted" style="margin:4px 0 0">${esc(GENRES[g.genre]?.label || '')} · added ${fmtDate(g.createdAt)}${g.url ? ` · <a href="${esc(g.url)}" target="_blank" rel="noopener noreferrer">Roblox page</a>` : ''}</p></div></div>
     <p class="small muted" style="margin:12px 0">${esc(g.loop || g.description || 'No description yet.')}</p>
     <div class="row" style="gap:6px">${OPTIMIZERS.map(o => { const r = latestReport(g.id, o.id); return `<span class="row small" style="gap:4px" title="${o.name}">${miniScore(r ? r.score : null)}<span class="tiny muted">${o.name.split(' ')[0]}</span></span>`; }).join('')}</div>
     <p class="small row" style="margin:14px 0 0;gap:8px">${n ? `<span class="pring ${rp.total && rp.done === rp.total ? 'complete' : ''}">${progressRing(rp.done, rp.total, 20)}</span>${plural(n, 'report')} · ${rp.done}/${rp.total} recommendations done` : '<span class="muted">No reports yet</span>'}</p>
@@ -2247,7 +2255,7 @@ function pageReports(q) {
   list.sort((a, b) => f.sort === 'old' ? a.createdAt - b.createdAt : f.sort === 'score' ? b.score - a.score : b.createdAt - a.createdAt);
   reportSel = reportSel.filter(id => list.some(r => r.id === id));
   const sel = (id, l, opts, v) => `<div class="field" style="min-width:160px"><label for="${id}">${l}</label><select id="${id}">${opts.map(([k, t]) => `<option value="${k}" ${k === v ? 'selected' : ''}>${esc(t)}</option>`).join('')}</select></div>`;
-  $('#view').innerHTML = `<header class="page-head"><p class="eyebrow">Library</p><h1>Reports</h1><p class="lede">Every saved analysis, with its original inputs. Tick two reports from the same optimizer to compare them.</p></header>
+  $('#view').innerHTML = `<header class="page-head"><p class="eyebrow">Library</p><h1>Reports</h1><p class="lede">Every saved analysis, with its original inputs. Tick two reports from the same optimizer to compare them.</p></header>${isAuthed() && !ownReports().length ? `<div class="hint"><span>Your first scan will generate a report containing findings and recommendations.</span><a class="btn sm" href="#/studio">Start your first scan</a></div>` : ''}
   <div class="card sunk row" style="gap:14px;align-items:flex-end;margin-bottom:18px">${sel('rfGame', 'Game', [['', 'All games'], ...games.map(g => [g.id, g.name])], f.game)}${sel('rfOpt', 'Optimizer', [['', 'All optimizers'], ...OPTIMIZERS.map(o => [o.id, o.name])], f.opt)}${sel('rfSort', 'Sort by', [['new', 'Newest first'], ['old', 'Oldest first'], ['score', 'Highest score']], f.sort)}<button class="btn" id="rfCompare" ${reportSel.length === 2 ? '' : 'disabled'}>${icon('compare', 18)} Compare selected (${reportSel.length}/2)</button></div>
   ${list.length ? `<div class="table-wrap"><table><thead><tr><th><span class="sr-only">Select to compare</span></th><th>Optimizer</th><th>Game</th><th>Date</th><th class="num">Score</th><th>Progress</th><th><span class="sr-only">Actions</span></th></tr></thead><tbody>${list.map(r => { const d = r.recs.filter(x => x.done).length; return `<tr><td><input type="checkbox" data-pick="${r.id}" ${reportSel.includes(r.id) ? 'checked' : ''} aria-label="Select ${esc(OPT[r.optimizer].name)} report from ${fmtDate(r.createdAt)} for comparison"></td><td><a href="#/reports/${r.id}"><b>${esc(OPT[r.optimizer].name)}</b></a> ${sampleChip(r)}</td><td>${esc(r.gameName)}</td><td class="small">${fmtDateTime(r.createdAt)}</td><td class="num">${miniScore(r.score)}</td><td class="small">${d}/${r.recs.length} done</td><td><div class="row" style="gap:4px;flex-wrap:nowrap"><a class="btn ghost sm" href="#/reports/${r.id}">Open</a><button class="icon-btn" data-del="${r.id}" aria-label="Delete this report">${icon('trash', 18)}</button></div></td></tr>`; }).join('')}</tbody></table></div>` : `<div class="card empty">${orbitArt({ size: 112, tone: 'lav' })}<h2>No reports here yet</h2><p class="muted">${S().reports.length ? 'Try a different filter.' : 'Run any optimizer and press "Save report" to keep it here.'}</p><a class="btn" href="#/optimizers">Open the optimizers</a></div>`}`;
   const applyFilters = () => { const p = new URLSearchParams(); const gv = $('#rfGame').value, ov = $('#rfOpt').value, sv = $('#rfSort').value; if (gv) p.set('game', gv); if (ov) p.set('opt', ov); if (sv !== 'new') p.set('sort', sv); go('#/reports' + (p.toString() ? '?' + p : '')); };
@@ -2277,7 +2285,7 @@ function pageReport(id) {
   <div class="split" style="margin-bottom:18px"><div class="card top-rec">${top ? `<div style="flex:1;min-width:220px"><div class="lbl">${icon('star', 16)} Top Recommendation</div><h3>${esc(top.title)}</h3><p class="muted small" style="margin:0">${esc(top.problem)}</p></div><button class="btn" id="rpTop">View Details ${icon('arrow', 16)}</button>` : `<div><div class="lbl">${icon('star', 16)} All done</div><h3>Every recommendation in this report is complete.</h3><p class="muted small" style="margin:0">Run the optimizer again to measure the change.</p></div>`}</div>
   <div class="card"><h3>Progress</h3><div id="rpProg">${progInner(dn, rep.recs.length)}</div>${hist.length > 1 ? `<p class="small" style="margin:14px 0 0"><span class="muted">Score history:</span> ${hist.map(h => h.id === id ? `<b>${h.score}</b>` : `<a href="#/reports/${h.id}">${h.score}</a>`).join(' → ')}</p>` : ''}</div></div>
   <div id="repBody">${renderResults(rep.optimizer, { ...rep.result, recs: rep.recs }, { mode: 'report', report: rep })}</div>
-  <section class="section"><div class="section-title"><h2>Original inputs</h2>${rep.sample ? '<span class="small muted">Demo data: every value below was invented for this example.</span>' : ''}</div><div class="card flat">${rep.result.extras.scan ? '<p class="small muted" style="margin:0">Built from a read-only Studio scan. The evidence above lists what was found and where.</p>' : inputsHTML(rep.optimizer, rep.inputs)}</div></section>`;
+  <section class="section"><div class="section-title"><h2>Original inputs</h2>${rep.sample ? '<span class="small muted">Example analysis: values are illustrative.</span>' : ''}</div><div class="card flat">${rep.result.extras.scan ? '<p class="small muted" style="margin:0">Built from a read-only Studio scan. The evidence above lists what was found and where.</p>' : inputsHTML(rep.optimizer, rep.inputs)}</div></section>`;
   const body = $('#repBody'); bindResults(body, rep.optimizer, rep.result, { mode: 'report', report: rep }); animateCounts(body);
   $('#rpDl').onclick = () => download(`launchpad-${rep.optimizer}-${new Date(rep.createdAt).toISOString().slice(0, 10)}.json`, JSON.stringify(rep, null, 2));
   $('#rpPrint').onclick = () => print();
@@ -2343,7 +2351,7 @@ async function syncNow() {
     for (const r of reports) { const j = JSON.stringify(r); if (SYNC.reports.get(r.id) !== j) { await api('PUT', `/api/reports/${encodeURIComponent(r.id)}`, { data: r }); SYNC.reports.set(r.id, j); } }
     for (const id of [...SYNC.reports.keys()]) if (!reports.some(r => r.id === id)) { await api('DELETE', `/api/reports/${encodeURIComponent(id)}`).catch(gone); SYNC.reports.delete(id); }
     for (const id of [...SYNC.games.keys()]) if (!games.some(g => g.id === id)) { await api('DELETE', `/api/games/${encodeURIComponent(id)}`).catch(gone); SYNC.games.delete(id); }
-    const p = JSON.stringify({ theme: S().prefs.theme, reduceMotion: S().prefs.reduceMotion, selectedGameId: S().selectedGameId });
+    const p = JSON.stringify({ theme: S().prefs.theme, reduceMotion: S().prefs.reduceMotion, selectedGameId: S().selectedGameId, onboarding: S().prefs.onboarding || null });
     if (p !== SYNC.prefs) { await api('PUT', '/api/me/preferences', { prefs: JSON.parse(p) }); SYNC.prefs = p; }
   } catch (e) { if (e.status === 401) { toast('You were signed out. Log in again to keep saving.', 'warn'); ME = null; } else toast(`Couldn't save to your account: ${e.message}`, 'warn'); }
 }
@@ -2373,7 +2381,7 @@ function enterDemo(gameId, opt) {
   go(opt ? '#/optimizers/' + opt : gameId && gameById(gameId) ? '#/games/' + gameId : '#/home');
 }
 // After any sign-in the page reloads, so the workspace is rebuilt from the server and nothing from demo mode leaks in.
-function finishAuth(isNew, to = '#/home') { try { if (isNew) sessionStorage.setItem('lp_onboard', '1'); } catch (e) { /* storage blocked */ } location.hash = to; location.reload(); }
+function finishAuth(isNew, to = '#/home') { location.hash = to; location.reload(); }
 async function googleButton(el, text, onCredential) {
   if (!AUTHCFG.googleClientId) { el.innerHTML = ''; return; }
   await loadScript('https://accounts.google.com/gsi/client');
@@ -2433,11 +2441,111 @@ function forgotModal(email = '') {
     actions: '<button class="btn ghost" data-close>Close</button><button class="btn" id="fGo">Send link</button>',
     onMount: m => { $('#fGo', m).onclick = async () => { try { const r = await api('POST', '/api/auth/forgot', { email: $('#f_fEmail', m).value.trim() }); $('#fOut', m).textContent = r.message; } catch (x) { $('#fOut', m).textContent = x.message; } }; } });
 }
-// After sign-up: guide to adding a first game or looking around the demo games.
-function onboard(name) {
-  openModal({ title: `Welcome, ${name}!`, body: `<p>Start by adding your own game, or look around the three demo games first. Demo games are labelled <b>Demo data</b> and kept apart from your own.</p>${ME && !ME.user.emailVerified ? '<p class="small muted">We sent you an email to confirm your address. Confirming is needed before subscribing.</p>' : ''}`,
-    actions: `<button class="btn ghost" id="obDemo">Explore the demo games</button><button class="btn" id="obAdd">${icon('plus', 18)} Add my first game</button>`,
-    onMount: m => { $('#obAdd', m).onclick = () => { closeModal(); go('#/games'); gameModal(null); }; $('#obDemo', m).onclick = () => { closeModal(); go('#/games'); }; } });
+/* ===== FIRST-RUN TOUR ===== */
+// State lives in the account's server-side preferences (prefs.onboarding), so it follows the user across devices.
+// Statuses: started (with step), completed, skipped, dismissed. Only a brand-new account with no state sees the welcome.
+const tourState = () => S().prefs.onboarding || null;
+function setTour(status, step = null) { S().prefs.onboarding = { status, step, at: Date.now() }; save(); }
+const ownGames = () => S().games.filter(g => !g.sample), ownReports = () => S().reports.filter(r => !r.sample && !gameById(r.gameId)?.sample);
+function maybeWelcome() {
+  if (!ME || tourState() || modalCtx || TOUR || document.body.classList.contains('public')) return;
+  if (ownGames().length || ownReports().length) return setTour('dismissed'); // an account already in use: don't interrupt
+  openModal({ title: 'Welcome to LaunchPad', body: `<p style="margin-top:0">Everything you need to understand what your Roblox game could improve.</p><p class="muted small" style="margin-bottom:0">Let's take a quick tour of the platform. It only takes a minute.</p>`,
+    actions: `<button class="btn ghost" id="twSkip">Skip for now</button><button class="btn" id="twGo">Take the tour</button>`,
+    onMount: m => {
+      let chosen = false;
+      $('#twSkip', m).onclick = () => { chosen = true; setTour('skipped', 0); track('onboarding_skip', { step: 0 }); closeModal(); };
+      $('#twGo', m).onclick = () => { chosen = true; closeModal(true); startTour(); };
+      m.addEventListener('lp-close', () => { if (!chosen) { setTour('dismissed', 0); track('onboarding_skip', { step: 0, how: 'close' }); } }, { once: true });
+    } });
+}
+// Steps describe the real interface and the account's real entitlements.
+function tourSteps() {
+  const f = ME?.entitlement?.features || [], studio = f.includes('studio_plugin'), rbx = !!ME?.roblox;
+  return [
+    { target: () => $('#view .page-head'), title: 'Your development overview', body: 'This is your central workspace. Manage your games, view recent reports and access your optimization tools from here. Your scores, next recommendations and recent activity sit below.' },
+    { target: () => $('#view .page-head [data-addgame]'), title: 'Start with your game', body: 'Add a Roblox experience by hand with its name, genre, Roblox link and description. You can also create one from a Roblox Studio scan on the Studio page.' },
+    { target: () => $('#sidebar a[href="#/studio"]'), title: 'Connect Roblox Studio',
+      body: studio ? `Included in your plan. ${rbx ? 'Roblox is connected; next, pair' : 'Connect Roblox through its official sign-in, then pair'} the read-only LaunchPad Studio plugin with a one-time code. It reads your game's structure, and script code only if you allow it. Only grant permissions you understand.`
+        : 'Automatic Studio sync is part of Light and Max. On Free you can still run the read-only plugin and paste its scan on the Studio page. Only grant permissions you understand.',
+      note: 'LaunchPad never changes your game and never asks for your Roblox password or cookies.' },
+    { target: () => [$('#sidebar a[href="#/optimizers"]'), $('#sidebar .nav .sub')], title: 'Five ways to improve your game', body: 'LaunchPad organizes game improvement into five areas:',
+      list: [['Game Page', 'your page and how it presents the game'], ['Thumbnail & Icon', 'your game\'s visual identity'], ['First Session', 'what new players experience first'], ['Retention', 'what brings players back'], ['Progression', 'goals, rewards and upgrade pacing']] },
+    { target: () => $('#sidebar a[href="#/reports"]'), title: 'Understand your results', body: 'Every analysis becomes a report: a score, category scores and recommendations ranked by priority, each saying why it appeared, with the evidence behind it. Confidence shows how much information was available. Recommendations are suggestions, not guarantees.' },
+    { target: () => $('#view .stepper')?.closest('.card'), title: 'Measure your improvements', body: 'Tick off recommendations as you fix them. Reports keep each game\'s score history, and on Reports you can pick two to compare side by side.' },
+  ];
+}
+let TOUR = null;
+function startTour(restart = false) {
+  if (TOUR) return;
+  closeModal(true); if (currentPath() !== '/home') go('#/home');
+  track(restart ? 'onboarding_restart' : 'onboarding_start');
+  const ov = document.createElement('div'); ov.className = 'tour';
+  ov.innerHTML = `<div class="tour-shade"></div><div class="tour-spot" aria-hidden="true"></div><div class="tour-pop" role="dialog" aria-modal="true" aria-labelledby="tourT" tabindex="-1"></div>`;
+  document.body.appendChild(ov);
+  const reflow = () => tourPlace();
+  addEventListener('resize', reflow); addEventListener('scroll', reflow, { passive: true, capture: true });
+  TOUR = { i: 0, steps: tourSteps(), ov, last: document.activeElement, off: () => { removeEventListener('resize', reflow); removeEventListener('scroll', reflow, true); } };
+  // The shade swallows clicks, so nothing underneath can be triggered by accident.
+  ov.addEventListener('click', e => { const b = e.target.closest('[data-t]'); if (!b) return;
+    const k = b.dataset.t, i = TOUR.i;
+    if (k === 'next') { track('onboarding_step', { step: i + 1 }); i + 1 < TOUR.steps.length ? tourShow(i + 1) : tourFinish(); }
+    else if (k === 'back') tourShow(i - 1);
+    else if (k === 'skip') tourEnd('skipped'); });
+  ov.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { e.preventDefault(); return tourEnd('dismissed'); }
+    if (e.key === 'Tab') { const f = $$('button', ov.querySelector('.tour-pop')); const a = f[0], z = f[f.length - 1]; if (e.shiftKey && document.activeElement === a) { e.preventDefault(); z.focus(); } else if (!e.shiftKey && document.activeElement === z) { e.preventDefault(); a.focus(); } }
+  });
+  tourShow(0);
+}
+function tourEls(s) { return [].concat(s.target()).filter(e => e && e.isConnected); }
+const drawerMode = () => getComputedStyle($('#menuBtn')).display !== 'none';
+function tourShow(i) {
+  const T = TOUR, s = T.steps[i], n = T.steps.length; T.i = i; setTour('started', i);
+  if (currentPath() !== '/home') go('#/home');
+  const els = tourEls(s), inSide = els.some(e => e.closest('#sidebar'));
+  if (drawerMode()) { $('#sidebar').classList.toggle('open', inSide); $('#scrim').classList.remove('open'); }
+  const pop = T.ov.querySelector('.tour-pop');
+  pop.innerHTML = `<div class="tour-prog" aria-label="Step ${i + 1} of ${n}">${T.steps.map((_, j) => `<i class="${j < i ? 'done' : j === i ? 'on' : ''}"></i>`).join('')}<span>${i + 1}/${n}</span></div>
+    <h2 id="tourT">${esc(s.title)}</h2><p>${esc(s.body)}</p>${s.list ? `<ol class="tour-list">${s.list.map(([a, b]) => `<li><b>${esc(a)}</b> · ${esc(b)}</li>`).join('')}</ol>` : ''}${s.note ? `<p class="tour-note">${esc(s.note)}</p>` : ''}
+    <div class="tour-act"><button class="tour-skip" data-t="skip">Skip tour</button>${i ? '<button class="btn ghost sm" data-t="back">Back</button>' : ''}<button class="btn sm" data-t="next">${i + 1 < n ? 'Next' : 'Finish'}</button></div>`;
+  const first = els[0];
+  if (first && !inSide) first.scrollIntoView({ block: 'center', behavior: reducedMotion() ? 'auto' : 'smooth' });
+  setTimeout(() => { tourPlace(); $('[data-t="next"]', pop).focus({ preventScroll: true }); }, inSide && drawerMode() ? 260 : 30);
+}
+function tourPlace() {
+  if (!TOUR) return;
+  const s = TOUR.steps[TOUR.i], els = tourEls(s), spot = TOUR.ov.querySelector('.tour-spot'), pop = TOUR.ov.querySelector('.tour-pop'), shade = TOUR.ov.querySelector('.tour-shade');
+  const rects = els.map(e => e.getBoundingClientRect()).filter(r => r.width && r.height);
+  const vw = innerWidth, vh = innerHeight, m = 12;
+  if (!rects.length) { // target not on screen (for example a hidden section): centre the card without a highlight
+    spot.style.opacity = 0; shade.classList.add('dim');
+    pop.style.left = Math.max(m, (vw - pop.offsetWidth) / 2) + 'px'; pop.style.top = Math.max(m, (vh - pop.offsetHeight) / 2) + 'px'; return;
+  }
+  shade.classList.remove('dim'); spot.style.opacity = 1;
+  const r = { left: Math.min(...rects.map(x => x.left)) - 6, top: Math.min(...rects.map(x => x.top)) - 6, right: Math.max(...rects.map(x => x.right)) + 6, bottom: Math.max(...rects.map(x => x.bottom)) + 6 };
+  Object.assign(spot.style, { left: r.left + 'px', top: r.top + 'px', width: (r.right - r.left) + 'px', height: (r.bottom - r.top) + 'px' });
+  const pw = Math.min(360, vw - m * 2), ph = pop.offsetHeight; pop.style.width = pw + 'px';
+  let x, y;
+  if (vh - r.bottom >= ph + m * 2) { y = r.bottom + m; x = r.left; }               // below
+  else if (r.top >= ph + m * 2) { y = r.top - ph - m; x = r.left; }                 // above
+  else if (vw - r.right >= pw + m * 2) { x = r.right + m; y = r.top; }              // right
+  else if (r.left >= pw + m * 2) { x = r.left - pw - m; y = r.top; }                // left
+  else { x = (vw - pw) / 2; y = vh - ph - m; }                                       // big target: dock at the bottom
+  pop.style.left = Math.min(Math.max(m, x), vw - pw - m) + 'px'; pop.style.top = Math.min(Math.max(m, y), vh - ph - m) + 'px';
+}
+function tourEnd(status) {
+  if (!TOUR) return;
+  const step = TOUR.i, last = TOUR.last; TOUR.off(); TOUR.ov.remove(); TOUR = null; closeNav();
+  setTour(status, step);
+  if (status !== 'completed') track('onboarding_skip', { step: step + 1, how: status });
+  if (last && last.focus && status !== 'completed') last.focus();
+}
+function tourFinish() {
+  tourEnd('completed'); track('onboarding_complete');
+  openModal({ title: 'You\'re ready to get started.', body: `<div class="tour-done" aria-hidden="true"><svg viewBox="0 0 52 52" width="56" height="56"><circle cx="26" cy="26" r="24"/><path d="M15 27l7 7 15-16"/></svg></div><p style="margin:0">Add your first game and discover what you could improve.</p>`,
+    actions: `<button class="btn ghost" id="tdOpt">Explore optimizers</button><button class="btn" id="tdHome">Go to my dashboard</button>`,
+    onMount: m => { $('#tdHome', m).onclick = () => { closeModal(); go('#/home'); }; $('#tdOpt', m).onclick = () => { closeModal(); go('#/optimizers'); }; } });
 }
 function logout() { confirmDialog({ title: 'Log out?', message: 'Your games and reports stay in your account.', yes: 'Log out', onYes: async () => { await syncing; await api('POST', '/api/auth/logout').catch(() => {}); finishAuth(false, '#/welcome'); } }); }
 function exitDemo() { S().demo = false; save(); go('#/welcome'); }
@@ -2471,7 +2579,7 @@ function variant(name, fallback = null) {
 }
 
 /* ===== PRICING (plans and prices come from the server) ===== */
-let PRICE_INT = 'month', PRICE_PICK = null;
+let PRICE_INT = 'month';
 const cents = s => Math.round(parseFloat(String(s).replace(/[^0-9.]/g, '')) * 100);
 const money = c => '$' + (c / 100).toFixed(2);
 // Price change: the number rolls once from the old to the new amount (instant with reduced motion).
@@ -2481,41 +2589,46 @@ function rollPrice(el, toCents) {
   const t0 = performance.now(), d = 420, step = t => { const k = Math.min(1, (t - t0) / d), e = 1 - Math.pow(1 - k, 3); el.textContent = money(Math.round(from + (toCents - from) * e)); if (k < 1) requestAnimationFrame(step); };
   requestAnimationFrame(step); setTimeout(() => { if (+el.dataset.c === toCents) el.textContent = money(toCents); }, d + 80); // lands on the exact price even if frames are throttled
 }
+// Three plans side by side. Every capacity value comes from the server's plan limits; only features the server
+// actually enforces differently are listed (Studio access for Light and Max; priority scan queue for Max).
 function pricingCards(ctx = 'app') {
   if (!PLANS) return '<div class="card flat muted">Prices couldn\'t load right now. Please refresh the page.</div>';
-  const [L, M] = PLANS.plans, cur = ME?.entitlement?.plan || 'free', ctaWord = variant('pricing_cta', 'choose') === 'start' ? 'Start with' : 'Choose';
-  const lim = (p, k, unit) => p.limits[k] == null ? 'Included' : `${p.limits[k]} ${unit}`;
-  const card = (p, who) => `<article class="pz-card ${p.plan === 'max' ? 'pz-max' : ''}" data-plan="${p.plan}" aria-labelledby="pz-${p.plan}">
-    <div class="pz-top"><h3 id="pz-${p.plan}">${p.name}</h3><span class="pz-badge" data-show="year">${p.plan === 'max' ? `SAVE ${p.display.saving} · ${p.display.percent}% OFF` : `${p.display.percent}% off`}</span></div>
-    <p class="pz-who">${who}</p>
-    <p class="pz-price"><b data-price="${p.plan}" data-c="${p.prices.month}">${p.display.monthly}</b><span data-unit="${p.plan}">/ month</span></p>
-    <p class="pz-note" data-note="${p.plan}"></p>
-    <button class="btn ${p.plan === 'max' ? '' : 'ghost'} pz-cta" data-buy="${p.plan}" ${!PLANS.paymentsAvailable ? 'disabled' : ''}>${!PLANS.paymentsAvailable ? 'Checkout opens soon' : `${cur !== 'free' && cur !== p.plan ? 'Switch to' : ctaWord} ${p.name}`}</button></article>`;
-  const rows = [['Five optimizers', 1, 1, 1], ['Roblox Studio automation', 0, 1, 1], ['Scan capacity', 'Manual', `${lim(L, 'monthly_scans', 'scans/mo')} · ${lim(L, 'connected_experiences', 'games')}`, `${lim(M, 'monthly_scans', 'scans/mo')} · ${lim(M, 'connected_experiences', 'games')}`], ['Advanced analysis', 0, 0, 1], ['Monitoring and history', 'Saved reports', 'Standard', 'Extended + priority']];
-  const cell = x => x === 1 ? icon('check', 16) : x === 0 ? '<span class="faint">—</span>' : esc(x);
-  const faq = [['What\'s in each plan?', 'Light: all five optimizers with Roblox Studio sync and automatic analysis. Max adds deeper script inspection, more games and scans, priority scans and extended history.'],
-    ['What is the annual charge?', `Light: ${L.display.annual} once a year. Max: ${M.display.annual} once a year. Charged upfront, renews yearly until you cancel.`],
-    ['How does the Roblox Studio connection work?', 'Authorize your experiences through Roblox\'s own sign-in, then pair the read-only LaunchPad Studio plugin with a one-time code.'],
-    ['Can I cancel?', 'Yes, any time in Settings → Billing. You keep your plan until the end of the period you paid for.'],
-    ['What happens to my reports if I cancel?', 'They stay. Only paid features switch off.'],
-    ['Does LaunchPad change my game?', 'Never. The plugin only reads.']];
+  const [L, M] = PLANS.plans, cur = ME?.entitlement?.plan || 'free';
+  const n = (p, k) => p.limits[k], fmt = x => Number(x).toLocaleString('en-US');
+  const games = p => n(p, 'connected_experiences') == null ? 'Connected games' : `${fmt(n(p, 'connected_experiences'))} connected game${n(p, 'connected_experiences') === 1 ? '' : 's'}`;
+  const scans = p => n(p, 'monthly_scans') == null ? 'Automatic scans' : `${fmt(n(p, 'monthly_scans'))} scans a month`;
+  const sync = p => { const m = n(p, 'sync_interval_minutes'); return m == null ? 'Automatic sync' : m >= 1440 ? 'Daily automatic sync' : m >= 60 ? (m === 60 ? 'Hourly automatic sync' : `Sync every ${m / 60} hours`) : `Sync every ${m} min`; };
+  const paid = p => cur === p.plan ? `<button class="btn ghost pz-cta" disabled>Your current plan</button>`
+    : !PLANS.paymentsAvailable ? `<button class="btn ${p.plan === 'max' ? '' : 'ghost'} pz-cta" disabled>Checkout opens soon</button>`
+    : `<button class="btn ${p.plan === 'max' ? '' : 'ghost'} pz-cta" data-buy="${p.plan}">${cur !== 'free' ? 'Switch to' : 'Choose'} ${p.name}</button>`;
+  const freeCta = isAuthed() ? (cur === 'free' ? `<button class="btn ghost pz-cta" data-free="go">Go to your workspace</button>` : `<button class="btn ghost pz-cta" disabled>Included in your plan</button>`) : `<button class="btn ghost pz-cta" data-free="signup">Start for free</button>`;
+  const list = items => `<ul class="pz-feats">${items.map(t => `<li>${icon('check', 15)}<span>${t}</span></li>`).join('')}</ul>`;
+  const rows = [
+    ['Five optimizers', 'Manual forms and paste-in scans', 'Included', 'Included'],
+    ['Roblox Studio automation', '—', 'Plugin sync and automatic analysis', 'Plugin sync and automatic analysis'],
+    ['Scan capacity', '—', `${scans(L)} · ${games(L)}`, `${scans(M)} · ${games(M)}`],
+    ['Advanced analysis', '—', 'Standard scan queue', 'Priority scan queue'],
+    ['Monitoring and history', 'Saved reports', `${sync(L)} · saved reports`, `${sync(M)} · saved reports`]];
   return `<div class="pz" data-ctx="${ctx}">
-    <div class="pz-pick"><div class="pz-toggle" role="radiogroup" aria-label="Billing period"><span class="pz-pill" aria-hidden="true"></span>
-      <button type="button" role="radio" data-int="month" aria-checked="true">Monthly</button><button type="button" role="radio" data-int="year" aria-checked="false">Annually <em>save up to 66.7%</em></button></div>
-      <div class="pz-cards">${card(L, 'For individual creators')}${card(M, 'For serious developers and multiple games')}</div>
-      <ul class="pz-trust">${[PLANS.paymentsAvailable ? ['tag', 'Secure Paddle checkout'] : ['tag', 'Paddle checkout opens soon'], ['check', 'Cancel any time'], ['user', 'Export or delete your data'], ['info', 'Independent of Roblox']].map(([i, t]) => `<li>${icon(i, 14)}${t}</li>`).join('')}</ul></div>
-    <div class="pz-detail">
-      <ul class="pz-value">${[['layers', 'Five optimizers'], ['play', 'Automatic Studio scans'], ['page', 'Evidence-based reports'], ['bars', 'Progress tracking']].map(([i, t]) => `<li>${icon(i, 18)}<span>${t}</span></li>`).join('')}</ul>
-      <div class="table-wrap pz-compare"><table><thead><tr><th></th><th>Free</th><th>Light</th><th>Max</th></tr></thead><tbody>${rows.map(([l, ...c]) => `<tr><th scope="row">${l}</th>${c.map(x => `<td>${cell(x)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>
-      <details class="pz-full"><summary>Full feature comparison</summary><ul>${Object.entries(PLAN_FEATURES).map(([k, l]) => `<li><span>${l}</span><span>${L.features.includes(k) ? 'Light, Max' : M.features.includes(k) ? 'Max' : '—'}</span></li>`).join('')}</ul></details>
-      <div class="pz-faq">${faq.map(([q, a]) => `<details><summary>${q}</summary><p>${a}</p></details>`).join('')}</div>
-      <p class="pz-legal">USD. Taxes calculated by Paddle at checkout. Renews automatically until cancelled. <a href="/legal/subscriptions" target="_blank" rel="noopener">Subscription Terms</a> · <a href="/legal/refunds" target="_blank" rel="noopener">Refunds</a></p></div>
-  </div>
-  <div class="pz-bar" hidden role="region" aria-label="Selected plan"><span class="pz-bar-txt"></span><button class="btn sm" data-bar="buy">Continue</button><button class="icon-btn" data-bar="close" aria-label="Dismiss">${icon('x', 18)}</button></div>`;
+    <div class="pz-head"><div class="pz-toggle" role="radiogroup" aria-label="Billing period"><span class="pz-pill" aria-hidden="true"></span>
+      <button type="button" role="radio" data-int="month" aria-checked="true">Monthly</button><button type="button" role="radio" data-int="year" aria-checked="false">Annually</button></div></div>
+    <div class="pz-cards">
+      <article class="pz-card" aria-labelledby="pz-free"><div class="pz-top"><h3 id="pz-free">Free</h3></div><p class="pz-who">Learn your game's strengths and start improving.</p>
+        <p class="pz-price"><b>$0</b><span>forever</span></p><p class="pz-note">No card needed.</p>${freeCta}
+        ${list(['All five optimizers', 'Paste-in Roblox Studio scans', 'Saved reports and progress tracking'])}</article>
+      <article class="pz-card" data-plan="light" aria-labelledby="pz-light"><div class="pz-top"><h3 id="pz-light">Light</h3><span class="pz-badge" data-show="year">Save ${L.display.saving}</span></div><p class="pz-who">Automate scanning for your games.</p>
+        <p class="pz-price"><b data-price="light" data-c="${L.prices.month}">${L.display.monthly}</b><span data-unit="light">/ month</span></p><p class="pz-note" data-note="light"></p>${paid(L)}
+        ${list(['Everything in Free', 'Roblox Studio plugin sync', 'Automatic five-optimizer analysis', `${scans(L)} · ${games(L)}`, sync(L)])}</article>
+      <article class="pz-card pz-max" data-plan="max" aria-labelledby="pz-max"><div class="pz-top"><h3 id="pz-max">Max</h3><span class="pz-label">Most powerful</span></div><p class="pz-who">For developers running several games.</p>
+        <p class="pz-price"><b data-price="max" data-c="${M.prices.month}">${M.display.monthly}</b><span data-unit="max">/ month</span></p><p class="pz-note" data-note="max"></p>${paid(M)}
+        ${list(['Everything in Light', `<b>${scans(M)}</b>`, `<b>${games(M)}</b>`, `<b>${sync(M)}</b>`, '<b>Priority scan queue</b>'])}</article>
+    </div>
+    <div class="pz-compare" role="table" aria-label="Plan comparison"><div class="pz-row pz-row-head" role="row"><span role="columnheader">Compare plans</span><span role="columnheader">Free</span><span role="columnheader">Light</span><span role="columnheader">Max</span></div>
+      ${rows.map(([f, ...c]) => `<div class="pz-row" role="row"><span class="pz-feat" role="rowheader">${f}</span>${c.map((x, i) => `<span role="cell" data-plan="${['Free', 'Light', 'Max'][i]}">${x === '—' ? '<span class="faint" aria-label="Not included">—</span>' : esc(x)}</span>`).join('')}</div>`).join('')}</div>
+    <p class="pz-legal">Prices in USD. Annual plans are charged upfront and renew yearly; monthly plans renew monthly. Cancel any time. Secure checkout by Paddle, which adds any tax. <a href="/legal/subscriptions" target="_blank" rel="noopener">Subscription Terms</a></p>
+  </div>`;
 }
-const PLAN_FEATURES = { manual_optimizers: 'All five optimizers', saved_reports: 'Saved reports', roblox_connection: 'Roblox account connection', studio_plugin: 'LaunchPad Studio plugin', studio_automatic_scanning: 'Automatic game scanning', automatic_analysis: 'Automatic analysis', report_history_standard: 'Report history', overrides: 'Manual corrections', scheduled_sync: 'Scheduled sync',
-  advanced_script_analysis: 'Deeper script inspection', report_history_extended: 'Extended history and comparisons', priority_queue: 'Priority scan queue', advanced_monitoring: 'Advanced change monitoring', cross_experience_overview: 'Cross-experience overview' };
-// Updates prices, units, notes, toggle pill and the mobile bar for the current interval and pick.
+// Updates prices, units, notes and the toggle for the current billing period.
 function pricingState(root) {
   if (!PLANS || !root.querySelector('.pz')) return;
   const yr = PRICE_INT === 'year';
@@ -2524,27 +2637,20 @@ function pricingState(root) {
   for (const p of PLANS.plans) {
     rollPrice($(`[data-price="${p.plan}"]`, root), yr ? p.prices.year : p.prices.month);
     $(`[data-unit="${p.plan}"]`, root).textContent = yr ? '/ year' : '/ month';
-    $(`[data-note="${p.plan}"]`, root).innerHTML = !yr ? `Billed monthly. ${p.display.annual}/year if paid annually.`
-      : p.plan === 'max' ? `<b>Max for ${p.display.annual}/year. Save ${p.display.saving}.</b> Pay annually instead of ${p.display.monthly} every month. ${p.display.annual} charged upfront (≈ ${p.display.effectiveMonthly}/mo).`
-      : `${p.display.annual} charged upfront. Save ${p.display.saving} vs ${p.display.twelveMonthly} monthly (≈ ${p.display.effectiveMonthly}/mo).`;
-    $(`[data-plan="${p.plan}"]`, root).classList.toggle('picked', PRICE_PICK === p.plan);
+    $(`[data-note="${p.plan}"]`, root).innerHTML = !yr ? `Billed monthly, or ${p.display.annual} a year.`
+      : p.plan === 'max' ? `<b>Save ${p.display.saving}</b> vs ${p.display.twelveMonthly} paid monthly. ${p.display.annual} charged upfront each year.`
+      : `Save ${p.display.saving} vs paying monthly. ${p.display.annual} charged upfront each year.`;
   }
-  const bar = $('.pz-bar', root);
-  if (bar && PRICE_PICK && !bar.dataset.closed) { const p = PLANS.plans.find(x => x.plan === PRICE_PICK); bar.hidden = false; $('.pz-bar-txt', bar).innerHTML = `<b>${p.name}</b> · ${yr ? p.display.annual + ' / year' : p.display.monthly + ' / month'}`; }
 }
 function bindPricing(root) {
   pricingState(root);
-  if (!reducedMotion() && 'IntersectionObserver' in window) { const io = new IntersectionObserver(es => { if (es[0].isIntersecting) { track('pricing_view', { ctx: root.querySelector('.pz')?.dataset.ctx }); io.disconnect(); } }, { threshold: .3 }); root.querySelector('.pz') && io.observe(root.querySelector('.pz')); }
-  else track('pricing_view');
+  if ('IntersectionObserver' in window && root.querySelector('.pz')) { const io = new IntersectionObserver(es => { if (es[0].isIntersecting) { track('pricing_view', { ctx: root.querySelector('.pz').dataset.ctx }); io.disconnect(); } }, { threshold: .3 }); io.observe(root.querySelector('.pz')); }
   root.addEventListener('click', e => {
-    const t = e.target.closest('[data-int],[data-buy],[data-plan],[data-bar]'); if (!t) return;
+    const t = e.target.closest('[data-int],[data-buy],[data-free]'); if (!t) return;
     if (t.dataset.int) { if (PRICE_INT !== t.dataset.int) { PRICE_INT = t.dataset.int; track('billing_toggle', { interval: PRICE_INT }); } return pricingState(root); }
-    if (t.dataset.bar === 'close') { const b = $('.pz-bar', root); b.hidden = true; b.dataset.closed = '1'; return; }
-    if (t.dataset.bar === 'buy') return startCheckout(PRICE_PICK, PRICE_INT, t);
-    const plan = t.dataset.buy || t.dataset.plan;
-    if (PRICE_PICK !== plan) { PRICE_PICK = plan; track('plan_select', { plan, interval: PRICE_INT }); }
-    pricingState(root);
-    if (t.dataset.buy) startCheckout(plan, PRICE_INT, t);
+    if (t.dataset.free) { track('plan_select', { plan: 'free' }); return t.dataset.free === 'go' ? go('#/home') : authModal('signup'); }
+    track('plan_select', { plan: t.dataset.buy, interval: PRICE_INT });
+    startCheckout(t.dataset.buy, PRICE_INT, t);
   });
 }
 async function startCheckout(plan, interval, btn) {
@@ -2585,7 +2691,7 @@ function pageSettings(tab = 'profile') {
   const v = $('#view'), p = S().prefs;
   if (!isAuthed()) tab = 'appearance';
   v.innerHTML = `<header class="page-head"><p class="eyebrow">Account</p><h1>Settings</h1></header>
-  ${isAuthed() ? `<nav class="tabs" aria-label="Settings sections">${SET_TABS.map(([k, l]) => `<a href="#/settings/${k}" ${k === tab ? 'aria-current="page"' : ''}>${l}</a>`).join('')}</nav>` : `<section class="card" style="margin-bottom:20px"><h2>You're in demo mode</h2><p class="muted">Demo data stays in this browser. Create an account to save your games across devices.</p><button class="btn" id="sSignup">${icon('user', 18)} Create an account</button> <button class="btn ghost" id="sLogin">Log in</button></section>`}
+  ${isAuthed() ? `<nav class="tabs" aria-label="Settings sections">${SET_TABS.map(([k, l]) => `<a href="#/settings/${k}" ${k === tab ? 'aria-current="page"' : ''}>${l}</a>`).join('')}</nav>` : `<section class="card" style="margin-bottom:20px"><h2>You're in demo mode</h2><p class="muted">Your changes stay in this browser. Create an account to save your games across devices.</p><button class="btn" id="sSignup">${icon('user', 18)} Create an account</button> <button class="btn ghost" id="sLogin">Log in</button></section>`}
   <div id="setBody"><p class="muted">Loading…</p></div>`;
   $('#sSignup') && ($('#sSignup').onclick = () => authModal('signup')); $('#sLogin') && ($('#sLogin').onclick = () => authModal('login'));
   SETTINGS[tab] ? SETTINGS[tab]($('#setBody'), p) : page404();
@@ -2598,7 +2704,9 @@ const SETTINGS = {
     el.innerHTML = card('Profile', `<div class="row" style="gap:16px;flex-wrap:nowrap"><span class="avatar" style="width:64px;height:64px;font-size:1.4rem;overflow:hidden">${u.hasAvatar ? `<img src="/api/me/avatar?${Date.now()}" alt="" style="width:100%;height:100%;object-fit:cover">` : esc(u.displayName[0].toUpperCase())}</span>
       <div class="row" style="gap:8px"><label class="btn ghost sm" for="pAv">${icon('upload', 16)} ${u.hasAvatar ? 'Change' : 'Add'} photo<input type="file" id="pAv" accept="image/png,image/jpeg,image/webp" class="sr-only"></label>${u.hasAvatar ? '<button class="btn ghost sm" id="pAvDel">Remove</button>' : ''}</div></div>
       <div class="form-grid" style="margin-top:16px">${F('text', 'pName', 'Display name', u.displayName, { req: true })}<div><span class="label">Email</span><p style="margin:6px 0">${esc(u.email)} ${u.emailVerified ? '<span class="chip good sm">Verified</span>' : '<span class="chip warn sm">Not verified</span> <button class="btn ghost sm" id="pResend">Resend email</button>'}</p></div></div>
-      <p class="small muted">Member since ${fmtDate(Date.parse(u.createdAt))}</p><button class="btn" id="pSave">Save profile</button>`);
+      <p class="small muted">Member since ${fmtDate(Date.parse(u.createdAt))}</p><button class="btn" id="pSave">Save profile</button>`)
+      + card('Product tour', `<p class="small muted">A one-minute walk through the dashboard, Studio connection, optimizers and reports.</p><button class="btn ghost" id="pTour">Restart the tour</button>`);
+    $('#pTour').onclick = () => startTour(true);
     $('#pSave').onclick = async () => { try { await api('PATCH', '/api/me', { displayName: $('#f_pName').value }); S().account.name = $('#f_pName').value.trim(); toast('Profile saved'); refreshMe(); } catch (e) { toast(e.message, 'warn'); } };
     $('#pResend') && ($('#pResend').onclick = async () => { try { await api('POST', '/api/auth/resend-verification'); toast('Check your inbox for the link.'); } catch (e) { toast(e.message, 'warn'); } });
     $('#pAv').onchange = async e => { const f = e.target.files[0]; if (!f) return; if (f.size > 1024 * 1024) return toast('Profile images must be 1 MB or smaller.', 'warn');
@@ -2665,7 +2773,7 @@ const SETTINGS = {
   appearance(el, p) {
     el.innerHTML = card('Appearance', `<div class="row" style="gap:12px"><span class="label" id="thLbl">Theme</span><div class="seg" role="group" aria-labelledby="thLbl">${[['light', 'Light'], ['dark', 'Dark'], ['system', 'Match system']].map(([k, l]) => `<button type="button" data-theme-set="${k}" aria-pressed="${p.theme === k}">${l}</button>`).join('')}</div></div>
       <label class="check" style="margin-top:12px"><input type="checkbox" id="sMotion" ${p.reduceMotion ? 'checked' : ''}><span>Reduce motion <span class="small muted">(also follows your system setting)</span></span></label>`)
-      + (isAuthed() ? '' : card('Demo data', `<p class="small muted">Demo mode keeps everything in this browser.</p><button class="btn danger sm" id="sReset">Reset demo</button>`));
+      + (isAuthed() ? '' : card('Demo workspace', `<p class="small muted">Demo mode keeps everything in this browser.</p><button class="btn danger sm" id="sReset">Reset demo</button>`));
     el.querySelectorAll('[data-theme-set]').forEach(b => b.onclick = () => { p.theme = b.dataset.themeSet; save(); applyTheme(); renderSidebar(); pageSettings('appearance'); });
     $('#sMotion').onchange = e => { p.reduceMotion = e.target.checked; save(); applyTheme(); };
     $('#sReset') && ($('#sReset').onclick = () => confirmDialog({ title: 'Reset the demo?', message: 'Clears demo changes in this browser and reloads the demo games.', yes: 'Reset', danger: true, onYes: () => { Store.data = freshState(); Store.data.demo = true; save(); Object.keys(PS).forEach(k => delete PS[k]); applyTheme(); renderSidebar(); go('#/home'); toast('Demo reset'); } }));
@@ -2683,18 +2791,18 @@ function pageGame(id) {
   <section class="section split"><div class="card"><h3>About</h3><p>${esc(g.loop || 'No gameplay loop added yet.')}</p>${g.description ? `<p class="small muted" style="white-space:pre-wrap;margin:0">${esc(g.description)}</p>` : ''}${g.sample ? '<p class="tiny faint" style="margin:12px 0 0">Demo text: the loop and description were written by LaunchPad from the game\'s title and artwork. They aren\'t the creator\'s own listing.</p>' : ''}</div>
   <div class="card"><h3>Progress</h3>${progInner(rp.done, rp.total)}</div></section>
   <section class="section"><div class="section-title"><h2>Optimizer reports</h2>${sampleChip(g)}</div><div class="table-wrap"><table><thead><tr><th>Optimizer</th><th class="num">Latest</th><th>Status</th><th>History</th><th><span class="sr-only">Actions</span></th></tr></thead><tbody>${rows}</tbody></table></div></section>
-  ${g.sample ? `<section class="section"><div class="card sunk small"><b>Credits.</b> ${esc(g.name)} and its artwork belong to ${esc(g.creator || 'its creator')}. The icon and thumbnail${g.thumbs.length > 1 ? 's' : ''} come from the Roblox CDN (<a href="${esc(g.url)}" target="_blank" rel="noopener noreferrer">official page</a> · <a href="${esc(g.stats)}" target="_blank" rel="noopener noreferrer">stats reference</a>) and are shown here as development references only. LaunchPad isn't affiliated with or endorsed by Roblox Corporation or the creator. All scores, timings, metrics and economy values for this game are invented demo data.</div></section>` : ''}`;
+  ${g.sample ? `<section class="section"><div class="card sunk small"><b>Credits.</b> ${esc(g.name)} and its artwork belong to ${esc(g.creator || 'its creator')}. <a href="${esc(g.url)}" target="_blank" rel="noopener noreferrer">Play on Roblox</a>. LaunchPad isn't affiliated with Roblox Corporation or the creator. Scores and metrics here are an example analysis.</div></section>` : ''}`;
   $('#view').onclick = e => { const b = e.target.closest('button'); if (!b) return; if (b.dataset.select) selectGame(b.dataset.select); if (b.dataset.run) { S().selectedGameId = g.id; save(); go('#/optimizers/' + b.dataset.run); } };
 }
 /* ===== LANDING PAGE (public, #/welcome) ===== */
-// Every preview is built from the real app components and real analyzer output on the demo games (labelled Demo data).
+// Every preview is built from the real app components and real analyzer output on the example games.
 let LP_DATA = null;
 function lpData() {
   if (!LP_DATA) { const reps = buildDemoReports(Date.now()); LP_DATA = DEMO_GAMES.map(g => { const r = Object.fromEntries(reps.filter(x => x.gameId === g.id).map(x => [x.optimizer, x])); return { g, r, avg: Math.round(avg(OPTIMIZERS.map(o => r[o.id].score))) }; }); }
   return LP_DATA;
 }
 const lpThumb = (g, i = 0) => `<img class="lp-thumb" src="${g.thumbs[i].preview}" alt="${esc(g.name)} thumbnail" data-name="${esc(g.name)}" loading="lazy">`;
-const lpDemo = '<span class="chip sample sm">Demo data</span>';
+const lpDemo = '<span class="lp-ex-tag">Example analysis</span>';
 const lpRecs = d => OPTIMIZERS.flatMap(o => d.r[o.id].recs.map(x => ({ ...x, opt: o.name }))).sort((a, b) => PRI[a.priority] - PRI[b.priority] || a.score - b.score);
 const lpRows = d => OPTIMIZERS.map(o => `<div class="lp-srow"><span>${o.name}</span><span class="lp-sbar"><i style="width:${d.r[o.id].score}%"></i></span><b>${d.r[o.id].score}</b></div>`).join('');
 function lpExample(d) {
@@ -2703,7 +2811,7 @@ function lpExample(d) {
   <p class="eyebrow">Top refinements</p><ul class="list-plain">${lpRecs(d).slice(0, 3).map(x => `<li class="small"><b>${esc(x.title)}</b><br><span class="muted">${esc(x.opt)}</span></li>`).join('')}</ul>
   <button class="btn" style="margin-top:16px" data-lp="demo-game" data-id="${d.g.id}">Explore analysis ${icon('arrow', 18)}</button></div></div>`;
 }
-// Landing page. Product demos use the real app components and real analyzer output on the demo games (labelled Demo data).
+// Landing page. Product demos use the real app components and real analyzer output on the example games ("Example analysis").
 // Motion vocabulary: hero = masked kinetic type; hero preview = morphing interface; optimizers = horizontal scroll track;
 // scan journey = pinned story + SVG path drawing; thumbnails = draggable clip-path compare; reports = stacking deck with
 // chart drawing and staged timeline; pricing = spring toggle + rolling prices. Many blocks simply appear: no blanket fade-up.
@@ -2724,17 +2832,18 @@ function lpScroll() {
 // A scroll scene drives fn(progress 0..1) while its tall wrapper scrolls past a sticky frame. Off on phones and with reduced motion.
 function lpScene(el, fn) { if (!el || reducedMotion() || matchMedia('(max-width: 880px)').matches) return false; LP_SCENES.push({ el, fn }); window.addEventListener('scroll', lpScroll, { passive: true }); lpScroll(); return true; }
 function lpOnce(el, fn, margin = '-15%') { if (!el) return; if (reducedMotion() || !('IntersectionObserver' in window)) return fn(); const io = new IntersectionObserver(es => { if (es[0].isIntersecting) { fn(); io.disconnect(); } }, { rootMargin: `0px 0px ${margin} 0px` }); io.observe(el); }
-function lpCount(el) { const to = +el.dataset.to, t0 = performance.now(); if (reducedMotion()) return void (el.textContent = to); const step = t => { const k = Math.min(1, (t - t0) / 900); el.textContent = Math.round(to * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(step); }; requestAnimationFrame(step); }
+function lpCount(el) { const to = +el.dataset.to, t0 = performance.now(); if (reducedMotion() || document.hidden) return void (el.textContent = to); setTimeout(() => { el.textContent = to; }, 1000); // lands on the real value even if frames are throttled
+  const step = t => { const k = Math.min(1, (t - t0) / 900); el.textContent = Math.round(to * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(step); }; requestAnimationFrame(step); }
 function lpLoop(el, ms, fn) { if (!el || reducedMotion()) return () => {}; let on = true; const t = setInterval(() => { if (!el.isConnected) return clearInterval(t); if (on && !document.hidden) fn(); }, ms); return v => { on = v; }; }
 
 function lpPreview(d, k) {
-  const o = OPT[k], r = d.r[k].result, dem = '<span class="chip sample sm">Demo data</span>';
+  const o = OPT[k], r = d.r[k].result, dem = '';
   const head = `<div class="lp-pv-head"><span class="opt-icon sm">${icon(o.icon, 16)}</span><b>${o.name}</b><span class="lp-pv-score"><b data-to="${r.score}">${r.score}</b>/100</span>${dem}</div>`;
   if (k === 'game-page') return head + `<p class="lp-listing">${esc(d.g.description.split('\n')[0])}</p>${catBars(r.categories.slice(0, 3).map(c => ({ ...c, source: '' })))}`;
   if (k === 'thumbnail') return head + `<div class="lp-art2"><img class="lp-thumb" src="${d.g.thumbs[0].preview}" alt="${esc(d.g.name)} thumbnail" data-name="${esc(d.g.name)}"><span class="game-art lp-icon">${gameArt(d.g)}</span></div>`;
   if (k === 'first-session') return head + journeyHTML(demoInputs(d.g.id, 'first-session').stages.slice(0, 4));
-  if (k === 'retention') { const x = demoInputs(d.g.id, 'retention'); return head + `<div class="lp-draw in">${lineChart({ labels: ['Day 1', 'Day 7', 'Day 30'], series: [{ name: 'Previous', values: [x.pd1 || x.d1, x.pd7 || x.d7, x.pd30 || x.d30], color: 'var(--faint)', dash: true }, { name: 'Now', values: [x.d1, x.d7, x.d30], color: 'var(--text)' }], yFmt: v => Math.round(v) + '%', h: 180, title: 'Retention, demo data' })}</div>`; }
-  const pg = r.extras; return head + `<div class="lp-draw in">${lineChart({ labels: pg.rows.map((x, i) => i + 1), series: [{ name: 'Current', values: pg.rows.map(x => x.time), color: 'var(--text)' }, { name: 'Suggested', values: pg.suggested.map(x => x.time), color: 'var(--faint)', dash: true }], yFmt: v => fmtMin(v), h: 180, title: 'Unlock time, demo data' })}</div>`;
+  if (k === 'retention') { const x = demoInputs(d.g.id, 'retention'); return head + `<div class="lp-draw in">${lineChart({ labels: ['Day 1', 'Day 7', 'Day 30'], series: [{ name: 'Previous', values: [x.pd1 || x.d1, x.pd7 || x.d7, x.pd30 || x.d30], color: 'var(--faint)', dash: true }, { name: 'Now', values: [x.d1, x.d7, x.d30], color: 'var(--text)' }], yFmt: v => Math.round(v) + '%', h: 180, title: 'Retention' })}</div>`; }
+  const pg = r.extras; return head + `<div class="lp-draw in">${lineChart({ labels: pg.rows.map((x, i) => i + 1), series: [{ name: 'Current', values: pg.rows.map(x => x.time), color: 'var(--text)' }, { name: 'Suggested', values: pg.suggested.map(x => x.time), color: 'var(--faint)', dash: true }], yFmt: v => fmtMin(v), h: 180, title: 'Unlock time' })}</div>`;
 }
 // Morph: the frame animates from its old height to the new one while the content swaps behind a clip-path wipe.
 function lpMorph(frame, html) {
@@ -2745,11 +2854,11 @@ function lpMorph(frame, html) {
 }
 
 function pageLanding() {
-  const D = lpData(), [sae, tfa, fish] = D, authed = isAuthed(), demoChip = '<span class="chip sample sm">Demo data</span>';
+  const D = lpData(), [sae, tfa, fish] = D, authed = isAuthed(), demoChip = '';
   const primary = `<button class="btn lg" data-lp="${authed ? 'analyze' : 'signup'}">Analyze your game ${icon('arrow', 18)}</button>`;
   const menuItem = (ic, t, d, attrs) => `<a class="lp-mi" ${attrs}><span class="lp-mi-ic">${icon(ic, 18)}</span><span><b>${t}</b><small>${d}</small></span></a>`;
   const productMenu = OPTIMIZERS.map((o, i) => menuItem(o.icon, o.full, o.analyzes[0], `href="#lp-optimizers" data-track="${i}"`)).join('') + menuItem('play', 'Roblox Studio', 'Read-only plugin and sync', 'href="#lp-journey"');
-  const resMenu = [['games', 'Sample games', 'Real games, demo data', 'href="#lp-examples"'], ['info', 'FAQ', 'Short answers', 'href="#lp-faq"'], ['page', 'Policies', 'Terms and privacy', 'href="/legal"'], ['user', 'Support', 'Contact us', 'href="/legal/request?kind=support"']].map(x => menuItem(...x)).join('');
+  const resMenu = [['games', 'Sample games', 'Example analyses', 'href="#lp-examples"'], ['info', 'FAQ', 'Short answers', 'href="#lp-faq"'], ['page', 'Policies', 'Terms and privacy', 'href="/legal"'], ['user', 'Support', 'Contact us', 'href="/legal/request?kind=support"']].map(x => menuItem(...x)).join('');
   const stages = [['Connect', 'play', 'Roblox Studio'], ['Scan', 'grid', 'Game structure'], ['Analyze', 'layers', 'Analysis engine'], ['Evaluate', 'bars', 'Five optimizers'], ['Report', 'page', 'Reports']];
   const stageUI = [
     `<div class="lp-ui"><div class="lp-ui-row">${logo()}<b>LaunchPad Studio</b><span class="chip sm">Connected</span></div><div class="lp-kv"><span>Experience</span><b>[UPD]Pull a pet!</b></div><div class="lp-kv"><span>Access</span><b>Read-only</b></div><div class="lp-kv"><span>Pairing</span><b>One-time code</b></div></div>`,
@@ -2773,14 +2882,13 @@ function pageLanding() {
     <h1 class="lp-kinetic"><span><span>Build better Roblox games.</span></span><span><span class="lp-dim">Make every player count.</span></span></h1>
     <p class="lp-sub">Find what's holding your game back, and fix the right thing first.</p>
     <div class="lp-cta-row">${primary}<a class="btn ghost lg" href="#lp-pricing">See pricing</a></div>
-    <div class="lp-app" role="group" aria-label="LaunchPad preview with demo data">
-      <div class="lp-chrome"><span></span><span></span><span></span><em>launchpad / ${esc(fish.g.name)}</em></div>
+    <div class="lp-app" role="group" aria-label="LaunchPad preview, example analysis">
+      <div class="lp-chrome"><span></span><span></span><span></span><em>launchpad / ${esc(fish.g.name)}</em>${lpDemo}</div>
       <div class="lp-tabs2" role="tablist" aria-label="Optimizer previews"><span class="lp-tab-ind" aria-hidden="true"></span>${OPTIMIZERS.map((o, i) => `<button role="tab" aria-selected="${i === 0}" data-lp="pv" data-k="${o.id}">${o.name}</button>`).join('')}</div>
       <div class="lp-pv" id="lpPv" role="tabpanel">${lpPreview(fish, 'game-page')}</div>
     </div></div></section>
 
-  <section class="lp-sec lp-alt" id="lp-pricing" tabindex="-1"><div class="lp-wrap"><h2 class="lp-h2">Two plans. Clear prices.</h2>
-    <div id="lpPricing">${pricingCards('landing')}</div></div></section>
+
 
   <section class="lp-track" id="lp-optimizers" tabindex="-1"><div class="lp-track-pin">
     <div class="lp-wrap lp-track-head"><h2 class="lp-h2">Five optimizers. One workspace.</h2><div class="lp-track-ctl"><ol class="lp-track-dots">${OPTIMIZERS.map((o, i) => `<li><button data-lp="track" data-i="${i}" aria-label="${o.name}" aria-current="${i === 0}"></button></li>`).join('')}</ol>
@@ -2792,7 +2900,7 @@ function pageLanding() {
       <svg class="lp-blueprint" viewBox="0 0 680 120" aria-hidden="true"><path class="lp-bp-base" d="M40 60 H640"/><path class="lp-bp-line" id="lpBp" d="M40 60 H640" pathLength="1"/>
         ${nodeX.map((x, i) => `<g class="lp-bp-node" data-i="${i}"><circle cx="${x}" cy="60" r="16"/><text x="${x}" y="104" text-anchor="middle">${stages[i][2]}</text></g>`).join('')}</svg>
       <ol class="lp-story-steps">${stages.map(([t], i) => `<li data-i="${i}"><b>${t}</b></li>`).join('')}</ol>
-      <p class="lp-fine">Demo animation. The real scan runs in the read-only LaunchPad Studio plugin, never in your browser.</p></div>
+</div>
     <div class="lp-story-frame">${stageUI.map((h, i) => `<div class="lp-story-ui" data-i="${i}">${h}</div>`).join('')}</div>
   </div></div></section>
 
@@ -2800,12 +2908,12 @@ function pageLanding() {
     <div class="lp-cmp" id="lpCmp" style="--x:50%"><img src="${t2.preview}" alt="${esc(tfa.g.name)} thumbnail 2" data-name="${esc(tfa.g.name)}"><img class="lp-cmp-top" src="${t1.preview}" alt="${esc(tfa.g.name)} thumbnail 1" data-name="${esc(tfa.g.name)}">
       <span class="lp-cmp-tag l">Thumbnail 1</span><span class="lp-cmp-tag r">Thumbnail 2</span>
       <input type="range" min="0" max="100" value="50" aria-label="Compare thumbnail 1 and thumbnail 2" class="lp-cmp-range"><span class="lp-cmp-handle" aria-hidden="true"></span></div>
-    <p class="lp-fine">${esc(tfa.g.name)} · ${t1.w}×${t1.h} and ${t2.w}×${t2.h} · creator artwork, shown as a reference</p></div></section>
+</div></section>
 
-  <section class="lp-deck" id="lp-reports"><div class="lp-wrap"><h2 class="lp-h2">Reports that show their work.</h2>
+  <section class="lp-deck" id="lp-reports"><div class="lp-wrap"><h2 class="lp-h2">Reports that show their work.</h2>${lpDemo}
     <div class="lp-deck-stack">
       <article class="lp-dcard" style="--n:0"><div class="lp-pv-head"><b>Game Page report</b><span class="lp-pv-score"><b>${gp.score}</b>/100</span>${demoChip}</div><div class="lp-dgrid"><div>${gp.categories.slice(0, 5).map(c => `<div class="lp-srow"><span>${esc(c.label)}</span><span class="lp-sbar"><i style="width:${c.score ?? 0}%"></i></span><b>${c.score ?? '—'}</b></div>`).join('')}</div><div>${tfa.r['game-page'].recs.slice(0, 2).map(x => `<div class="lp-rec2"><span class="pri ${x.priority}">${x.priority}</span><b>${esc(x.title)}</b></div>`).join('')}<p class="lp-fine">Evidence: listing text · loop · genre</p></div></div></article>
-      <article class="lp-dcard" style="--n:1"><div class="lp-pv-head"><b>Retention report · ${esc(fish.g.name)}</b>${demoChip}</div><div class="lp-dgrid"><div class="lp-draw" id="lpRet">${lineChart({ labels: ['Day 1', 'Day 7', 'Day 30'], series: [{ name: 'Previous', values: [rIn.pd1, rIn.pd7, rIn.pd30], color: 'var(--faint)', dash: true }, { name: 'Now', values: [rIn.d1, rIn.d7, rIn.d30], color: 'var(--text)' }], yFmt: v => Math.round(v) + '%', h: 200, title: 'Retention, demo data' })}</div>
+      <article class="lp-dcard" style="--n:1"><div class="lp-pv-head"><b>Retention report · ${esc(fish.g.name)}</b>${demoChip}</div><div class="lp-dgrid"><div class="lp-draw" id="lpRet">${lineChart({ labels: ['Day 1', 'Day 7', 'Day 30'], series: [{ name: 'Previous', values: [rIn.pd1, rIn.pd7, rIn.pd30], color: 'var(--faint)', dash: true }, { name: 'Now', values: [rIn.d1, rIn.d7, rIn.d30], color: 'var(--text)' }], yFmt: v => Math.round(v) + '%', h: 200, title: 'Retention' })}</div>
         <ul class="lp-stats">${[['Day 1', rIn.d1], ['Day 7', rIn.d7], ['Day 30', rIn.d30]].map(([l, v]) => `<li><b><span data-to="${Math.round(v)}">0</span>%</b><span>${l}</span></li>`).join('')}</ul></div></article>
       <article class="lp-dcard" style="--n:2"><div class="lp-pv-head"><b>Progression report · ${esc(sae.g.name)}</b>${demoChip}</div><ol class="lp-steps2" id="lpSteps">${pg.rows.map((x, i) => `<li style="--i:${i}" class="${x.spike ? 'spike' : ''}"><span>${esc(x.name)}</span><i style="--w:${Math.min(100, x.time / Math.max(...pg.rows.map(y => y.time)) * 100)}%"></i><b>${fmtMin(x.time)}</b></li>`).join('')}</ol></article>
     </div></div></section>
@@ -2813,8 +2921,10 @@ function pageLanding() {
   <section class="lp-sec lp-alt" id="lp-examples" tabindex="-1"><div class="lp-wrap"><h2 class="lp-h2">Pick a game. See its reports.</h2>
     <div class="lp-tabs" role="tablist" aria-label="Example games">${D.map((d, i) => `<button class="lp-tab" role="tab" id="lpTab${i}" aria-controls="lpPanel" aria-selected="${i === 0}" data-lp="tab" data-i="${i}"><span class="game-art" style="width:28px;height:28px;border-radius:7px">${gameArt(d.g)}</span>${esc(d.g.name)}</button>`).join('')}</div>
     <div id="lpPanel" class="lp-panel-morph" role="tabpanel" aria-labelledby="lpTab0">${lpExample(D[0])}</div>
-    <p class="lp-fine">Scores are LaunchPad demo data, not the games' real analytics. Names and artwork belong to their creators, who aren't affiliated with LaunchPad.</p></div></section>
+    <p class="lp-fine">Example analyses. Game names and artwork belong to their creators.</p></div></section>
 
+  <section class="lp-sec" id="lp-pricing" tabindex="-1"><div class="lp-wrap"><h2 class="lp-h2">Start free. Upgrade when it pays off.</h2>
+    <div id="lpPricing">${pricingCards('landing')}</div></div></section>
   <section class="lp-sec" id="lp-faq" tabindex="-1"><div class="lp-wrap lp-faq"><h2 class="lp-h2">FAQ</h2>
     ${[['Is the analysis done by AI?', 'No. It\'s transparent rule-based scoring and real calculations on what LaunchPad can see or you enter.'],
       ['What does the Studio plugin read?', 'Object names, UI text, prompts, spawns and number values. Script code only if you allow it; your code never leaves Studio.'],
@@ -2927,6 +3037,7 @@ function guessGenre(sc) { const t = `${sc.place.name} ${sc.place.description}`; 
 const studioGameFor = sc => S().games.find(g => g.studio && (sc.place.placeId ? g.studio.placeId === sc.place.placeId : g.name === sc.place.name));
 
 function importScan(sc, targetId, ans) {
+  if (!S().reports.some(r => r.studio)) setTimeout(() => track('first_scan_completed'), 0);
   let g = gameById(targetId); const isNew = !g;
   const before = (g && g.studio && g.studio.scanned) || {}, prevStart = g && g.studio ? g.studio.startIncome : null;
   if (isNew) { g = { id: uid('game'), name: sc.place.name, genre: guessGenre(sc), url: sc.place.placeId ? `https://www.roblox.com/games/${sc.place.placeId}` : '', description: '', loop: '', icon: null, thumbs: [], createdAt: Date.now() }; S().games.push(g); logActivity(`Added ${g.name} from a Studio scan`, '#/games/' + g.id); }
@@ -3227,8 +3338,7 @@ async function init() {
   window.addEventListener('hashchange', () => { const h = readHash(); if (h && h !== curHash) { curHash = h; route(); } });
   const start = readHash(); curHash = start.startsWith('#/') ? start : inApp() ? '#/home' : '#/welcome';
   route();
-  let ob = null; try { ob = sessionStorage.getItem('lp_onboard'); sessionStorage.removeItem('lp_onboard'); } catch (e) { /* storage blocked */ }
-  if (ob && ME) onboard(ME.user.displayName);
+  if (ME) setTimeout(maybeWelcome, 500);
 }
 init();
 </script>

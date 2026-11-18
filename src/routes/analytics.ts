@@ -1,10 +1,11 @@
-// Privacy-friendly analytics: allow-listed event names, small props, no account or IP stored.
+﻿// Privacy-friendly analytics: allow-listed event names, small props, no account or IP stored.
 import type { FastifyInstance } from 'fastify';
 import { db } from '../db.ts';
 import { fail, ip, requireRole, str } from '../http.ts';
 import { throttles } from '../security.ts';
 
-const EVENTS = ['pricing_view', 'billing_toggle', 'plan_select', 'checkout_start', 'checkout_complete', 'checkout_cancel', 'checkout_fail'];
+const EVENTS = ['pricing_view', 'billing_toggle', 'plan_select', 'checkout_start', 'checkout_complete', 'checkout_cancel', 'checkout_fail',
+  'onboarding_start', 'onboarding_skip', 'onboarding_step', 'onboarding_complete', 'onboarding_restart', 'first_game_added', 'first_scan_completed'];
 export const SERVER_EVENTS = ['subscription_active', 'subscription_cancelled', 'refund'];
 const clean = (o: unknown) => Object.fromEntries(Object.entries(o && typeof o === 'object' ? o : {}).slice(0, 6).map(([k, v]) => [str(k, 30), typeof v === 'number' ? v : str(v, 40)]));
 
@@ -29,6 +30,7 @@ export default async function analyticsRoutes(app: FastifyInstance) {
     const byPlan = (await db.query(`select name, props->>'plan' plan, props->>'interval' interval, count(*)::int n from analytics_events where at > now() - ($1 || ' days')::interval and name in ('plan_select', 'checkout_start', 'checkout_complete') group by 1, 2, 3 order by 1, 2, 3`, [String(days)])).rows;
     const byVariant = (await db.query(`select v.key experiment, v.value variant, e.name, count(distinct e.session)::int sessions from analytics_events e, jsonb_each_text(e.variants) v
       where e.at > now() - ($1 || ' days')::interval group by 1, 2, 3 order by 1, 2, 3`, [String(days)])).rows;
-    return { days, counts, byPlan, byVariant };
+    const onboarding = (await db.query(`select name, props->>'step' step, count(*)::int n from analytics_events where at > now() - ($1 || ' days')::interval and name in ('onboarding_step', 'onboarding_skip') group by 1, 2 order by 1, (props->>'step')::int nulls first`, [String(days)])).rows;
+    return { days, counts, byPlan, byVariant, onboarding };
   });
 }
