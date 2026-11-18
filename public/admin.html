@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
+<title>Admin · LaunchPad</title>
+<style>
+:root{--t:#292A27;--bg:#F7F6F1;--s:#FFFFFF;--m:#6B6A64;--l:#E4E2DA;--sunk:#EFEDE6}
+@media (prefers-color-scheme:dark){:root{--t:#F7F6F1;--bg:#151515;--s:#1E1E1D;--m:#A8A69E;--l:#34332F;--sunk:#252523}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--t);font:15px/1.5 Inter,system-ui,sans-serif}
+.wrap{display:grid;grid-template-columns:220px 1fr;min-height:100vh}aside{border-right:1px solid var(--l);padding:20px 14px;background:var(--s)}
+aside b{display:block;margin:0 8px 18px}aside button{display:block;width:100%;text-align:left;background:none;border:0;color:var(--t);font:inherit;padding:8px 10px;border-radius:8px;cursor:pointer}
+aside button[aria-current]{background:var(--t);color:var(--bg)}main{padding:28px;max-width:1200px;min-width:0}
+h1{margin:0 0 4px;font-size:1.6rem}.muted{color:var(--m)}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px;margin:18px 0}
+.card{background:var(--s);border:1px solid var(--l);border-radius:12px;padding:16px}.card b{display:block;font-size:1.6rem}
+table{width:100%;border-collapse:collapse;background:var(--s);border:1px solid var(--l);border-radius:12px;overflow:hidden;font-size:14px}th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--l);vertical-align:top}th{background:var(--sunk);font-weight:600}
+.tw{overflow-x:auto}input,select,textarea{font:inherit;padding:9px 11px;border:1px solid var(--l);border-radius:10px;background:var(--s);color:var(--t)}
+.btn{background:var(--t);color:var(--bg);border:1.5px solid var(--t);border-radius:10px;padding:8px 14px;font:inherit;font-weight:600;cursor:pointer}.btn.ghost{background:none;color:var(--t)}
+.chip{display:inline-block;border:1px solid var(--l);border-radius:99px;padding:1px 9px;font-size:12px}.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.err{border:1px solid var(--t);border-radius:10px;padding:12px;margin:12px 0}pre{white-space:pre-wrap;font-size:12px;margin:0}
+@media (max-width:760px){.wrap{grid-template-columns:1fr}aside{border-right:0;border-bottom:1px solid var(--l)}aside button{display:inline-block;width:auto}}
+</style></head>
+<body><div class="wrap"><aside><b>LaunchPad Admin</b><nav id="nav"></nav><p class="muted" style="font-size:12px;margin:18px 8px 0">Every action here is recorded in the audit log.</p><button id="home">← Back to app</button></aside><main id="main" aria-live="polite"><p class="muted">Loading…</p></main></div>
+<script>
+const $ = s => document.querySelector(s), main = $('#main');
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const dt = t => t ? new Date(t).toLocaleString() : '—', money = (c, cur = 'USD') => c == null ? '—' : (cur === 'USD' ? '$' : '') + (Number(c) / 100).toFixed(2) + (cur === 'USD' ? '' : ' ' + cur);
+async function api(method, url, body) {
+  const r = await fetch(url, { method, headers: body ? { 'Content-Type': 'application/json' } : {}, body: body ? JSON.stringify(body) : undefined });
+  const j = await r.json().catch(() => ({})); if (!r.ok) { const e = new Error(j.error || 'Request failed'); e.data = j; e.status = r.status; throw e; } return j;
+}
+const table = (cols, rows) => `<div class="tw"><table><thead><tr>${cols.map(c => `<th>${esc(c[0])}</th>`).join('')}</tr></thead><tbody>${rows.length ? rows.map(r => `<tr>${cols.map(c => `<td>${c[1](r)}</td>`).join('')}</tr>`).join('') : `<tr><td colspan="${cols.length}" class="muted">Nothing here yet.</td></tr>`}</tbody></table></div>`;
+const reason = what => { const r = prompt(`Reason for: ${what}\n(recorded in the audit log)`); return r && r.trim() ? r.trim() : null; };
+let roles = [];
+const PAGES = {
+  overview: async () => { const o = await api('GET', '/api/admin/overview'), s = o.subscriptions, card = (l, v) => `<div class="card"><span class="muted">${l}</span><b>${esc(v)}</b></div>`;
+    return `<h1>Overview</h1><p class="muted">Live numbers from the database. Billing environment: <b>${esc(o.billingEnvironment)}</b>.</p>
+    <div class="grid">${card('Accounts', o.accounts)}${card('Verified', o.verified)}${card('Active (30 days)', o.active30d)}${card('Suspended', o.suspended)}${card('Roblox connections', o.robloxConnections)}${card('Connected experiences', o.connectedExperiences)}${card('Scans', o.scans)}${card('Successful scans', o.scansDone)}${card('Failed scans', o.scansFailed)}${card('Active jobs', o.activeJobs)}${card('Failed jobs', o.failedJobs)}</div>
+    <h2>Subscriptions</h2><div class="grid">${card('Light monthly', s.light_month)}${card('Light annual', s.light_year)}${card('Max monthly', s.max_month)}${card('Max annual', s.max_year)}${card('Scheduled cancellations', o.scheduledCancellations)}${card('Canceled', o.canceled)}${card('Payment failures (30 days)', o.paymentFailures30d)}</div>
+    <div class="grid" style="grid-template-columns:1fr 1fr"><div><h2>Recent security events</h2>${table([['Event', r => esc(r.kind)], ['IP', r => esc(r.ip)], ['When', r => dt(r.at)]], o.recentSecurity)}</div><div><h2>Recent admin actions</h2>${table([['Action', r => esc(r.action)], ['Outcome', r => esc(r.outcome)], ['When', r => dt(r.at)]], o.recentAdmin)}</div></div>`; },
+  users: async (q = '') => { const rows = await api('GET', '/api/admin/users?q=' + encodeURIComponent(q));
+    return `<h1>Users</h1><form id="uq" class="row" style="margin:14px 0"><input name="q" value="${esc(q)}" placeholder="Search email, name or ID" style="flex:1;min-width:220px"><button class="btn">Search</button></form>
+    ${table([['User', r => `<a href="#" data-user="${esc(r.id)}">${esc(r.display_name)}</a><br><span class="muted">${esc(r.email)}</span>`], ['Status', r => `<span class="chip">${esc(r.status)}</span> ${r.verified ? '<span class="chip">verified</span>' : ''}`], ['Plan', r => esc(r.plan + (r.billing_interval ? ' · ' + (r.billing_interval === 'year' ? 'annual' : 'monthly') : ''))], ['Created', r => dt(r.created_at)], ['Last login', r => dt(r.last_login_at)]], rows)}`; },
+  user: async id => { const d = await api('GET', '/api/admin/users/' + id), u = d.user, admin = roles.some(r => r === 'owner' || r === 'administrator'), sec = admin || roles.includes('security');
+    let bill = ''; if (admin) { const b = await api('GET', `/api/admin/users/${id}/billing`); bill = `<h2>Billing</h2><p class="muted">Customer: ${b.customer.map(c => esc(c.customer_id + ' (' + c.environment + ')')).join(', ') || 'none'}. Payment methods are managed only in Paddle.</p>
+      ${table([['Subscription', r => esc(r.provider_subscription_id)], ['Plan', r => esc((r.plan || '?') + ' · ' + (r.billing_interval === 'year' ? 'annual' : 'monthly'))], ['Status', r => esc(r.status) + (r.scheduled_change ? ' (cancels ' + dt(r.scheduled_change.effective_at) + ')' : '')], ['Renews', r => dt(r.next_billed_at)]], b.subscriptions)}
+      ${table([['Transaction', r => esc(r.transaction_id)], ['Status', r => esc(r.status)], ['Amount', r => money(r.amount_cents, r.currency)], ['Interval', r => esc(r.billing_interval || '—')], ['Billed', r => dt(r.billed_at)]], b.transactions)}`; }
+    return `<p><a href="#" data-page="users">← Users</a></p><h1>${esc(u.display_name)}</h1><p class="muted">${esc(u.email)} · ${esc(u.id)}</p>
+    <div class="grid">${[['Status', u.status + (u.suspended_reason ? ': ' + u.suspended_reason : '')], ['Email verified', u.email_verified_at ? 'Yes' : 'No'], ['Two-step', u.mfa ? 'On' : 'Off'], ['Created', dt(u.created_at)], ['Last login', dt(u.last_login_at)], ['Sign-in methods', d.providers.join(', ')], ['Active sessions', d.sessions], ['Plan', d.plan ? d.plan.plan + (d.plan.billing_interval ? ' · ' + d.plan.billing_interval : '') : 'free'], ['Roblox', d.roblox ? `${d.roblox.roblox_username || ''} (${d.roblox.roblox_user_id}) · ${d.roblox.status}` : 'Not connected'], ['Experiences', d.experiences.length]].map(([l, v]) => `<div class="card"><span class="muted">${esc(l)}</span><div>${esc(v)}</div></div>`).join('')}</div>
+    <div class="row">${admin ? (u.status === 'suspended' ? `<button class="btn" data-act="reinstate" data-id="${id}">Reinstate</button>` : `<button class="btn" data-act="suspend" data-id="${id}">Suspend</button>`) : ''}${sec ? `<button class="btn ghost" data-act="revoke-sessions" data-id="${id}">Revoke all sessions</button>` : ''}${admin ? `<button class="btn ghost" data-act="delete" data-id="${id}">Process deletion</button>` : ''}</div>
+    ${d.security ? `<h2>Security history</h2>${table([['Event', r => esc(r.kind)], ['IP', r => esc(r.ip)], ['When', r => dt(r.at)]], d.security)}` : ''}${bill}`; },
+  requests: async (status = 'open') => { const rows = await api('GET', '/api/admin/requests?status=' + status);
+    return `<h1>Support & legal requests</h1><div class="row" style="margin:14px 0">${['open', 'in_progress', 'resolved', 'rejected', ''].map(s => `<button class="btn ${s === status ? '' : 'ghost'}" data-reqs="${s}">${s || 'all'}</button>`).join('')}</div>
+    ${table([['Request', r => `<b>${esc(r.subject)}</b><br><span class="chip">${esc(r.kind)}</span> <span class="muted">${esc(r.email)}</span>`], ['Details', r => `<pre>${esc(JSON.stringify(r.body, null, 1))}</pre>`], ['Status', r => `${esc(r.status)}${r.resolution ? '<br><span class="muted">' + esc(r.resolution) + '</span>' : ''}`], ['Received', r => dt(r.created_at)], ['', r => `<select data-req="${esc(r.id)}">${['open', 'in_progress', 'resolved', 'rejected'].map(s => `<option ${s === r.status ? 'selected' : ''}>${s}</option>`).join('')}</select>`]], rows)}`; },
+  billing: async () => { const b = await api('GET', '/api/admin/billing'), sum = (rows, f = () => true) => rows.filter(f).reduce((a, r) => a + Number(r.total || 0), 0);
+    return `<h1>Billing</h1><p class="muted">Environment: <b>${esc(b.environment)}</b>. Cash figures come from Paddle transactions. Recurring revenue is an estimate from active subscriptions; annual plans count as one twelfth per month, never as monthly revenue.</p>
+    <div class="grid">${b.active.map(a => `<div class="card"><span class="muted">${esc(a.plan)} ${a.billing_interval === 'year' ? 'annual' : 'monthly'}</span><b>${a.n}</b></div>`).join('') || '<div class="card muted">No active subscriptions</div>'}
+    <div class="card"><span class="muted">Estimated MRR</span><b>${money(b.estimatedMrrCents)}</b></div><div class="card"><span class="muted">Estimated ARR</span><b>${money(b.estimatedArrCents)}</b></div>
+    <div class="card"><span class="muted">Cash collected: monthly plans</span><b>${money(sum(b.cashCollected, r => r.billing_interval === 'month'))}</b></div><div class="card"><span class="muted">Cash collected: annual plans</span><b>${money(sum(b.cashCollected, r => r.billing_interval === 'year'))}</b></div>
+    <div class="card"><span class="muted">Refunds & chargebacks</span><b>${money(sum(b.adjustments))}</b></div><div class="card"><span class="muted">Failed payments (30 days)</span><b>${b.failedPayments30d}</b></div></div>
+    <h2>Scheduled cancellations</h2>${table([['Subscription', r => esc(r.provider_subscription_id)], ['Plan', r => esc(r.plan + ' · ' + r.billing_interval)], ['Cancels', r => dt(r.scheduled_change?.effective_at)]], b.scheduledCancellations)}
+    <h2>Recent transactions</h2>${table([['Transaction', r => esc(r.transaction_id)], ['Status', r => esc(r.status)], ['Amount', r => money(r.amount_cents, r.currency)], ['Interval', r => esc(r.billing_interval || '—')], ['Billed', r => dt(r.billed_at)]], b.recent)}`; },
+  security: async () => `<h1>Security events</h1>${table([['Event', r => esc(r.kind)], ['User', r => r.user_id ? `<a href="#" data-user="${esc(r.user_id)}">${esc(r.user_id.slice(0, 8))}</a>` : '—'], ['IP', r => esc(r.ip)], ['Detail', r => `<pre>${esc(JSON.stringify(r.detail))}</pre>`], ['When', r => dt(r.at)]], await api('GET', '/api/admin/security-events'))}`,
+  audit: async () => `<h1>Audit log</h1><p class="muted">Append-only: entries can't be edited or deleted.</p>${table([['Action', r => esc(r.action)], ['Admin', r => esc((r.admin_id || 'CLI').slice(0, 8))], ['Target', r => esc(r.target || '—')], ['Reason', r => esc(r.reason || '—')], ['Outcome', r => esc(r.outcome)], ['When', r => dt(r.at)]], await api('GET', '/api/admin/audit'))}`,
+  roles: async () => { const rows = await api('GET', '/api/admin/roles'), owner = roles.includes('owner');
+    return `<h1>Roles</h1><p class="muted">Only owners can change roles, never their own. New staff must turn on two-step verification first.</p>${table([['User', r => esc(r.email)], ['Role', r => `<span class="chip">${esc(r.role)}</span>`], ['Since', r => dt(r.granted_at)], ['', r => owner ? `<button class="btn ghost" data-revoke="${esc(r.user_id)}" data-role="${esc(r.role)}">Remove</button>` : '']], rows)}
+    ${owner ? `<form id="grant" class="row" style="margin-top:16px"><input name="userId" placeholder="User ID" required style="flex:1;min-width:240px"><select name="role"><option>support</option><option>administrator</option><option>security</option><option>owner</option></select><button class="btn">Grant role</button></form>` : ''}`; },
+};
+const NAV = [['overview', 'Overview', ['administrator', 'security', 'support']], ['users', 'Users', ['administrator', 'support', 'security']], ['requests', 'Requests', ['administrator', 'support']], ['billing', 'Billing', ['administrator']], ['security', 'Security events', ['security']], ['audit', 'Audit log', ['security']], ['roles', 'Roles', ['administrator', 'security']]];
+const allowed = r => roles.includes('owner') || r.some(x => roles.includes(x));
+async function show(page, arg) {
+  $('#nav').innerHTML = NAV.filter(n => allowed(n[2])).map(([k, l]) => `<button data-page="${k}" ${k === page || (page === 'user' && k === 'users') ? 'aria-current="page"' : ''}>${l}</button>`).join('');
+  main.innerHTML = '<p class="muted">Loading…</p>';
+  try { main.innerHTML = await PAGES[page](arg); } catch (e) { main.innerHTML = `<div class="err">${esc(e.message)}</div>`; }
+}
+document.addEventListener('click', async e => {
+  const t = e.target.closest('[data-page],[data-user],[data-act],[data-reqs],[data-revoke],#home'); if (!t) return; e.preventDefault();
+  if (t.id === 'home') return location.assign('/');
+  if (t.dataset.page) return show(t.dataset.page);
+  if (t.dataset.user) return show('user', t.dataset.user);
+  if (t.dataset.reqs != null) return show('requests', t.dataset.reqs);
+  if (t.dataset.revoke) { const r = reason(`remove ${t.dataset.role}`); if (!r) return; try { await api('DELETE', '/api/admin/roles', { userId: t.dataset.revoke, role: t.dataset.role, reason: r }); } catch (x) { alert(x.message); } return show('roles'); }
+  if (t.dataset.act) { const r = reason(t.dataset.act.replace('-', ' ')); if (!r) return; try { await api('POST', `/api/admin/users/${t.dataset.id}/${t.dataset.act}`, { reason: r }); } catch (x) { alert(x.message); } return show('user', t.dataset.id); }
+});
+document.addEventListener('submit', async e => {
+  e.preventDefault(); const f = Object.fromEntries(new FormData(e.target));
+  if (e.target.id === 'uq') return show('users', f.q);
+  if (e.target.id === 'grant') { const r = reason('grant ' + f.role); if (!r) return; try { await api('POST', '/api/admin/roles', { ...f, reason: r }); } catch (x) { alert(x.message); } return show('roles'); }
+  if (e.target.id === 'mfa') { try { await api('POST', '/api/auth/reauth', f); boot(); } catch (x) { $('#mfaErr').textContent = x.message; } }
+});
+document.addEventListener('change', async e => { const s = e.target.closest('[data-req]'); if (!s) return; const note = s.value === 'open' ? '' : prompt('Note for the record (optional)') || ''; try { await api('PATCH', '/api/admin/requests/' + s.dataset.req, { status: s.value, resolution: note }); } catch (x) { alert(x.message); } });
+async function boot() {
+  try { roles = (await api('GET', '/api/admin/me')).roles; show('overview'); }
+  catch (e) {
+    if (e.status === 401) main.innerHTML = '<h1>Admin</h1><p>Please <a href="/#/login">log in</a> first.</p>';
+    else if (e.data?.mfa) main.innerHTML = `<h1>Confirm it's you</h1><p class="muted">Administrators need two-step verification in this session. If you haven't turned it on yet, do that in Settings → Security first.</p>
+      <form id="mfa" style="display:grid;gap:10px;max-width:320px"><input name="password" type="password" placeholder="Password" autocomplete="current-password" required><input name="code" inputmode="numeric" placeholder="6-digit code" autocomplete="one-time-code" required><button class="btn">Continue</button><p id="mfaErr" role="alert"></p></form>`;
+    else main.innerHTML = `<h1>No access</h1><p class="muted">${esc(e.message)}</p>`;
+  }
+}
+boot();
+</script></body></html>
