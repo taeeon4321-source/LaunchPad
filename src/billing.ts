@@ -7,6 +7,7 @@ import { sendEmail } from './email.ts';
 import { recomputeEntitlement } from './entitlements.ts';
 import { planForPriceId } from './plans.ts';
 import { safeEqual, securityEvent } from './security.ts';
+import { serverEvent } from './routes/analytics.ts';
 
 export interface BillingProvider {
   name: string;
@@ -94,7 +95,7 @@ export async function applySubscription(s: any, occurredAt: string, eventId: str
     const u = await db.one('select email from users where id = $1', [userId]);
     if (u && before !== after) {
       if (before !== 'free' && after !== 'free') await sendEmail(u.email, 'plan_changed', { from: cap(before), to: cap(after), interval: mapped?.interval ?? 'month', portal: portalLink() });
-      else if (after === 'free') await sendEmail(u.email, 'subscription_canceled', { plan: cap(before), until: null, portal: portalLink() });
+      else if (after === 'free') { await sendEmail(u.email, 'subscription_canceled', { plan: cap(before), until: null, portal: portalLink() }); await serverEvent('subscription_cancelled', { plan: before }); }
     } else if (u && s.scheduled_change?.action === 'cancel' && !existing?.scheduled_change)
       await sendEmail(u.email, 'subscription_canceled', { plan: cap(after), until: String(s.scheduled_change.effective_at).slice(0, 10), portal: portalLink() });
   }
@@ -118,12 +119,14 @@ export async function handleWebhookEvent(evt: any) {
         values ('paddle', $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, now()) on conflict (provider, environment, transaction_id) do update set status = excluded.status, amount_cents = excluded.amount_cents, billed_at = excluded.billed_at, user_id = coalesce(billing_transactions.user_id, excluded.user_id), updated_at = now()`,
         [env(), d.id, userId, d.subscription_id ?? null, d.status, d.origin ?? null, total, d.currency_code ?? null, mapped?.interval ?? null, d.billed_at ?? null]);
       const u = userId && await db.one('select email from users where id = $1', [userId]);
+      if (type === 'transaction.completed' && mapped) await serverEvent('subscription_active', { plan: mapped.plan, interval: mapped.interval });
       if (u && type === 'transaction.completed' && mapped && total != null) {
         const sub = d.subscription_id && await db.one("select next_billed_at from subscriptions where provider_subscription_id = $1", [d.subscription_id]);
         await sendEmail(u.email, 'subscription_active', { plan: cap(mapped.plan), interval: mapped.interval, amountCents: total, currency: d.currency_code, nextBilled: sub?.next_billed_at ? new Date(sub.next_billed_at).toISOString().slice(0, 10) : null, portal: portalLink() });
       }
       if (u && type === 'transaction.payment_failed') await sendEmail(u.email, 'payment_failed', { plan: cap(mapped?.plan ?? 'LaunchPad'), portal: portalLink() });
     } else if (type.startsWith('adjustment.')) {
+      if (type === 'adjustment.created') await serverEvent(d.action === 'refund' ? 'refund' : 'adjustment', { action: d.action });
       await db.query(`insert into billing_adjustments (provider, environment, adjustment_id, transaction_id, action, status, amount_cents, currency) values ('paddle', $1, $2, $3, $4, $5, $6, $7)
         on conflict (provider, environment, adjustment_id) do update set status = excluded.status, amount_cents = excluded.amount_cents`,
         [env(), d.id, d.transaction_id ?? null, d.action ?? null, d.status ?? null, d.totals?.total != null ? Number(d.totals.total) : null, d.currency_code ?? null]);

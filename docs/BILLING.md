@@ -6,7 +6,7 @@ Single source: `src/plans.ts` (integer cents). The self-check at the bottom fail
 | Plan | Monthly | Annual (upfront) | Saving vs 12 × monthly | Discount | Effective monthly |
 |---|---:|---:|---:|---:|---:|
 | Light | $9.99 | $99.99 | $19.89 | 16.6% | $8.33 |
-| Max | $49.99 | $200.00 | $399.88 | 66.7% | $16.67 |
+| Max | $49.99 | $199.99 | $399.89 | 66.7% | $16.67 |
 
 Monthly and annual prices of one plan grant identical features. Limits come from `PLAN_LIMITS_JSON` (unset = not limited).
 
@@ -16,7 +16,7 @@ Monthly and annual prices of one plan grant identical features. Limits come from
 | Light monthly | `pri_01m7q05rz85enpzsxn6cjdnfqr` | $9.99 USD / 1 month |
 | Light annual | `pri_01m7q05t8vf36bbswmgkmwg8pr` | $99.99 USD / 1 year |
 | Max monthly | `pri_01m7q05w7w64dt33bwny5n72xj` | $49.99 USD / 1 month |
-| Max annual | `pri_01m7q05x15nabyq12xd5xcd137` | $200.00 USD / 1 year |
+| Max annual | `pri_01m7qjn55bak7m7v1v8m27gxb8` | $199.99 USD / 1 year (the old $200.00 price `pri_01m7q05x15nabyq12xd5xcd137` is archived) |
 
 Products: LaunchPad Light, LaunchPad Max (IDs in `.env`).
 
@@ -26,7 +26,7 @@ Products: LaunchPad Light, LaunchPad Max (IDs in `.env`).
 | Light monthly | `pri_01m7q1hq536t4ag2k3j6df625c` | $9.99 USD / 1 month |
 | Light annual | `pri_01m7q1hqdyh8rkn5w55es7jyf3` | $99.99 USD / 1 year |
 | Max monthly | `pri_01m7q1hrzwdkx75whg1tm13rgv` | $49.99 USD / 1 month |
-| Max annual | `pri_01m7q1hs88qjpb22a2y05px1e6` | $200.00 USD / 1 year |
+| Max annual | `pri_01m7q1hs88qjpb22a2y05px1e6` | **$200.00: outdated. Re-run the setup script with the live key to create $199.99 and archive this one.** |
 
 The app still runs on sandbox. Production gets `PADDLE_ENV=live`, the live API key, live client token and live webhook secret from the host's secret manager, plus these price IDs.
 
@@ -50,3 +50,4 @@ Portal: `POST /api/billing/portal` creates a Paddle customer-portal session for 
 Plan changes: `POST /api/billing/change` → Paddle subscription update (prorated immediately); entitlement changes when Paddle's event arrives.
 
 Provider abstraction: `BillingProvider` in `src/billing.ts`; another provider can implement it without touching routes or entitlements.
+

@@ -34,9 +34,9 @@ async function webhook(event_type: string, data: object, occurred = new Date().t
 const sub = (id: string, price: string, status = 'active', extra = {}) => ({ id, status, customer_id: 'ctm_1', custom_data: { user_id: U.id }, items: [{ price: { id: price, product_id: 'pro_x' } }], current_billing_period: { starts_at: '2026-01-01T00:00:00Z', ends_at: '2027-01-01T00:00:00Z' }, next_billed_at: '2027-01-01T00:00:00Z', ...extra });
 
 test('price table and annual savings', () => {
-  assert.deepEqual(PRICES, { light: { month: 999, year: 9999 }, max: { month: 4999, year: 20000 } });
+  assert.deepEqual(PRICES, { light: { month: 999, year: 9999 }, max: { month: 4999, year: 19999 } });
   assert.deepEqual([savings('light').saving, savings('light').percent, savings('light').effectiveMonthly], ['$19.89', '16.6', '$8.33']);
-  assert.deepEqual([savings('max').saving, savings('max').percent, savings('max').effectiveMonthly, savings('max').twelveMonthly], ['$399.88', '66.7', '$16.67', '$599.88']);
+  assert.deepEqual([savings('max').saving, savings('max').percent, savings('max').effectiveMonthly, savings('max').twelveMonthly], ['$399.89', '66.7', '$16.67', '$599.88']);
 });
 
 test('checkout uses server-side price IDs only and needs a verified email', async () => {
@@ -88,12 +88,12 @@ test('duplicate, out-of-order, scheduled cancellation, cancellation, past due', 
 });
 
 test('transactions record amounts; refunds are adjustments; portal is per user', async () => {
-  await webhook('transaction.completed', { id: 'txn_9', status: 'completed', customer_id: 'ctm_1', subscription_id: 'sub_1', origin: 'web', currency_code: 'USD', billed_at: '2026-03-01T00:00:00Z', items: [{ price: { id: P.max_year } }], details: { totals: { grand_total: '20000' } } });
+  await webhook('transaction.completed', { id: 'txn_9', status: 'completed', customer_id: 'ctm_1', subscription_id: 'sub_1', origin: 'web', currency_code: 'USD', billed_at: '2026-03-01T00:00:00Z', items: [{ price: { id: P.max_year } }], details: { totals: { grand_total: '19999' } } });
   const t = await db.one("select amount_cents, billing_interval from billing_transactions where transaction_id = 'txn_9'");
-  assert.deepEqual([Number(t.amount_cents), t.billing_interval], [20000, 'year'], 'annual Max is charged $200.00 once');
+  assert.deepEqual([Number(t.amount_cents), t.billing_interval], [19999, 'year'], 'annual Max is charged $199.99 once');
   const mail = await db.one("select body_html from email_outbox where template = 'subscription_active' order by id desc limit 1");
-  assert.match(mail.body_html, /\$200\.00/); assert.match(mail.body_html, /annually, paid upfront/);
-  await webhook('adjustment.created', { id: 'adj_1', transaction_id: 'txn_9', action: 'refund', status: 'approved', currency_code: 'USD', totals: { total: '20000' } });
+  assert.match(mail.body_html, /\$199\.99/); assert.match(mail.body_html, /annually, paid upfront/);
+  await webhook('adjustment.created', { id: 'adj_1', transaction_id: 'txn_9', action: 'refund', status: 'approved', currency_code: 'USD', totals: { total: '19999' } });
   assert.equal((await db.one("select action from billing_adjustments where adjustment_id = 'adj_1'")).action, 'refund');
   assert.equal((await U.c.call('POST', '/api/billing/portal')).json.url, 'https://sandbox-customer-portal.paddle.com/x');
   const other = await registerUser(app, 'notpayer@example.com');

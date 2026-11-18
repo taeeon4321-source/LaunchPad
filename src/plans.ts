@@ -7,7 +7,7 @@ export type Interval = 'month' | 'year';
 
 export const PRICES: Record<'light' | 'max', Record<Interval, number>> = {
   light: { month: 999, year: 9999 },
-  max: { month: 4999, year: 20000 },
+  max: { month: 4999, year: 19999 },
 };
 
 const FEATURES: Record<Plan, string[]> = {
@@ -48,5 +48,5 @@ export function planForPriceId(priceId: string): { plan: 'light' | 'max'; interv
 
 // Self-check of the required price table.
 const s1 = savings('light'), s2 = savings('max');
-if (s1.saving !== '$19.89' || s1.percent !== '16.6' || s1.effectiveMonthly !== '$8.33' || s2.saving !== '$399.88' || s2.percent !== '66.7' || s2.effectiveMonthly !== '$16.67' || s2.twelveMonthly !== '$599.88')
+if (s1.saving !== '$19.89' || s1.percent !== '16.6' || s1.effectiveMonthly !== '$8.33' || s2.saving !== '$399.89' || s2.percent !== '66.7' || s2.effectiveMonthly !== '$16.67' || s2.twelveMonthly !== '$599.88')
   throw new Error('Plan price table does not match the required prices');

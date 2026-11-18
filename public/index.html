@@ -431,11 +431,16 @@ tr.flat td:first-child{box-shadow:inset 3px 0 0 var(--border-strong)}
 
 /* ===== LANDING PAGE (body.public): charcoal, cream, white; game artwork supplies the only colour ===== */
 body.public .sidebar,body.public .topbar,body.public .scrim{display:none!important}
-body.public .app{display:block}body.public main.main,body.public #view{padding:0;max-width:none;margin:0}
+body.public .app{display:block}body.public .main{max-width:none;padding:0}
+body.public #storageBanner:not(:empty){max-width:1160px;margin:12px auto 0;padding:0 16px}
+@property --x{syntax:'<percentage>';inherits:true;initial-value:50%}
 .lp-wrap{max-width:1200px;margin:0 auto;padding:0 clamp(16px,4vw,40px)}
-.lp-kicker{display:inline-flex;align-items:center;gap:8px;font-size:.82rem;font-weight:600;color:var(--muted);margin:0 0 18px}
-.lp-num{font:600 .8rem/1 var(--font-mono);color:var(--muted);letter-spacing:.04em}
+.lp-num{font:600 .78rem/1 var(--font-mono);color:var(--muted)}
 .lp-dim{color:var(--muted)}
+.lp-h2{font-size:clamp(1.9rem,4vw,3rem);line-height:1.04;letter-spacing:-.045em;font-weight:700;margin:0 0 40px;max-width:18ch}
+.lp-fine{font-size:.78rem;color:var(--faint);margin:14px 0 0}
+.lp-sec{padding:clamp(72px,9vw,120px) 0;scroll-margin-top:64px;outline:none}
+.lp-alt{background:var(--surface);border-block:1px solid var(--border)}
 /* nav */
 .lp-nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:saturate(1.4) blur(14px);border-bottom:1px solid transparent;transition:border-color .2s}
 .lp-nav.scrolled{border-bottom-color:var(--border)}
@@ -444,158 +449,184 @@ body.public .app{display:block}body.public main.main,body.public #view{padding:0
 .lp-links{display:flex;align-items:center;gap:2px;flex:1}
 .lp-link{display:inline-flex;align-items:center;gap:4px;padding:7px 12px;border-radius:999px;border:0;background:none;font:500 .9rem var(--font-body);color:var(--muted);text-decoration:none;cursor:pointer;transition:color .15s,background .15s}
 .lp-link:hover,.lp-link[aria-expanded="true"]{color:var(--text);background:var(--hover)}
-.lp-link .ic{transition:transform .2s var(--ease)}.lp-link[aria-expanded="true"] .ic{transform:rotate(180deg)}
+.lp-link .ic{transition:transform .3s cubic-bezier(.34,1.56,.64,1)}.lp-link[aria-expanded="true"] .ic{transform:rotate(180deg)}
 .lp-dd{position:relative}
-.lp-menu{position:absolute;top:calc(100% + 10px);left:-8px;min-width:300px;background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-lg);padding:8px;display:grid;gap:2px;opacity:0;visibility:hidden;transform:translateY(-6px) scale(.98);transform-origin:top left;transition:opacity .16s,transform .2s var(--ease),visibility 0s .2s}
-.lp-menu-wide{grid-template-columns:1fr 1fr;width:620px}
-.lp-dd button[aria-expanded="true"]+.lp-menu{opacity:1;visibility:visible;transform:none;transition:opacity .16s,transform .2s var(--ease)}
-.lp-mi{display:flex;gap:12px;align-items:flex-start;padding:10px 12px;border-radius:10px;text-decoration:none;color:var(--text);transition:background .12s}
+.lp-menu{position:absolute;top:calc(100% + 10px);left:-8px;min-width:280px;background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-lg);padding:8px;display:grid;gap:2px;opacity:0;visibility:hidden;transform:translateY(-8px) scale(.97);transform-origin:top left;transition:opacity .15s,transform .32s cubic-bezier(.34,1.4,.64,1),visibility 0s .3s}
+.lp-menu-wide{grid-template-columns:1fr 1fr;width:560px}
+.lp-dd button[aria-expanded="true"]+.lp-menu{opacity:1;visibility:visible;transform:none;transition:opacity .15s,transform .32s cubic-bezier(.34,1.4,.64,1)}
+.lp-mi{display:flex;gap:12px;align-items:center;padding:9px 10px;border-radius:10px;text-decoration:none;color:var(--text);transition:background .12s}
 .lp-mi:hover,.lp-mi:focus-visible{background:var(--hover)}
-.lp-mi b{display:block;font-size:.9rem;font-weight:600}.lp-mi small{display:block;color:var(--muted);font-size:.8rem;line-height:1.4;margin-top:2px}
-.lp-mi-ic{flex:0 0 34px;height:34px;border-radius:9px;border:1px solid var(--border);display:grid;place-items:center;background:var(--bg)}
-.lp-nav-cta{margin-left:auto;display:flex;gap:8px}
-.lp-burger{display:none;margin-left:auto}
-/* hero */
-.lp-hero{padding:clamp(56px,9vw,112px) 0 72px;outline:none}
-.lp-hero-copy{max-width:860px;margin:0 auto;text-align:center}
-.lp-hero h1{font-size:clamp(2.6rem,6.6vw,5.2rem);line-height:.98;letter-spacing:-.055em;font-weight:700;margin:0 0 24px}
-.lp-hero .lede{font-size:clamp(1.05rem,1.6vw,1.22rem);max-width:56ch;margin:0 auto;color:var(--muted)}
-.lp-cta-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:32px}
-.lp-reassure{margin:18px 0 0;font-size:.82rem;color:var(--faint)}
-/* app preview */
-.lp-app{margin:64px auto 0;max-width:1080px;background:var(--surface);border:1px solid var(--border);border-radius:16px;box-shadow:0 1px 0 var(--border),0 30px 80px -30px rgba(41,42,39,.35);overflow:hidden}
+.lp-mi b{display:block;font-size:.88rem;font-weight:600}.lp-mi small{display:block;color:var(--muted);font-size:.78rem}
+.lp-mi-ic{flex:0 0 32px;height:32px;border-radius:9px;border:1px solid var(--border);display:grid;place-items:center;background:var(--bg)}
+.lp-nav-cta{margin-left:auto;display:flex;gap:8px}.lp-burger{display:none;margin-left:auto}
+/* hero: masked kinetic type */
+.lp-hero{padding:clamp(56px,8vw,104px) 0 clamp(56px,7vw,88px);text-align:center;outline:none}
+.lp-kinetic{font-size:clamp(2.6rem,6.8vw,5.4rem);line-height:1;letter-spacing:-.055em;font-weight:700;margin:0 0 22px}
+.lp-kinetic>span{display:block;overflow:hidden;padding-bottom:.08em}
+.lp-kinetic>span>span{display:inline-block;animation:lpLineUp .9s cubic-bezier(.16,1,.3,1) both}
+.lp-kinetic>span:nth-child(2)>span{animation-delay:.12s}
+@keyframes lpLineUp{from{transform:translateY(105%)}}
+.lp-sub{font-size:clamp(1.05rem,1.6vw,1.2rem);color:var(--muted);margin:0 auto;max-width:44ch}
+.lp-cta-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:30px}
+/* hero preview: morphing interface */
+.lp-app{margin:56px auto 0;max-width:980px;text-align:left;background:var(--surface);border:1px solid var(--border);border-radius:16px;box-shadow:0 1px 0 var(--border),0 30px 80px -34px rgba(41,42,39,.4);overflow:hidden}
 .lp-chrome{display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid var(--border);background:var(--bg)}
 .lp-chrome>span{width:10px;height:10px;border-radius:50%;background:var(--border-strong)}
-.lp-chrome em{font:normal .78rem var(--font-mono);color:var(--muted);margin:0 auto 0 10px}
-.lp-app-body{display:grid;grid-template-columns:180px 1fr;min-height:380px}
-.lp-app-side{border-right:1px solid var(--border);padding:16px 10px;display:flex;flex-direction:column;gap:2px;background:var(--bg)}
-.lp-app-side>svg{margin:0 0 14px 6px}
-.lp-app-side span{display:flex;align-items:center;gap:10px;padding:7px 10px;border-radius:8px;color:var(--muted);font-size:.84rem}
-.lp-app-side span em{font-style:normal}.lp-app-side span.on{background:var(--text);color:var(--bg)}
-.lp-app-main{padding:20px 22px;min-width:0}
-.lp-app-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}
-.lp-scan{display:inline-flex;align-items:center;gap:8px;font-size:.8rem;border:1px solid var(--border);border-radius:999px;padding:5px 12px;color:var(--muted)}
-.lp-scan i{width:7px;height:7px;border-radius:50%;background:var(--text)}.lp-scan.busy i{animation:lpPulse 1s infinite}
-.lp-app-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:14px}
-.lp-panel{border:1px solid var(--border);border-radius:12px;padding:16px;min-width:0}
-.lp-plabel{font-size:.74rem;font-weight:600;color:var(--muted);margin:0 0 10px}
-.lp-health{display:flex;align-items:center;gap:14px;margin-bottom:12px}
-.lp-srow{display:grid;grid-template-columns:118px 1fr 28px;gap:10px;align-items:center;font-size:.82rem;padding:4px 0}
-.lp-srow b{text-align:right;font-variant-numeric:tabular-nums}
-.lp-sbar{height:6px;border-radius:99px;background:var(--sunk);overflow:hidden}.lp-sbar i{display:block;height:100%;width:0;background:var(--text);border-radius:inherit;transition:width 1s var(--ease) calc(var(--i)*120ms + 300ms)}
-.in .lp-sbar i{width:var(--w)}
-.lp-recs{display:grid;gap:8px}
-.lp-rec{display:flex;gap:10px;align-items:flex-start;padding:10px;border:1px solid var(--border);border-radius:10px;font-size:.84rem;opacity:0;transform:translateY(6px);transition:opacity .45s,transform .45s var(--ease);transition-delay:calc(var(--i)*160ms + 700ms)}
-.lp-rec div{min-width:0}.lp-rec b{display:block;font-weight:600}.in .lp-rec{opacity:1;transform:none}
-.lp-recent div{display:flex;justify-content:space-between;font-size:.82rem;padding:6px 0;border-top:1px solid var(--border)}
-/* sections */
-.lp-sec{padding:clamp(72px,10vw,128px) 0;scroll-margin-top:64px;outline:none}
-.lp-alt{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.lp-dark{background:var(--charcoal);color:var(--cream);--text:#F7F6F1;--muted:#B5B1A7;--faint:#8A867D;--border:#3A3B37;--border-strong:#55564F;--surface:#31322E;--bg:#2E2F2B;--sunk:#3A3B37;--hover:#3A3B37}
-.lp-dark .chip{border-color:var(--border-strong);color:var(--text)}
-.lp-head{max-width:760px;margin-bottom:56px}
-.lp-head h2,.lp-studio h2{font-size:clamp(2rem,4.4vw,3.3rem);line-height:1.04;letter-spacing:-.045em;font-weight:700;margin:0 0 16px}
-.lp-head .lede{color:var(--muted);font-size:1.08rem;max-width:60ch}
-.lp-show{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(28px,5vw,72px);align-items:center;padding:clamp(40px,6vw,72px) 0;border-top:1px solid var(--border)}
-.lp-show:first-of-type{border-top:0}.lp-dark .lp-show,.lp-sec>.lp-wrap>.lp-show:only-child{border-top:0;padding:0}
-.lp-show.flip .lp-show-copy{order:2}
-.lp-show h3{font-size:clamp(1.5rem,2.6vw,2rem);letter-spacing:-.035em;margin:12px 0 12px;font-weight:650}
-.lp-show-copy p{color:var(--muted);max-width:46ch;font-size:1.02rem}
-.lp-sticky{align-items:start}.lp-sticky .lp-show-copy{position:sticky;top:100px}
-.lp-stage{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;box-shadow:0 20px 50px -30px rgba(41,42,39,.3);min-width:0}
-.lp-stage-top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px;font-size:.88rem}
-.lp-stage.swap{animation:lpSwap .4s var(--ease)}
-/* game page */
-.lp-gp-flip{display:grid}.lp-gp-side{grid-area:1/1;transition:opacity .45s,transform .45s var(--ease)}
-.lp-gp[data-v="after"] .lp-gp-before,.lp-gp[data-v="before"] .lp-gp-after{opacity:0;transform:translateY(8px);pointer-events:none}
-.lp-listing{font-size:.95rem;line-height:1.55;border:1px solid var(--border);background:var(--bg);border-radius:10px;padding:14px;margin:0 0 12px;min-height:96px}
-.lp-gp-cats{display:grid;grid-template-columns:1fr 1fr;gap:6px 16px;font-size:.82rem}.lp-gp-cats div{display:flex;justify-content:space-between;border-bottom:1px solid var(--border);padding:5px 0}
-.lp-gp-score{display:flex;justify-content:space-between;align-items:baseline;margin-top:12px}.lp-gp-score b{font-size:2rem;letter-spacing:-.04em}
-.lp-gp-notes{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;padding-top:14px;border-top:1px solid var(--border)}.lp-gp-notes p.small{margin:0 0 6px;display:flex;gap:6px;align-items:center}
-/* artwork */
-.lp-pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
-.lp-pills button{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:999px;padding:6px 12px 6px 6px;font:500 .84rem var(--font-body);cursor:pointer;transition:border-color .15s,background .15s}
-.lp-pills button[aria-selected="true"]{border-color:var(--text);background:var(--text);color:var(--bg)}
-.lp-art2{position:relative}.lp-thumb{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:12px;display:block;border:1px solid var(--border)}
-.lp-icon{position:absolute;right:14px;bottom:-18px;width:76px;height:76px;border-radius:18px;border:3px solid var(--surface);box-shadow:var(--shadow-md)}
-.lp-art2+.lp-gp-notes{margin-top:30px}
-.lp-mini-bar{display:inline-block;width:46px;height:5px;border-radius:9px;background:var(--sunk);overflow:hidden;vertical-align:middle;margin-right:6px}.lp-mini-bar i{display:block;height:100%;background:var(--text)}
-/* journey */
-.lp-facts{list-style:none;padding:0;margin:24px 0 0;display:flex;gap:28px;flex-wrap:wrap}.lp-facts b{display:block;font-size:1.7rem;letter-spacing:-.04em}.lp-facts span{font-size:.8rem;color:var(--muted)}
-.lp-journey2{list-style:none;margin:0;padding:0;position:relative}
-.lp-journey2::before{content:"";position:absolute;left:13px;top:14px;bottom:14px;width:2px;background:var(--border)}
-.lp-journey2 li{position:relative;display:grid;grid-template-columns:28px 1fr auto;gap:12px;padding:10px 8px;border-radius:10px;transition:background .3s}
-.lp-journey2 li b{display:block;font-size:.9rem}.lp-journey2 li.on{background:var(--hover)}
-.lp-jdot{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--border-strong);background:var(--surface);display:grid;place-items:center;font-size:.75rem;font-weight:700;z-index:1;transition:background .3s,color .3s,border-color .3s}
-.lp-journey2 li.done .lp-jdot,.lp-journey2 li.on .lp-jdot{background:var(--text);color:var(--bg);border-color:var(--text)}
-.lp-friction{display:inline-flex;gap:5px;align-items:center;font-size:.76rem;border:1px dashed var(--border-strong);border-radius:99px;padding:2px 9px;margin-top:6px}
-/* charts draw in */
-.lp-draw .chart path[fill="none"],.lp-draw .chart polyline{stroke-dasharray:1600;stroke-dashoffset:1600;transition:stroke-dashoffset 1.6s var(--ease) .2s}
-.in .lp-draw .chart path[fill="none"],.in .lp-draw .chart polyline,.lp-show.in .lp-draw .chart path[fill="none"]{stroke-dashoffset:0}
-/* progression */
-.lp-pstep{margin-top:22px;border:1px solid var(--border);border-radius:12px;padding:14px;display:grid;gap:6px;font-size:.9rem;min-height:92px}.lp-pstep em{font-style:normal;font-weight:700;text-decoration:underline}
-.lp-ptable tr{transition:background .3s}.lp-ptable tr.on{background:var(--hover)}.lp-ptable tr.on td:first-child{box-shadow:inset 2px 0 0 var(--text)}
-/* how it works */
-.lp-flow{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(4,1fr);gap:16px;counter-reset:f}
-.lp-flow li{position:relative;padding:24px;border:1px solid var(--border);border-radius:16px;background:var(--bg);transition-delay:calc(var(--i)*120ms)!important}
-.lp-flow li::after{content:"";position:absolute;top:44px;right:-17px;width:16px;height:1px;background:var(--border-strong)}.lp-flow li:last-child::after{display:none}
-.lp-flow-ic{width:40px;height:40px;border-radius:11px;background:var(--text);color:var(--bg);display:grid;place-items:center;margin-bottom:18px}
-.lp-flow-ic .ic{color:var(--bg)}
-.lp-flow h3{font-size:1.15rem;margin:8px 0 6px}.lp-flow p{color:var(--muted);font-size:.92rem;margin:0}
-/* studio */
-.lp-studio{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,6vw,80px);align-items:center}
-.lp-studio>.lp-show-copy p{color:var(--muted)}
-.lp-ticks{list-style:none;padding:0;margin:22px 0 0;display:grid;gap:10px}.lp-ticks li{display:flex;gap:10px;align-items:center;font-size:.95rem}
-.lp-plugin{background:#232421;border:1px solid var(--border);border-radius:16px;padding:18px;font-size:.88rem;box-shadow:0 30px 70px -30px rgba(0,0,0,.7)}
-.lp-plugin-top{display:flex;align-items:center;gap:10px;padding-bottom:14px;border-bottom:1px solid var(--border)}.lp-plugin-top .chip{margin-left:auto}
-.lp-plugin-meta{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}.lp-plugin-meta span{display:block;font-size:.74rem;color:var(--muted)}
-.lp-scanlist{list-style:none;margin:0;padding:0;display:grid;gap:2px}
-.lp-scanlist li{display:grid;grid-template-columns:16px 1fr auto;gap:10px;align-items:center;padding:8px 6px;border-radius:8px;color:var(--faint);transition:color .3s,background .3s}
-.lp-scanlist li em{font-style:normal;font-size:.76rem;opacity:0;transition:opacity .3s}
-.lp-scanlist li.on{background:var(--hover);color:var(--text)}.lp-scanlist li.done{color:var(--text)}.lp-scanlist li.done em{opacity:.75}
-.lp-sdot{width:12px;height:12px;border-radius:50%;border:1.5px solid var(--border-strong)}
-.lp-scanlist li.on .lp-sdot{border-color:var(--text);border-top-color:transparent;animation:lpSpin .8s linear infinite}
-.lp-scanlist li.done .lp-sdot{background:var(--text);border-color:var(--text)}
-.lp-plugin-bar{height:4px;border-radius:9px;background:var(--border);margin:14px 0 10px;overflow:hidden}.lp-plugin-bar i{display:block;height:100%;width:0;background:var(--text);transition:width .6s var(--ease)}
-.lp-plugin-foot{display:flex;justify-content:space-between;gap:10px;color:var(--muted)}
-/* examples */
+.lp-chrome em{font:normal .78rem var(--font-mono);color:var(--muted);margin-left:10px}
+.lp-tabs2{position:relative;display:flex;gap:2px;padding:8px;border-bottom:1px solid var(--border);overflow-x:auto;scrollbar-width:none}
+.lp-tabs2 button{position:relative;z-index:1;border:0;background:none;font:500 .86rem var(--font-body);color:var(--muted);padding:8px 14px;border-radius:9px;cursor:pointer;white-space:nowrap;transition:color .2s}
+.lp-tabs2 button[aria-selected="true"]{color:var(--bg)}
+.lp-tab-ind{position:absolute;left:0;top:8px;bottom:8px;border-radius:9px;background:var(--text);transition:transform .45s cubic-bezier(.34,1.3,.64,1),width .45s cubic-bezier(.34,1.3,.64,1)}
+.lp-pv{padding:22px;overflow:hidden}
+.lp-pv-head{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}.lp-pv-head .chip{margin-left:auto}
+.lp-pv-score{font-size:.8rem;color:var(--muted)}.lp-pv-score b{font-size:1.2rem;color:var(--text);letter-spacing:-.03em}
+.opt-icon.sm{width:28px;height:28px;border-radius:8px}
+.lp-listing{font-size:.95rem;line-height:1.55;border:1px solid var(--border);background:var(--bg);border-radius:10px;padding:14px;margin:0 0 14px}
+.lp-art2{position:relative;max-width:560px}.lp-thumb{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:12px;display:block;border:1px solid var(--border)}
+.lp-icon{position:absolute;right:14px;bottom:-16px;width:68px;height:68px;border-radius:16px;border:3px solid var(--surface);box-shadow:var(--shadow-md)}
+/* pricing */
+.pz{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(24px,4vw,56px);align-items:start}
+.pz-pick{position:sticky;top:84px}
+.pz-toggle{position:relative;display:inline-grid;grid-template-columns:1fr 1fr;border:1px solid var(--border);border-radius:999px;padding:4px;background:var(--bg);margin-bottom:18px}
+.pz-toggle button{position:relative;z-index:1;border:0;background:none;padding:9px 18px;border-radius:999px;font:600 .9rem var(--font-body);color:var(--muted);cursor:pointer;transition:color .25s;white-space:nowrap}
+.pz-toggle button em{font-style:normal;font-weight:500;font-size:.74rem;opacity:.75;margin-left:4px}
+.pz-toggle button[aria-checked="true"]{color:var(--bg)}
+.pz-pill{position:absolute;top:4px;bottom:4px;left:4px;width:calc(50% - 4px);border-radius:999px;background:var(--text);transition:transform .5s cubic-bezier(.34,1.35,.64,1)}
+.pz[data-int="year"] .pz-pill{transform:translateX(100%)}
+.pz-cards{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.pz-card{position:relative;display:flex;flex-direction:column;gap:6px;background:var(--surface);border:1.5px solid var(--border);border-radius:18px;padding:22px;cursor:pointer;transition:border-color .2s,transform .35s cubic-bezier(.34,1.4,.64,1),box-shadow .25s}
+.pz-card:hover{border-color:var(--border-strong)}
+.pz-card.picked{border-color:var(--text);transform:translateY(-3px);box-shadow:var(--shadow-md)}
+.pz-max{background:var(--charcoal);color:var(--cream);border-color:var(--charcoal)}
+.pz-max .pz-who,.pz-max .pz-note,.pz-max .pz-price span{color:#B5B1A7}
+.pz-max.picked{border-color:var(--cream);box-shadow:0 0 0 3px var(--charcoal),var(--shadow-lg)}
+.pz-max .pz-cta{background:var(--cream)!important;color:var(--charcoal)!important;border-color:var(--cream)!important}
+.pz-top{display:flex;justify-content:space-between;align-items:center;gap:8px}.pz-top h3{margin:0;font-size:1.3rem;letter-spacing:-.03em}
+.pz-badge{font-size:.7rem;font-weight:700;letter-spacing:.02em;border:1px solid currentColor;border-radius:99px;padding:3px 9px;opacity:0;transform:scale(.85);transition:opacity .2s,transform .35s cubic-bezier(.34,1.5,.64,1)}
+.pz[data-int="year"] .pz-badge{opacity:1;transform:none}
+.pz-max .pz-badge{background:var(--cream);color:var(--charcoal);border-color:var(--cream)}
+.pz-who{margin:0;font-size:.86rem;color:var(--muted)}
+.pz-price{margin:10px 0 0;display:flex;align-items:baseline;gap:6px}.pz-price b{font-size:2.4rem;letter-spacing:-.05em;font-variant-numeric:tabular-nums}.pz-price span{color:var(--muted);font-size:.9rem}
+.pz-note{margin:0;font-size:.82rem;color:var(--muted);min-height:3.4em}
+.pz-cta{margin-top:auto;width:100%;justify-content:center}
+.pz-trust{list-style:none;padding:0;margin:16px 0 0;display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.8rem;color:var(--muted)}.pz-trust li{display:flex;gap:6px;align-items:center}
+.pz-value{list-style:none;padding:0;margin:0 0 20px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pz-value li{display:flex;gap:10px;align-items:center;font-weight:600;font-size:.9rem;border:1px solid var(--border);border-radius:12px;padding:12px;background:var(--bg)}
+.pz-compare th[scope="row"]{font-weight:600;color:var(--text);background:none;font-size:.86rem}
+.pz-compare td,.pz-compare th{padding:10px 12px;font-size:.84rem}
+.pz-full,.pz-faq details{border-bottom:1px solid var(--border);padding:12px 0}
+.pz-full summary,.pz-faq summary{cursor:pointer;font-weight:600;font-size:.92rem;list-style:none;display:flex;justify-content:space-between}
+.pz-full summary::after,.pz-faq summary::after{content:"+";color:var(--muted);transition:transform .3s cubic-bezier(.34,1.5,.64,1)}
+.pz-full[open] summary::after,.pz-faq details[open] summary::after{transform:rotate(45deg)}
+.pz-full ul{list-style:none;padding:0;margin:10px 0 0;font-size:.84rem}.pz-full li{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px dashed var(--border)}
+.pz-faq p{margin:8px 0 0;font-size:.88rem;color:var(--muted)}
+.pz-legal{font-size:.76rem;color:var(--faint);margin:14px 0 0}
+.pz-bar{display:none}
+/* horizontal track */
+.lp-track{position:relative;padding:clamp(72px,9vw,110px) 0;scroll-margin-top:64px;outline:none}
+.lp-track.pinned{height:300vh;padding:0}
+.lp-track.pinned .lp-track-pin{position:sticky;top:64px;height:calc(100vh - 64px);display:flex;flex-direction:column;justify-content:center;overflow:hidden}
+.lp-track-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;width:100%}.lp-track-head .lp-h2{margin-bottom:28px}
+.lp-track-ctl{display:flex;align-items:center;gap:6px;margin-bottom:34px}
+.lp-track-dots{list-style:none;display:flex;gap:6px;padding:0;margin:0 8px 0 0}
+.lp-track-dots button{width:8px;height:8px;border-radius:99px;border:0;background:var(--border-strong);cursor:pointer;transition:width .4s cubic-bezier(.34,1.4,.64,1),background .2s}
+.lp-track-dots button[aria-current="true"]{width:28px;background:var(--text)}
+.lp-track-rail{display:flex;gap:18px;padding:0 max(16px,calc((100vw - 1200px)/2 + 40px));will-change:transform;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+.lp-track.pinned .lp-track-rail{overflow:visible}
+.lp-tcard{flex:0 0 min(560px,82vw);scroll-snap-align:start;background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:24px}
+.lp-tcard h3{font-size:1.4rem;letter-spacing:-.03em;margin:10px 0 4px}.lp-tcard>p{margin:0 0 16px;color:var(--muted);font-size:.86rem}
+.lp-tcard-pv{border-top:1px solid var(--border);padding-top:16px}.lp-tcard-pv .lp-pv-head{display:none}
+/* pinned story + blueprint */
+.lp-story{position:relative;background:var(--charcoal);color:var(--cream);--text:#F7F6F1;--muted:#B5B1A7;--faint:#8A867D;--border:#3A3B37;--border-strong:#55564F;--surface:#31322E;--bg:#2B2C29;--sunk:#3A3B37;--hover:#3A3B37;scroll-margin-top:64px;outline:none}
+.lp-story.pinned{height:320vh}
+.lp-story-pin{padding:clamp(72px,9vw,110px) 0}
+.lp-story.pinned .lp-story-pin{position:sticky;top:64px;height:calc(100vh - 64px);display:flex;align-items:center;padding:0}
+.lp-story-in{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(28px,5vw,64px);align-items:center;width:100%}
+.lp-blueprint{width:100%;height:auto;overflow:visible;margin:0 0 18px}
+.lp-bp-base{stroke:var(--border);stroke-width:2;fill:none;stroke-dasharray:4 6}
+.lp-bp-line{stroke:var(--text);stroke-width:2.5;fill:none;stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset .15s linear}
+.lp-bp-node circle{fill:var(--bg);stroke:var(--border-strong);stroke-width:2;transition:fill .3s,stroke .3s,r .4s cubic-bezier(.34,1.6,.64,1)}
+.lp-bp-node text{fill:var(--faint);font:500 11px var(--font-body);transition:fill .3s}
+.lp-bp-node.done circle,.lp-bp-node.on circle{fill:var(--text);stroke:var(--text)}.lp-bp-node.on circle{r:20}
+.lp-bp-node.done text,.lp-bp-node.on text{fill:var(--text)}
+.lp-story-steps{list-style:none;padding:0;margin:0;display:flex;gap:8px;flex-wrap:wrap}
+.lp-story-steps li{font-size:.85rem;padding:6px 12px;border:1px solid var(--border);border-radius:99px;color:var(--faint);transition:all .3s}
+.lp-story-steps li.on{background:var(--text);color:var(--charcoal);border-color:var(--text)}.lp-story-steps li.done{color:var(--text)}
+.lp-story-frame{position:relative;display:grid;min-height:300px}
+.lp-story-ui{grid-area:1/1;clip-path:inset(0 0 100% 0 round 16px);opacity:.4;transition:clip-path .6s cubic-bezier(.16,1,.3,1),opacity .4s}
+.lp-story-ui.on{clip-path:inset(0 0 0 0 round 16px);opacity:1}
+.lp-story-ui.done{clip-path:inset(0 0 0 0 round 16px);opacity:0;transform:scale(.96);transition:opacity .3s,transform .4s}
+.lp-story.static .lp-story-frame{gap:12px}.lp-story.static .lp-story-ui{grid-area:auto;clip-path:none;opacity:1;transform:none}
+.lp-ui{background:#232421;border:1px solid var(--border);border-radius:16px;padding:20px;font-size:.88rem;display:grid;gap:8px}
+.lp-ui-row{display:flex;align-items:center;gap:10px;padding-bottom:10px;border-bottom:1px solid var(--border);margin-bottom:4px}.lp-ui-row .chip{margin-left:auto}
+.lp-kv{display:flex;justify-content:space-between;gap:10px;align-items:center}.lp-kv span{color:var(--muted)}.lp-kv .ic+b{margin-right:auto}
+.lp-tree{display:grid;gap:4px;font:.82rem var(--font-mono)}.lp-tree span{padding:4px 8px;border-left:2px solid var(--border-strong)}
+.lp-rec2{display:flex;gap:10px;align-items:center;padding:8px;border:1px solid var(--border);border-radius:10px;font-size:.86rem;margin-bottom:6px}
+.lp-srow{display:grid;grid-template-columns:120px 1fr 28px;gap:10px;align-items:center;font-size:.82rem;padding:4px 0}.lp-srow b{text-align:right}
+.lp-sbar{height:6px;border-radius:99px;background:var(--sunk);overflow:hidden;display:block}.lp-sbar i{display:block;height:100%;background:var(--text);border-radius:inherit}
+/* clip-path compare */
+.lp-cmp-wrap{max-width:900px}
+.lp-cmp{position:relative;aspect-ratio:16/9;border-radius:18px;overflow:hidden;border:1px solid var(--border);user-select:none;touch-action:pan-y}
+.lp-cmp img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.lp-cmp-top{clip-path:inset(0 calc(100% - var(--x)) 0 0)}
+.lp-cmp-range{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;margin:0}
+.lp-cmp-handle{position:absolute;top:0;bottom:0;left:var(--x);width:2px;background:var(--cream);transform:translateX(-1px);pointer-events:none;box-shadow:0 0 0 1px rgba(41,42,39,.3)}
+.lp-cmp-handle::after{content:"⟷";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:38px;height:38px;border-radius:50%;background:var(--cream);color:var(--charcoal);display:grid;place-items:center;font-size:.9rem;box-shadow:var(--shadow-md)}
+.lp-cmp-range:focus-visible+.lp-cmp-handle::after{box-shadow:0 0 0 3px var(--charcoal)}
+.lp-cmp-tag{position:absolute;top:12px;font-size:.74rem;font-weight:600;background:rgba(41,42,39,.75);color:var(--cream);padding:4px 10px;border-radius:99px}.lp-cmp-tag.l{left:12px}.lp-cmp-tag.r{right:12px}
+/* stacking report deck */
+.lp-deck{padding:clamp(72px,9vw,120px) 0}
+.lp-deck-stack{display:grid;gap:28px}
+.lp-dcard{position:sticky;top:calc(96px + var(--n) * 18px);background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:24px;box-shadow:0 -10px 30px -20px rgba(41,42,39,.25);transform-origin:top center;will-change:transform}
+.lp-dgrid{display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:center}
+.lp-stats{list-style:none;padding:0;margin:0;display:grid;gap:14px}.lp-stats b{display:block;font-size:2rem;letter-spacing:-.04em;font-variant-numeric:tabular-nums}.lp-stats span{font-size:.8rem;color:var(--muted)}
+.lp-steps2{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.lp-steps2 li{display:grid;grid-template-columns:150px 1fr 70px;gap:12px;align-items:center;font-size:.85rem}
+.lp-steps2 i{display:block;height:10px;border-radius:99px;background:var(--text);width:0;transition:width .7s cubic-bezier(.16,1,.3,1) calc(var(--i)*110ms)}
+.lp-steps2.in i{width:var(--w)}.lp-steps2 li.spike i{background:repeating-linear-gradient(90deg,var(--text) 0 6px,transparent 6px 9px)}
+.lp-steps2 b{text-align:right;font-variant-numeric:tabular-nums}
+.lp-draw .chart path[fill="none"],.lp-draw .chart polyline{stroke-dasharray:1600;stroke-dashoffset:1600;transition:stroke-dashoffset 1.8s cubic-bezier(.65,0,.35,1)}
+.lp-draw.in .chart path[fill="none"],.lp-draw.in .chart polyline{stroke-dashoffset:0}
+/* examples, faq, final, footer */
 .lp-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
-.lp-tab{display:inline-flex;align-items:center;gap:10px;padding:7px 14px 7px 7px;border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:999px;font:500 .9rem var(--font-body);cursor:pointer;transition:border-color .15s,background .15s}
-.lp-tab[aria-selected="true"]{background:var(--text);color:var(--bg);border-color:var(--text)}
-.lp-ex{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
-.lp-sbar{display:block}
-/* faq, final, footer */
-.lp-faq details{border-bottom:1px solid var(--border);padding:22px 0;max-width:860px}
-.lp-faq summary{font-weight:600;font-size:1.06rem;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px}
-.lp-faq summary::after{content:"+";font-weight:400;color:var(--muted);transition:transform .2s var(--ease)}.lp-faq details[open] summary::after{transform:rotate(45deg)}
-.lp-faq details p{margin:12px 0 0;max-width:70ch}
-.lp-final-wrap{padding:0 0 clamp(72px,10vw,120px)}
+.lp-tab{display:inline-flex;align-items:center;gap:10px;padding:7px 14px 7px 7px;border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:999px;font:500 .9rem var(--font-body);cursor:pointer;transition:border-color .15s,background .2s,transform .3s cubic-bezier(.34,1.5,.64,1)}
+.lp-tab:active{transform:scale(.96)}.lp-tab[aria-selected="true"]{background:var(--text);color:var(--bg);border-color:var(--text)}
+.lp-panel-morph{overflow:hidden}.lp-ex{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
+.lp-faq details{border-bottom:1px solid var(--border);padding:20px 0;max-width:820px}
+.lp-faq summary{font-weight:600;font-size:1.04rem;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px}
+.lp-faq summary::after{content:"+";font-weight:400;color:var(--muted);transition:transform .3s cubic-bezier(.34,1.5,.64,1)}.lp-faq details[open] summary::after{transform:rotate(45deg)}
+.lp-faq details p{margin:10px 0 0;max-width:68ch}
+.lp-final-wrap{padding:0 0 clamp(72px,9vw,110px)}
 .lp-final{text-align:center;background:var(--charcoal);color:var(--cream);border-radius:24px;padding:clamp(48px,8vw,96px) 24px}
-.lp-final h2{font-size:clamp(2rem,4.6vw,3.4rem);letter-spacing:-.045em;margin:0 0 12px}.lp-final p{color:#B5B1A7;margin:0}
+.lp-final h2{font-size:clamp(2rem,5vw,3.6rem);letter-spacing:-.05em;margin:0}
+.lp-swap-word{display:inline-block;text-decoration:underline;text-decoration-thickness:3px;text-underline-offset:8px}
 .lp-final .btn:not(.ghost){background:var(--cream)!important;color:var(--charcoal)!important;border-color:var(--cream)!important}
 .lp-final .btn.ghost{color:var(--cream)!important;border-color:#55564F!important;background:transparent!important}
-.lp-foot{border-top:1px solid var(--border);padding:56px 0 40px;background:var(--bg)}
+.lp-foot{border-top:1px solid var(--border);padding:56px 0 40px}
 .lp-foot-grid{display:grid;grid-template-columns:1.4fr repeat(4,1fr);gap:28px}
 .lp-foot-grid b{display:block;font-size:.85rem;margin-bottom:12px}
 .lp-foot-grid a:not(.brand){display:block;color:var(--muted);text-decoration:none;font-size:.88rem;padding:4px 0;transition:color .15s}.lp-foot-grid a:not(.brand):hover{color:var(--text)}
-.lp-foot-brand p{max-width:30ch;margin-top:12px}
-.lp-foot-base{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:48px;padding-top:20px;border-top:1px solid var(--border);font-size:.78rem;color:var(--faint)}.lp-foot-base span:last-child{max-width:70ch}
-/* reveal motion */
-[data-reveal]{opacity:0;transform:translateY(18px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
-[data-reveal].in{opacity:1;transform:none}
-@keyframes lpPulse{50%{opacity:.25}}@keyframes lpSpin{to{transform:rotate(360deg)}}@keyframes lpSwap{from{opacity:.3;transform:translateY(6px)}}
-@media (prefers-reduced-motion:reduce){[data-reveal]{opacity:1;transform:none;transition:none}.lp-sbar i,.lp-rec,.lp-gp-side{transition:none}.lp-draw .chart path,.lp-draw .chart polyline{stroke-dasharray:none!important}}
-:root[data-motion="reduce"] [data-reveal]{opacity:1;transform:none;transition:none}
+.lp-foot-brand p{max-width:28ch;margin-top:12px}
+.lp-foot-base{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:44px;padding-top:20px;border-top:1px solid var(--border);font-size:.78rem;color:var(--faint)}
+@keyframes lpSpin{to{transform:rotate(360deg)}}@keyframes lpSwap{from{opacity:.3;transform:translateY(6px)}}
+/* reduced motion: static, complete states */
+@media (prefers-reduced-motion:reduce){.lp-kinetic>span>span{animation:none}.lp-draw .chart path,.lp-draw .chart polyline{stroke-dasharray:none!important}.lp-steps2 i{transition:none;width:var(--w)}.pz-pill,.lp-tab-ind,.pz-card{transition:none}}
+:root[data-motion="reduce"] .lp-kinetic>span>span{animation:none}
 /* responsive */
-@media (max-width:980px){.lp-show,.lp-studio,.lp-ex{grid-template-columns:1fr}.lp-show.flip .lp-show-copy{order:0}.lp-sticky .lp-show-copy{position:static}.lp-flow{grid-template-columns:1fr 1fr}.lp-flow li::after{display:none}.lp-app-grid{grid-template-columns:1fr}.lp-foot-grid{grid-template-columns:1fr 1fr 1fr}.lp-foot-brand{grid-column:1/-1}}
+@media (max-width:1040px){.pz{grid-template-columns:1fr}.pz-pick{position:static}}
+@media (max-width:980px){.lp-story-in,.lp-ex,.lp-dgrid{grid-template-columns:1fr}.lp-foot-grid{grid-template-columns:1fr 1fr 1fr}.lp-foot-brand{grid-column:1/-1}}
 @media (max-width:880px){.lp-burger{display:inline-grid}
   .lp-links{display:none;position:absolute;left:0;right:0;top:64px;background:var(--bg);border-bottom:1px solid var(--border);flex-direction:column;align-items:stretch;padding:12px 16px 20px;gap:4px;max-height:calc(100vh - 64px);overflow:auto}
-  .lp-links.open{display:flex;animation:lpSwap .25s var(--ease)}.lp-nav-in{position:relative}
+  .lp-links.open{display:flex;animation:lpSwap .25s ease}.lp-nav-in{position:relative}
   .lp-link{padding:12px;border-radius:10px;justify-content:space-between;font-size:1rem}
   .lp-menu,.lp-menu-wide{position:static;width:auto;min-width:0;box-shadow:none;border:0;padding:0 0 6px;grid-template-columns:1fr;display:none;opacity:1;visibility:visible;transform:none}
   .lp-dd button[aria-expanded="true"]+.lp-menu{display:grid}
-  .lp-nav-cta{margin:12px 0 0;flex-direction:column}.lp-nav-cta .btn{width:100%}}
-@media (max-width:640px){.lp-app-body{grid-template-columns:1fr}.lp-app-side{display:none}.lp-srow{grid-template-columns:96px 1fr 24px}.lp-flow{grid-template-columns:1fr}.lp-gp-notes,.lp-gp-cats,.lp-plugin-meta{grid-template-columns:1fr}.lp-foot-grid{grid-template-columns:1fr 1fr}.lp-cta-row .btn{flex:1 1 100%}.lp-chrome em{display:none}}
+  .lp-nav-cta{margin:12px 0 0;flex-direction:column}.lp-nav-cta .btn{width:100%}
+  .lp-track-head{flex-direction:column;align-items:flex-start}.lp-track-ctl{margin-bottom:20px}
+  .lp-dcard{position:relative;top:auto}
+  .pz-bar:not([hidden]){display:flex;position:fixed;left:12px;right:12px;bottom:12px;z-index:60;align-items:center;gap:10px;background:var(--charcoal);color:var(--cream);border-radius:14px;padding:10px 10px 10px 16px;box-shadow:var(--shadow-lg);animation:lpSwap .3s ease}
+  .pz-bar .pz-bar-txt{flex:1;font-size:.9rem}.pz-bar .btn{background:var(--cream)!important;color:var(--charcoal)!important;border-color:var(--cream)!important}.pz-bar .icon-btn{color:var(--cream)}.pz-bar .icon-btn .ic{color:var(--cream)}}
+@media (max-width:640px){.pz-cards,.pz-value{grid-template-columns:1fr}.lp-srow{grid-template-columns:96px 1fr 24px}.lp-steps2 li{grid-template-columns:100px 1fr 56px}.lp-foot-grid{grid-template-columns:1fr 1fr}.lp-cta-row .btn{flex:1 1 100%}.lp-chrome em{display:none}.lp-blueprint text{font-size:13px}}
 /* ===== DESIGN SYSTEM v2: shared tokens, type scale and motion for public and signed-in pages ===== */
 :root{--font-mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;--dur-1:120ms;--dur-2:200ms;--dur-3:360ms;--ease-out:cubic-bezier(.16,1,.3,1);
   --s-1:4px;--s-2:8px;--s-3:12px;--s-4:16px;--s-5:24px;--s-6:32px;--s-7:48px;--s-8:64px;--r-xl:16px;--ring:0 0 0 3px color-mix(in srgb,var(--text) 18%,transparent)}
@@ -2421,45 +2452,105 @@ function pageReset(q) {
 }
 
 /* ===== PRICING (plans and prices come from the server) ===== */
-let PRICE_INT = 'month';
-const PLAN_FEATURES = { manual_optimizers: 'All five optimizers', saved_reports: 'Saved reports', roblox_connection: 'Roblox account connection', studio_plugin: 'LaunchPad Studio plugin', studio_automatic_scanning: 'Automatic game scanning', automatic_analysis: 'Automatic analysis of all five areas', report_history_standard: 'Standard report history', overrides: 'Manual corrections and overrides', scheduled_sync: 'Scheduled synchronization',
-  advanced_script_analysis: 'Deeper script inspection', report_history_extended: 'Extended report history and comparisons', priority_queue: 'Priority scan queue', advanced_monitoring: 'Advanced change monitoring', cross_experience_overview: 'Cross-experience overview' };
+/* ===== PRIVACY-FRIENDLY PRODUCT ANALYTICS + EXPERIMENTS ===== */
+// Anonymous, cookie-free: a random id per browser tab, no account link, nothing sent when Do Not Track / Global Privacy Control is on.
+const TRACK_OFF = navigator.doNotTrack === '1' || navigator.globalPrivacyControl === true;
+let TRACK_SID = null;
+function track(name, props = {}) {
+  if (TRACK_OFF) return;
+  try { TRACK_SID = TRACK_SID || sessionStorage.getItem('lp_sid') || (sessionStorage.setItem('lp_sid', uid('s')), sessionStorage.getItem('lp_sid')); } catch (e) { TRACK_SID = TRACK_SID || uid('s'); }
+  const variants = Object.fromEntries(Object.keys(PLANS?.experiments || {}).map(k => [k, variant(k)]));
+  fetch('/api/events', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name, props, session: TRACK_SID, variants }), keepalive: true }).catch(() => {});
+}
+// A/B variants come from the server's experiment list (EXPERIMENTS_JSON); each browser keeps one assignment.
+function variant(name, fallback = null) {
+  const opts = PLANS?.experiments?.[name]; if (!Array.isArray(opts) || !opts.length) return fallback;
+  let v = null; try { v = localStorage.getItem('lp_x_' + name); } catch (e) { /* storage blocked */ }
+  if (!opts.includes(v)) { v = opts[Math.floor(Math.random() * opts.length)]; try { localStorage.setItem('lp_x_' + name, v); } catch (e) { /* storage blocked */ } }
+  return v;
+}
+
+/* ===== PRICING (plans and prices come from the server) ===== */
+let PRICE_INT = 'month', PRICE_PICK = null;
+const cents = s => Math.round(parseFloat(String(s).replace(/[^0-9.]/g, '')) * 100);
+const money = c => '$' + (c / 100).toFixed(2);
+// Price change: the number rolls once from the old to the new amount (instant with reduced motion).
+function rollPrice(el, toCents) {
+  const from = +el.dataset.c || toCents; el.dataset.c = toCents;
+  if (from === toCents || reducedMotion() || document.hidden) return void (el.textContent = money(toCents));
+  const t0 = performance.now(), d = 420, step = t => { const k = Math.min(1, (t - t0) / d), e = 1 - Math.pow(1 - k, 3); el.textContent = money(Math.round(from + (toCents - from) * e)); if (k < 1) requestAnimationFrame(step); };
+  requestAnimationFrame(step); setTimeout(() => { if (+el.dataset.c === toCents) el.textContent = money(toCents); }, d + 80); // lands on the exact price even if frames are throttled
+}
 function pricingCards(ctx = 'app') {
   if (!PLANS) return '<div class="card flat muted">Prices couldn\'t load right now. Please refresh the page.</div>';
-  const cur = ME?.entitlement?.plan || 'free', yr = PRICE_INT === 'year', [L, M] = PLANS.plans;
-  const feats = (p, skip = []) => `<ul class="plan-feats">${p.features.filter(f => PLAN_FEATURES[f] && !skip.includes(f)).map(f => `<li>${icon('check', 16)}<span>${PLAN_FEATURES[f]}</span></li>`).join('')}</ul>`;
-  const btn = p => { const name = p.name, mine = cur === p.plan && (ME?.entitlement?.interval || 'month') === PRICE_INT;
-    if (mine) return `<button class="btn ghost" disabled>Your current plan</button>`;
-    if (!PLANS.paymentsAvailable) return `<button class="btn ${p.plan === 'max' ? '' : 'ghost'}" disabled>Checkout opens soon</button>`;
-    return `<button class="btn ${p.plan === 'max' ? '' : 'ghost'}" data-buy="${p.plan}">${cur !== 'free' ? 'Switch to' : 'Choose'} ${name}${yr ? ' annual' : ''}</button>`; };
-  const price = (p, big, unit) => `<p class="plan-price"><b>${big}</b> <span class="muted">/ ${unit}</span></p>`;
-  return `<div class="plan-toggle seg" role="group" aria-label="Billing period"><button type="button" data-int="month" aria-pressed="${!yr}">Monthly</button><button type="button" data-int="year" aria-pressed="${yr}">Annually</button></div>
-  <div class="plan-grid">
-    <article class="card plan"><div class="row between"><h2 style="margin:0">Light</h2>${yr ? `<span class="chip">${L.display.percent}% off</span>` : ''}</div><p class="muted small">For solo developers who want automatic analysis.</p>
-      ${yr ? price(L, L.display.annual, 'year') + `<p class="small"><b>Save ${L.display.saving} annually: ${L.display.percent}% off.</b> About ${L.display.effectiveMonthly}/month, charged ${L.display.annual} upfront for the full year.</p>` : price(L, L.display.monthly, 'month') + `<p class="small muted">Billed monthly. Or choose annual: ${L.display.annual}/year and save ${L.display.percent}%.</p>`}
-      ${btn(L)}${feats(L)}</article>
-    <article class="card plan featured"><div class="row between"><h2 style="margin:0">Max</h2>${yr ? `<span class="chip plan-badge">SAVE ${M.display.saving} PER YEAR · ${M.display.percent}% OFF</span>` : '<span class="chip">Most capable</span>'}</div><p class="muted small">Everything in Light, plus deeper analysis and more room.</p>
-      ${yr ? price(M, M.display.annual.replace('.00', ''), 'year') + `<p><b>An incredible ${M.display.saving} annual saving.</b></p><p class="small">Get Max annually for just ${M.display.annual.replace('.00', '')} instead of ${M.display.twelveMonthly} when paying monthly. Save ${M.display.saving}: that's a ${M.display.percent}% discount. About ${M.display.effectiveMonthly}/month, charged ${M.display.annual} upfront for the full year.</p>`
-        : price(M, M.display.monthly, 'month') + `<p class="small muted">Billed monthly. Or choose annual: ${M.display.annual.replace('.00', '')}/year and save ${M.display.saving}.</p>`}
-      ${btn(M)}<p class="tiny faint" style="margin:10px 0 0">Everything in Light, plus:</p>${feats(M, L.features)}</article>
+  const [L, M] = PLANS.plans, cur = ME?.entitlement?.plan || 'free', ctaWord = variant('pricing_cta', 'choose') === 'start' ? 'Start with' : 'Choose';
+  const lim = (p, k, unit) => p.limits[k] == null ? 'Included' : `${p.limits[k]} ${unit}`;
+  const card = (p, who) => `<article class="pz-card ${p.plan === 'max' ? 'pz-max' : ''}" data-plan="${p.plan}" aria-labelledby="pz-${p.plan}">
+    <div class="pz-top"><h3 id="pz-${p.plan}">${p.name}</h3><span class="pz-badge" data-show="year">${p.plan === 'max' ? `SAVE ${p.display.saving} · ${p.display.percent}% OFF` : `${p.display.percent}% off`}</span></div>
+    <p class="pz-who">${who}</p>
+    <p class="pz-price"><b data-price="${p.plan}" data-c="${p.prices.month}">${p.display.monthly}</b><span data-unit="${p.plan}">/ month</span></p>
+    <p class="pz-note" data-note="${p.plan}"></p>
+    <button class="btn ${p.plan === 'max' ? '' : 'ghost'} pz-cta" data-buy="${p.plan}" ${!PLANS.paymentsAvailable ? 'disabled' : ''}>${!PLANS.paymentsAvailable ? 'Checkout opens soon' : `${cur !== 'free' && cur !== p.plan ? 'Switch to' : ctaWord} ${p.name}`}</button></article>`;
+  const rows = [['Five optimizers', 1, 1, 1], ['Roblox Studio automation', 0, 1, 1], ['Scan capacity', 'Manual', `${lim(L, 'monthly_scans', 'scans/mo')} · ${lim(L, 'connected_experiences', 'games')}`, `${lim(M, 'monthly_scans', 'scans/mo')} · ${lim(M, 'connected_experiences', 'games')}`], ['Advanced analysis', 0, 0, 1], ['Monitoring and history', 'Saved reports', 'Standard', 'Extended + priority']];
+  const cell = x => x === 1 ? icon('check', 16) : x === 0 ? '<span class="faint">—</span>' : esc(x);
+  const faq = [['What\'s in each plan?', 'Light: all five optimizers with Roblox Studio sync and automatic analysis. Max adds deeper script inspection, more games and scans, priority scans and extended history.'],
+    ['What is the annual charge?', `Light: ${L.display.annual} once a year. Max: ${M.display.annual} once a year. Charged upfront, renews yearly until you cancel.`],
+    ['How does the Roblox Studio connection work?', 'Authorize your experiences through Roblox\'s own sign-in, then pair the read-only LaunchPad Studio plugin with a one-time code.'],
+    ['Can I cancel?', 'Yes, any time in Settings → Billing. You keep your plan until the end of the period you paid for.'],
+    ['What happens to my reports if I cancel?', 'They stay. Only paid features switch off.'],
+    ['Does LaunchPad change my game?', 'Never. The plugin only reads.']];
+  return `<div class="pz" data-ctx="${ctx}">
+    <div class="pz-pick"><div class="pz-toggle" role="radiogroup" aria-label="Billing period"><span class="pz-pill" aria-hidden="true"></span>
+      <button type="button" role="radio" data-int="month" aria-checked="true">Monthly</button><button type="button" role="radio" data-int="year" aria-checked="false">Annually <em>save up to 66.7%</em></button></div>
+      <div class="pz-cards">${card(L, 'For individual creators')}${card(M, 'For serious developers and multiple games')}</div>
+      <ul class="pz-trust">${[PLANS.paymentsAvailable ? ['tag', 'Secure Paddle checkout'] : ['tag', 'Paddle checkout opens soon'], ['check', 'Cancel any time'], ['user', 'Export or delete your data'], ['info', 'Independent of Roblox']].map(([i, t]) => `<li>${icon(i, 14)}${t}</li>`).join('')}</ul></div>
+    <div class="pz-detail">
+      <ul class="pz-value">${[['layers', 'Five optimizers'], ['play', 'Automatic Studio scans'], ['page', 'Evidence-based reports'], ['bars', 'Progress tracking']].map(([i, t]) => `<li>${icon(i, 18)}<span>${t}</span></li>`).join('')}</ul>
+      <div class="table-wrap pz-compare"><table><thead><tr><th></th><th>Free</th><th>Light</th><th>Max</th></tr></thead><tbody>${rows.map(([l, ...c]) => `<tr><th scope="row">${l}</th>${c.map(x => `<td>${cell(x)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>
+      <details class="pz-full"><summary>Full feature comparison</summary><ul>${Object.entries(PLAN_FEATURES).map(([k, l]) => `<li><span>${l}</span><span>${L.features.includes(k) ? 'Light, Max' : M.features.includes(k) ? 'Max' : '—'}</span></li>`).join('')}</ul></details>
+      <div class="pz-faq">${faq.map(([q, a]) => `<details><summary>${q}</summary><p>${a}</p></details>`).join('')}</div>
+      <p class="pz-legal">USD. Taxes calculated by Paddle at checkout. Renews automatically until cancelled. <a href="/legal/subscriptions" target="_blank" rel="noopener">Subscription Terms</a> · <a href="/legal/refunds" target="_blank" rel="noopener">Refunds</a></p></div>
   </div>
-  <p class="small muted plan-note">Prices in USD. Subscriptions renew automatically ${yr ? 'every year' : 'every month'} until you cancel; cancel any time and keep access until the end of the paid period. Payments are processed by Paddle, our merchant of record, which calculates any applicable tax at checkout. ${PLANS.paymentsAvailable ? '' : '<b>Payments aren\'t switched on yet.</b> '}The free demo and manual optimizers stay free. See the <a href="/legal/subscriptions" target="_blank" rel="noopener">Subscription Terms</a>.</p>
-  <div class="table-wrap plan-compare"><table><thead><tr><th>Compare</th><th>Free</th><th>Light</th><th>Max</th></tr></thead><tbody>
-  ${[['Five optimizers (manual forms)', 1, 1, 1], ['Demo games and paste-in Studio scans', 1, 1, 1], ['Roblox connection and Studio plugin', 0, 1, 1], ['Automatic scanning and analysis', 0, 1, 1], ['Deeper script inspection and progression tracing', 0, 0, 1], ['Priority scan queue', 0, 0, 1], ['Report history', 'Saved', 'Standard', 'Extended'],
-    ['Connected experiences', '—', lim(L, 'connected_experiences'), lim(M, 'connected_experiences')], ['Scans per month', '—', lim(L, 'monthly_scans'), lim(M, 'monthly_scans')]]
-    .map(([l, ...c]) => `<tr><td>${l}</td>${c.map(x => `<td>${x === 1 ? icon('check', 16) : x === 0 ? '<span class="faint">—</span>' : esc(x)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+  <div class="pz-bar" hidden role="region" aria-label="Selected plan"><span class="pz-bar-txt"></span><button class="btn sm" data-bar="buy">Continue</button><button class="icon-btn" data-bar="close" aria-label="Dismiss">${icon('x', 18)}</button></div>`;
 }
-const lim = (p, k) => p.limits[k] == null ? 'Set per plan' : String(p.limits[k]);
-function bindPricing(root, rerender) {
-  root.addEventListener('click', async e => {
-    const t = e.target.closest('[data-int],[data-buy]'); if (!t) return;
-    if (t.dataset.int) { PRICE_INT = t.dataset.int; return rerender(); }
-    startCheckout(t.dataset.buy, PRICE_INT, t);
+const PLAN_FEATURES = { manual_optimizers: 'All five optimizers', saved_reports: 'Saved reports', roblox_connection: 'Roblox account connection', studio_plugin: 'LaunchPad Studio plugin', studio_automatic_scanning: 'Automatic game scanning', automatic_analysis: 'Automatic analysis', report_history_standard: 'Report history', overrides: 'Manual corrections', scheduled_sync: 'Scheduled sync',
+  advanced_script_analysis: 'Deeper script inspection', report_history_extended: 'Extended history and comparisons', priority_queue: 'Priority scan queue', advanced_monitoring: 'Advanced change monitoring', cross_experience_overview: 'Cross-experience overview' };
+// Updates prices, units, notes, toggle pill and the mobile bar for the current interval and pick.
+function pricingState(root) {
+  if (!PLANS || !root.querySelector('.pz')) return;
+  const yr = PRICE_INT === 'year';
+  root.querySelector('.pz').dataset.int = PRICE_INT;
+  $$('[data-int]', root).forEach(b => b.setAttribute('aria-checked', b.dataset.int === PRICE_INT));
+  for (const p of PLANS.plans) {
+    rollPrice($(`[data-price="${p.plan}"]`, root), yr ? p.prices.year : p.prices.month);
+    $(`[data-unit="${p.plan}"]`, root).textContent = yr ? '/ year' : '/ month';
+    $(`[data-note="${p.plan}"]`, root).innerHTML = !yr ? `Billed monthly. ${p.display.annual}/year if paid annually.`
+      : p.plan === 'max' ? `<b>Max for ${p.display.annual}/year. Save ${p.display.saving}.</b> Pay annually instead of ${p.display.monthly} every month. ${p.display.annual} charged upfront (≈ ${p.display.effectiveMonthly}/mo).`
+      : `${p.display.annual} charged upfront. Save ${p.display.saving} vs ${p.display.twelveMonthly} monthly (≈ ${p.display.effectiveMonthly}/mo).`;
+    $(`[data-plan="${p.plan}"]`, root).classList.toggle('picked', PRICE_PICK === p.plan);
+  }
+  const bar = $('.pz-bar', root);
+  if (bar && PRICE_PICK && !bar.dataset.closed) { const p = PLANS.plans.find(x => x.plan === PRICE_PICK); bar.hidden = false; $('.pz-bar-txt', bar).innerHTML = `<b>${p.name}</b> · ${yr ? p.display.annual + ' / year' : p.display.monthly + ' / month'}`; }
+}
+function bindPricing(root) {
+  pricingState(root);
+  if (!reducedMotion() && 'IntersectionObserver' in window) { const io = new IntersectionObserver(es => { if (es[0].isIntersecting) { track('pricing_view', { ctx: root.querySelector('.pz')?.dataset.ctx }); io.disconnect(); } }, { threshold: .3 }); root.querySelector('.pz') && io.observe(root.querySelector('.pz')); }
+  else track('pricing_view');
+  root.addEventListener('click', e => {
+    const t = e.target.closest('[data-int],[data-buy],[data-plan],[data-bar]'); if (!t) return;
+    if (t.dataset.int) { if (PRICE_INT !== t.dataset.int) { PRICE_INT = t.dataset.int; track('billing_toggle', { interval: PRICE_INT }); } return pricingState(root); }
+    if (t.dataset.bar === 'close') { const b = $('.pz-bar', root); b.hidden = true; b.dataset.closed = '1'; return; }
+    if (t.dataset.bar === 'buy') return startCheckout(PRICE_PICK, PRICE_INT, t);
+    const plan = t.dataset.buy || t.dataset.plan;
+    if (PRICE_PICK !== plan) { PRICE_PICK = plan; track('plan_select', { plan, interval: PRICE_INT }); }
+    pricingState(root);
+    if (t.dataset.buy) startCheckout(plan, PRICE_INT, t);
   });
 }
 async function startCheckout(plan, interval, btn) {
+  track('checkout_start', { plan, interval });
   if (!isAuthed()) return authModal('signup', 'Create a free account first. Then you can subscribe.');
-  if (btn) btn.disabled = true;
+  if (btn) btn.setAttribute('aria-busy', 'true');
   try {
     const cur = ME.entitlement?.plan;
     if (cur && cur !== 'free') { const name = plan === 'max' ? 'Max' : 'Light';
@@ -2467,9 +2558,14 @@ async function startCheckout(plan, interval, btn) {
     const { transactionId } = await api('POST', '/api/billing/checkout', { plan, interval });
     await loadScript('https://cdn.paddle.com/paddle/v2/paddle.js');
     if (PLANS.paddle.environment === 'sandbox') Paddle.Environment.set('sandbox');
-    Paddle.Initialize({ token: PLANS.paddle.clientToken, eventCallback: ev => { if (ev.name === 'checkout.completed') waitForPlan(plan); } });
+    let done = false;
+    Paddle.Initialize({ token: PLANS.paddle.clientToken, eventCallback: ev => {
+      if (ev.name === 'checkout.completed') { done = true; track('checkout_complete', { plan, interval }); waitForPlan(plan); }
+      else if (ev.name === 'checkout.closed' && !done) track('checkout_cancel', { plan, interval });
+      else if (ev.name === 'checkout.error') track('checkout_fail', { plan, interval });
+    } });
     Paddle.Checkout.open({ transactionId });
-  } catch (x) { toast(x.message, 'warn'); } finally { if (btn) btn.disabled = false; }
+  } catch (x) { track('checkout_fail', { plan, interval, reason: String(x.status || 'error') }); toast(x.message, 'warn'); } finally { if (btn) btn.removeAttribute('aria-busy'); }
 }
 // The browser never grants a plan: it waits until the server has a verified Paddle event.
 async function waitForPlan(plan) {
@@ -2478,9 +2574,8 @@ async function waitForPlan(plan) {
   toast('Paddle hasn\'t confirmed the payment yet. Your plan will switch on automatically when it does.', 'warn');
 }
 function pagePricing() {
-  const v = $('#view'), draw = () => { $('#pricingBody').innerHTML = pricingCards('app'); };
-  v.innerHTML = `<header class="page-head"><p class="eyebrow">Plans</p><h1>Pricing</h1><p class="lede">Two plans, monthly or annual. Annual billing saves the most on Max.</p></header><div id="pricingBody"></div>`;
-  draw(); bindPricing($('#pricingBody'), draw);
+  $('#view').innerHTML = `<header class="page-head"><h1>Pricing</h1></header><div id="pricingBody">${pricingCards('app')}</div>`;
+  bindPricing($('#pricingBody'));
 }
 function download(name, text) { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([text], { type: 'application/json' })); a.download = name; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500); }
 
@@ -2608,132 +2703,147 @@ function lpExample(d) {
   <p class="eyebrow">Top refinements</p><ul class="list-plain">${lpRecs(d).slice(0, 3).map(x => `<li class="small"><b>${esc(x.title)}</b><br><span class="muted">${esc(x.opt)}</span></li>`).join('')}</ul>
   <button class="btn" style="margin-top:16px" data-lp="demo-game" data-id="${d.g.id}">Explore analysis ${icon('arrow', 18)}</button></div></div>`;
 }
-// Landing page: product demos are built from the real app components and real analyzer output on the demo games (labelled Demo data).
-// Motion: IntersectionObserver adds .in when a block enters the viewport; small interval loops run only while their element is on the page.
-function lpLoop(el, ms, fn) { if (!el || reducedMotion()) return; const t = setInterval(() => { if (!el.isConnected) return clearInterval(t); if (!document.hidden) fn(); }, ms); }
-function lpReveal(root) {
-  const items = $$('[data-reveal]', root);
-  if (reducedMotion() || !('IntersectionObserver' in window)) return items.forEach(e => e.classList.add('in'));
-  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -12% 0px' });
-  items.forEach(e => io.observe(e));
+// Landing page. Product demos use the real app components and real analyzer output on the demo games (labelled Demo data).
+// Motion vocabulary: hero = masked kinetic type; hero preview = morphing interface; optimizers = horizontal scroll track;
+// scan journey = pinned story + SVG path drawing; thumbnails = draggable clip-path compare; reports = stacking deck with
+// chart drawing and staged timeline; pricing = spring toggle + rolling prices. Many blocks simply appear: no blanket fade-up.
+const LP_SCENES = [];
+let lpRaf = 0;
+function lpScroll() {
+  if (lpRaf) return;
+  lpRaf = requestAnimationFrame(() => {
+    lpRaf = 0; const vh = innerHeight;
+    for (let i = LP_SCENES.length - 1; i >= 0; i--) {
+      const s = LP_SCENES[i]; if (!s.el.isConnected) { LP_SCENES.splice(i, 1); continue; }
+      const r = s.el.getBoundingClientRect(), p = Math.min(1, Math.max(0, -r.top / Math.max(1, r.height - vh)));
+      if (r.bottom > -vh && r.top < vh * 2) s.fn(p);
+    }
+    if (!LP_SCENES.length) window.removeEventListener('scroll', lpScroll);
+  });
 }
+// A scroll scene drives fn(progress 0..1) while its tall wrapper scrolls past a sticky frame. Off on phones and with reduced motion.
+function lpScene(el, fn) { if (!el || reducedMotion() || matchMedia('(max-width: 880px)').matches) return false; LP_SCENES.push({ el, fn }); window.addEventListener('scroll', lpScroll, { passive: true }); lpScroll(); return true; }
+function lpOnce(el, fn, margin = '-15%') { if (!el) return; if (reducedMotion() || !('IntersectionObserver' in window)) return fn(); const io = new IntersectionObserver(es => { if (es[0].isIntersecting) { fn(); io.disconnect(); } }, { rootMargin: `0px 0px ${margin} 0px` }); io.observe(el); }
+function lpCount(el) { const to = +el.dataset.to, t0 = performance.now(); if (reducedMotion()) return void (el.textContent = to); const step = t => { const k = Math.min(1, (t - t0) / 900); el.textContent = Math.round(to * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(step); }; requestAnimationFrame(step); }
+function lpLoop(el, ms, fn) { if (!el || reducedMotion()) return () => {}; let on = true; const t = setInterval(() => { if (!el.isConnected) return clearInterval(t); if (on && !document.hidden) fn(); }, ms); return v => { on = v; }; }
+
+function lpPreview(d, k) {
+  const o = OPT[k], r = d.r[k].result, dem = '<span class="chip sample sm">Demo data</span>';
+  const head = `<div class="lp-pv-head"><span class="opt-icon sm">${icon(o.icon, 16)}</span><b>${o.name}</b><span class="lp-pv-score"><b data-to="${r.score}">${r.score}</b>/100</span>${dem}</div>`;
+  if (k === 'game-page') return head + `<p class="lp-listing">${esc(d.g.description.split('\n')[0])}</p>${catBars(r.categories.slice(0, 3).map(c => ({ ...c, source: '' })))}`;
+  if (k === 'thumbnail') return head + `<div class="lp-art2"><img class="lp-thumb" src="${d.g.thumbs[0].preview}" alt="${esc(d.g.name)} thumbnail" data-name="${esc(d.g.name)}"><span class="game-art lp-icon">${gameArt(d.g)}</span></div>`;
+  if (k === 'first-session') return head + journeyHTML(demoInputs(d.g.id, 'first-session').stages.slice(0, 4));
+  if (k === 'retention') { const x = demoInputs(d.g.id, 'retention'); return head + `<div class="lp-draw in">${lineChart({ labels: ['Day 1', 'Day 7', 'Day 30'], series: [{ name: 'Previous', values: [x.pd1 || x.d1, x.pd7 || x.d7, x.pd30 || x.d30], color: 'var(--faint)', dash: true }, { name: 'Now', values: [x.d1, x.d7, x.d30], color: 'var(--text)' }], yFmt: v => Math.round(v) + '%', h: 180, title: 'Retention, demo data' })}</div>`; }
+  const pg = r.extras; return head + `<div class="lp-draw in">${lineChart({ labels: pg.rows.map((x, i) => i + 1), series: [{ name: 'Current', values: pg.rows.map(x => x.time), color: 'var(--text)' }, { name: 'Suggested', values: pg.suggested.map(x => x.time), color: 'var(--faint)', dash: true }], yFmt: v => fmtMin(v), h: 180, title: 'Unlock time, demo data' })}</div>`;
+}
+// Morph: the frame animates from its old height to the new one while the content swaps behind a clip-path wipe.
+function lpMorph(frame, html) {
+  if (reducedMotion()) return void (frame.innerHTML = html);
+  const h0 = frame.offsetHeight; frame.innerHTML = html; const h1 = frame.offsetHeight;
+  frame.animate([{ height: h0 + 'px' }, { height: h1 + 'px' }], { duration: 380, easing: 'cubic-bezier(.16,1,.3,1)' });
+  frame.firstElementChild && [...frame.children].forEach((c, i) => c.animate([{ clipPath: 'inset(0 0 100% 0)', transform: 'translateY(-4px)' }, { clipPath: 'inset(0 0 0 0)', transform: 'none' }], { duration: 420, delay: i * 50, easing: 'cubic-bezier(.16,1,.3,1)', fill: 'backwards' }));
+}
+
 function pageLanding() {
-  const D = lpData(), [sae, tfa, fish] = D, authed = isAuthed();
-  const gpIn = demoInputs(tfa.g.id, 'game-page'), rough = 'throw food to animals. feed them to get money and unlock new worlds. there are lots of animals like phoenix and more coming soon';
-  const roughR = analyzeGamePage({ ...gpIn, description: rough }, { noExtras: true }), goodR = tfa.r['game-page'].result;
-  const fsStages = demoInputs(fish.g.id, 'first-session').stages, fsR = fish.r['first-session'].result, rIn = demoInputs(fish.g.id, 'retention'), pg = sae.r.progression.result.extras;
-  const recs = lpRecs(fish), demoChip = '<span class="chip sample sm">Demo data</span>';
-  const primary = authed ? `<button class="btn lg" data-lp="analyze">Analyze your game ${icon('arrow', 18)}</button>` : `<button class="btn lg" data-lp="signup">Analyze your game ${icon('arrow', 18)}</button>`;
+  const D = lpData(), [sae, tfa, fish] = D, authed = isAuthed(), demoChip = '<span class="chip sample sm">Demo data</span>';
+  const primary = `<button class="btn lg" data-lp="${authed ? 'analyze' : 'signup'}">Analyze your game ${icon('arrow', 18)}</button>`;
   const menuItem = (ic, t, d, attrs) => `<a class="lp-mi" ${attrs}><span class="lp-mi-ic">${icon(ic, 18)}</span><span><b>${t}</b><small>${d}</small></span></a>`;
-  const productMenu = OPTIMIZERS.map((o, i) => menuItem(o.icon, o.full, o.blurb.split('.')[0] + '.', `href="#lp-opt-${i + 1}"`)).join('') + menuItem('play', 'Roblox Studio integration', 'Pair the read-only plugin and sync your game.', 'href="#lp-studio"');
-  const resMenu = [['games', 'Sample games', 'Three real games, analyzed with demo data.', 'href="#lp-examples"'], ['layers', 'How it works', 'From your game to a ranked list of fixes.', 'href="#lp-how"'], ['info', 'FAQ', 'Straight answers about scores and data.', 'href="#lp-faq"'], ['page', 'Policies', 'Terms, privacy and data requests.', 'href="/legal"'], ['user', 'Support', 'Contact the LaunchPad team.', 'href="/legal/request?kind=support"']].map(x => menuItem(...x)).join('');
-  const scoreRows = d => OPTIMIZERS.map((o, i) => `<div class="lp-srow" style="--i:${i}"><span>${o.name}</span><span class="lp-sbar"><i style="--w:${d.r[o.id].score}%"></i></span><b>${d.r[o.id].score}</b></div>`).join('');
-  const scanStages = ['Connecting to Studio', 'Scanning project structure', 'Collecting permitted assets', 'Inspecting relevant systems', 'Analyzing game progression', 'Generating reports'];
-  const scanDetail = ['Paired · LaunchPad Studio', '8,907 objects · 42 scripts', 'Icon, listing text, UI text', 'Saves, offline income, leaderboard', '7 priced unlocks found', '5 reports ready'];
-  const listing = (txt, r) => `<p class="lp-listing">${esc(txt.split('\n')[0])}</p><div class="lp-gp-cats">${r.categories.slice(0, 4).map(c => `<div><span>${esc(c.label)}</span><b>${c.score ?? '—'}</b></div>`).join('')}</div>`;
+  const productMenu = OPTIMIZERS.map((o, i) => menuItem(o.icon, o.full, o.analyzes[0], `href="#lp-optimizers" data-track="${i}"`)).join('') + menuItem('play', 'Roblox Studio', 'Read-only plugin and sync', 'href="#lp-journey"');
+  const resMenu = [['games', 'Sample games', 'Real games, demo data', 'href="#lp-examples"'], ['info', 'FAQ', 'Short answers', 'href="#lp-faq"'], ['page', 'Policies', 'Terms and privacy', 'href="/legal"'], ['user', 'Support', 'Contact us', 'href="/legal/request?kind=support"']].map(x => menuItem(...x)).join('');
+  const stages = [['Connect', 'play', 'Roblox Studio'], ['Scan', 'grid', 'Game structure'], ['Analyze', 'layers', 'Analysis engine'], ['Evaluate', 'bars', 'Five optimizers'], ['Report', 'page', 'Reports']];
+  const stageUI = [
+    `<div class="lp-ui"><div class="lp-ui-row">${logo()}<b>LaunchPad Studio</b><span class="chip sm">Connected</span></div><div class="lp-kv"><span>Experience</span><b>[UPD]Pull a pet!</b></div><div class="lp-kv"><span>Access</span><b>Read-only</b></div><div class="lp-kv"><span>Pairing</span><b>One-time code</b></div></div>`,
+    `<div class="lp-ui"><div class="lp-ui-row"><b>Project structure</b></div><div class="lp-tree">${['Workspace · 8,312', 'ReplicatedStorage · 214', 'ServerScriptService · 23', 'StarterGui · 0', 'StarterPlayer · 2'].map(t => `<span>${t}</span>`).join('')}</div></div>`,
+    `<div class="lp-ui"><div class="lp-ui-row"><b>Systems found</b></div>${['Save system', 'Offline income', 'Leaderboard', 'Tutorial', '7 priced unlocks'].map(t => `<div class="lp-kv">${icon('check', 14)}<b>${t}</b></div>`).join('')}</div>`,
+    `<div class="lp-ui"><div class="lp-ui-row"><b>Five optimizers</b>${demoChip}</div>${OPTIMIZERS.map(o => `<div class="lp-srow"><span>${o.name}</span><span class="lp-sbar"><i style="width:${fish.r[o.id].score}%"></i></span><b>${fish.r[o.id].score}</b></div>`).join('')}</div>`,
+    `<div class="lp-ui"><div class="lp-ui-row"><b>Report ready</b>${demoChip}</div>${lpRecs(fish).slice(0, 3).map(x => `<div class="lp-rec2"><span class="pri ${x.priority}">${x.priority}</span><b>${esc(x.title)}</b></div>`).join('')}</div>`];
+  const nodeX = [40, 190, 340, 490, 640];
+  const t1 = tfa.g.thumbs[0], t2 = tfa.g.thumbs[1];
+  const rIn = demoInputs(fish.g.id, 'retention'), pg = sae.r.progression.result.extras, gp = tfa.r['game-page'].result;
 
   $('#view').innerHTML = `<header class="lp-nav" id="lpNav"><div class="lp-wrap lp-nav-in"><a class="brand lp-brand" href="#lp-top">${logo()}<b>LaunchPad</b></a>
     <nav class="lp-links" id="lpLinks" aria-label="Site">
-      <div class="lp-dd"><button class="lp-link" data-lp="dd" aria-expanded="false" aria-controls="ddProduct">Product ${icon('down', 14)}</button><div class="lp-menu lp-menu-wide" id="ddProduct" role="menu">${productMenu}</div></div>
-      <a class="lp-link" href="#lp-optimizers">Features</a><a class="lp-link" href="#lp-studio">For Developers</a><a class="lp-link" href="#lp-pricing">Pricing</a>
-      <div class="lp-dd"><button class="lp-link" data-lp="dd" aria-expanded="false" aria-controls="ddRes">Resources ${icon('down', 14)}</button><div class="lp-menu" id="ddRes" role="menu">${resMenu}</div></div>
+      <div class="lp-dd"><button class="lp-link" data-lp="dd" aria-expanded="false" aria-controls="ddProduct">Product ${icon('down', 14)}</button><div class="lp-menu lp-menu-wide" id="ddProduct">${productMenu}</div></div>
+      <a class="lp-link" href="#lp-pricing">Pricing</a><a class="lp-link" href="#lp-optimizers">Features</a><a class="lp-link" href="#lp-journey">Studio</a>
+      <div class="lp-dd"><button class="lp-link" data-lp="dd" aria-expanded="false" aria-controls="ddRes">Resources ${icon('down', 14)}</button><div class="lp-menu" id="ddRes">${resMenu}</div></div>
       <div class="lp-nav-cta">${authed ? `<button class="btn sm" data-lp="workspace">Open workspace</button>` : `<button class="btn ghost sm" data-lp="login">Log in</button><button class="btn sm" data-lp="signup">Get started</button>`}</div>
     </nav><button class="icon-btn lp-burger" data-lp="menu" aria-expanded="false" aria-controls="lpLinks" aria-label="Open menu">${icon('menu', 22)}</button></div></header>
 
   <section class="lp-hero" id="lp-top" tabindex="-1"><div class="lp-wrap">
-    <div class="lp-hero-copy" data-reveal><p class="lp-kicker"><span class="px" aria-hidden="true"></span>For Roblox developers</p>
-      <h1>Build better Roblox games.<br><span class="lp-dim">Make every player count.</span></h1>
-      <p class="lede">LaunchPad analyzes your Roblox game, identifies what is holding it back, and shows you exactly what to improve.</p>
-      <div class="lp-cta-row">${primary}<button class="btn ghost lg" data-lp="demo">Explore the platform</button></div>
-      <p class="lp-reassure">Free to start · Read-only Studio plugin · Never asks for your Roblox password</p></div>
-    <div class="lp-app" id="lpHeroApp" data-reveal role="img" aria-label="Animated preview of the LaunchPad workspace analyzing the demo game ${esc(fish.g.name)}. Demo data.">
-      <div class="lp-chrome"><span></span><span></span><span></span><em>launchpad / ${esc(fish.g.name)}</em>${demoChip}</div>
-      <div class="lp-app-body"><aside class="lp-app-side">${logo()}${[['home', 'Dashboard'], ['games', 'My Games'], ['layers', 'Optimizers'], ['bars', 'Reports'], ['play', 'Studio']].map(([n, l], i) => `<span class="${i === 0 ? 'on' : ''}">${icon(n, 16)}<em>${l}</em></span>`).join('')}</aside>
-      <div class="lp-app-main">
-        <div class="lp-app-head"><div class="row" style="gap:12px;flex-wrap:nowrap"><span class="game-art" style="width:44px;height:44px;border-radius:11px">${gameArt(fish.g)}</span><div><b>${esc(fish.g.name)}</b><br><span class="tiny muted">${esc(fish.g.genreLabel)}</span></div></div><span class="lp-scan" id="lpHeroScan"><i></i><span>Scan complete</span></span></div>
-        <div class="lp-app-grid">
-          <div class="lp-panel"><p class="lp-plabel">Game health</p><div class="lp-health">${scoreRing(fish.avg, 84, 'Overall score')}<div class="small muted">Average of five optimizer scores</div></div><div class="lp-rows">${scoreRows(fish)}</div></div>
-          <div class="lp-panel"><p class="lp-plabel">Top recommendations</p><div class="lp-recs">${recs.slice(0, 3).map((x, i) => `<div class="lp-rec" style="--i:${i}"><span class="pri ${x.priority}">${x.priority}</span><div><b>${esc(x.title)}</b><span class="tiny muted">${esc(x.opt)}</span></div></div>`).join('')}</div>
-            <p class="lp-plabel" style="margin-top:16px">Recent analysis</p><div class="lp-recent">${OPTIMIZERS.slice(0, 3).map(o => `<div><span>${o.name}</span><span class="tiny muted">${fish.r[o.id].score} · Saved</span></div>`).join('')}</div></div>
-        </div></div></div></div>
-  </div></section>
+    <h1 class="lp-kinetic"><span><span>Build better Roblox games.</span></span><span><span class="lp-dim">Make every player count.</span></span></h1>
+    <p class="lp-sub">Find what's holding your game back, and fix the right thing first.</p>
+    <div class="lp-cta-row">${primary}<a class="btn ghost lg" href="#lp-pricing">See pricing</a></div>
+    <div class="lp-app" role="group" aria-label="LaunchPad preview with demo data">
+      <div class="lp-chrome"><span></span><span></span><span></span><em>launchpad / ${esc(fish.g.name)}</em></div>
+      <div class="lp-tabs2" role="tablist" aria-label="Optimizer previews"><span class="lp-tab-ind" aria-hidden="true"></span>${OPTIMIZERS.map((o, i) => `<button role="tab" aria-selected="${i === 0}" data-lp="pv" data-k="${o.id}">${o.name}</button>`).join('')}</div>
+      <div class="lp-pv" id="lpPv" role="tabpanel">${lpPreview(fish, 'game-page')}</div>
+    </div></div></section>
 
-  <section class="lp-sec" id="lp-optimizers" tabindex="-1"><div class="lp-wrap">
-    <div class="lp-head" data-reveal><p class="lp-kicker">The platform</p><h2>Everything your game needs to improve, in one place.</h2><p class="lede">Five optimizers, each with its own rules and its own evidence. Here they are on real Roblox games, with demo data.</p></div>
-
-    <article class="lp-show" id="lp-opt-1" data-reveal><div class="lp-show-copy"><span class="lp-num">01</span><h3>Game Page Optimizer</h3><p>See whether your title and description tell players what's fun. LaunchPad scores the listing, then shows a clearer version built from your own gameplay loop.</p>
-      <div class="seg" role="group" aria-label="Listing version"><button type="button" data-lp="gp" data-v="before" aria-pressed="false">Original</button><button type="button" data-lp="gp" data-v="after" aria-pressed="true">Improved</button></div></div>
-      <div class="lp-stage lp-gp" id="lpGp" data-v="after"><div class="lp-stage-top"><b>${esc(tfa.g.name)}</b>${demoChip}</div>
-        <div class="lp-gp-flip"><div class="lp-gp-side lp-gp-before">${listing(rough, roughR)}<div class="lp-gp-score"><span>Listing score</span><b>${roughR.score}</b></div></div>
-        <div class="lp-gp-side lp-gp-after">${listing(tfa.g.description, goodR)}<div class="lp-gp-score"><span>Listing score</span><b>${goodR.score}</b></div></div></div>
-        <div class="lp-gp-notes"><div><p class="lp-plabel">Working</p>${goodR.strengths.slice(0, 2).map(c => `<p class="small">${icon('check', 14)} ${esc(c.label)}</p>`).join('')}</div><div><p class="lp-plabel">Next</p>${goodR.weaknesses.slice(0, 2).map(c => `<p class="small">${icon('arrow', 14)} ${esc(c.label)}</p>`).join('')}</div></div></div></article>
-
-    <article class="lp-show flip" id="lp-opt-2" data-reveal><div class="lp-show-copy"><span class="lp-num">02</span><h3>Thumbnail &amp; Icon Optimizer</h3><p>Real file checks on size, shape and format, plus structured feedback on focus, contrast and readability. Pick a game to compare.</p>
-      <div class="lp-pills" role="tablist" aria-label="Example artwork">${D.map((d, i) => `<button role="tab" aria-selected="${i === 0}" data-lp="art" data-i="${i}"><span class="game-art" style="width:22px;height:22px;border-radius:6px">${gameArt(d.g)}</span>${esc(d.g.name)}</button>`).join('')}</div>
-      <p class="tiny muted" style="margin-top:12px">No image-recognition AI is connected: visual scores come from file checks and the developer's answers.</p></div>
-      <div class="lp-stage" id="lpArt">${lpArtPanel(D[0])}</div></article>
-
-    <article class="lp-show" id="lp-opt-3" data-reveal><div class="lp-show-copy"><span class="lp-num">03</span><h3>First Session Optimizer</h3><p>Map the first minutes from spawn to the first reward. LaunchPad times each step and flags where new players get stuck.</p>
-      <ul class="lp-facts"><li><b>${fmtSec(fsR.extras.stats.tAction)}</b><span>to first action</span></li><li><b>${fmtSec(fsR.extras.stats.tReward)}</b><span>to first reward</span></li><li><b>${fsR.extras.friction.length}</b><span>friction points</span></li></ul></div>
-      <div class="lp-stage"><div class="lp-stage-top"><b>First minutes · ${esc(fish.g.name)}</b>${demoChip}</div><ol class="lp-journey2" id="lpJourney">${fsStages.map((s, i) => `<li data-i="${i}"><span class="lp-jdot">${i + 1}</span><div><b>${esc(s.name)}</b><span class="small muted">${esc(s.action)}${s.reward ? ` · Reward: ${esc(s.reward)}` : ''}</span>${s.friction ? `<span class="lp-friction">${icon('flag', 12)} ${esc(s.friction)}</span>` : ''}</div><span class="tiny muted">${s.time}s</span></li>`).join('')}</ol></div></article>
-  </div></section>
-
-  <section class="lp-sec lp-dark" id="lp-retention"><div class="lp-wrap"><article class="lp-show flip" id="lp-opt-4" data-reveal><div class="lp-show-copy"><span class="lp-num">04</span><h3>Retention Optimizer</h3><p>Day 1, 7 and 30 against your previous period, session length and returning players, next to the design reasons players come back.</p>
-      <ul class="lp-facts">${[['Day 1', rIn.d1, rIn.pd1], ['Day 7', rIn.d7, rIn.pd7], ['Day 30', rIn.d30, rIn.pd30]].map(([l, v, p]) => `<li><b>${v}%</b><span>${l} · ${v >= p ? '+' : ''}${(v - p).toFixed(1)} pts</span></li>`).join('')}</ul></div>
-      <div class="lp-stage lp-draw"><div class="lp-stage-top"><b>Retention · ${esc(fish.g.name)}</b>${demoChip}</div>${lineChart({ labels: ['Day 1', 'Day 7', 'Day 30'], series: [{ name: 'Previous period', values: [rIn.pd1, rIn.pd7, rIn.pd30], color: 'var(--faint)', dash: true }, { name: 'This period', values: [rIn.d1, rIn.d7, rIn.d30], color: 'var(--text)' }], yFmt: v => Math.round(v) + '%', h: 220, title: 'Retention by day, demo data' })}
-        <div class="lp-gp-notes"><div><p class="lp-plabel">Session length</p><p class="small">${rIn.psession} → <b>${rIn.session} min</b></p></div><div><p class="lp-plabel">Returning players</p><p class="small">${rIn.preturning}% → <b>${rIn.returningPct}%</b></p></div></div></div></article></div></section>
-
-  <section class="lp-sec" id="lp-progression"><div class="lp-wrap"><article class="lp-show lp-sticky" id="lp-opt-5" data-reveal><div class="lp-show-copy"><span class="lp-num">05</span><h3>Progression Optimizer</h3><p>Cost ÷ income per minute gives the real time to each unlock. LaunchPad flags difficulty spikes (an unlock that takes 2.5× longer than the one before) and long gaps, then suggests smoother costs.</p>
-      <div class="lp-pstep" id="lpPStep" aria-live="polite"></div></div>
-      <div class="lp-stage lp-draw"><div class="lp-stage-top"><b>Time to unlock · ${esc(sae.g.name)}</b>${demoChip}</div>${lineChart({ labels: pg.rows.map((x, i) => i + 1), series: [{ name: 'Current', values: pg.rows.map(x => x.time), color: 'var(--text)' }, { name: 'Suggested', values: pg.suggested.map(x => x.time), color: 'var(--faint)', dash: true }], yFmt: v => fmtMin(v), h: 220, title: 'Minutes to unlock each upgrade, demo data' })}
-        <div class="table-wrap"><table class="lp-ptable"><thead><tr><th>Upgrade</th><th class="num">Cost</th><th class="num">Income/min</th><th class="num">Unlock</th></tr></thead><tbody>${pg.rows.map((x, i) => `<tr data-i="${i}"><td>${esc(x.name)}</td><td class="num">${fmtNum(x.cost)}</td><td class="num">${fmtNum(x.income)}</td><td class="num">${fmtMin(x.time)}</td></tr>`).join('')}</tbody></table></div></div></article></div></section>
-
-  <section class="lp-sec lp-alt" id="lp-how" tabindex="-1"><div class="lp-wrap"><div class="lp-head" data-reveal><p class="lp-kicker">How it works</p><h2>From your Roblox game to a clearer growth strategy.</h2></div>
-    <ol class="lp-flow">${[['01', 'Connect', 'Connect Roblox and pair LaunchPad Studio.', 'play'], ['02', 'Analyze', 'LaunchPad collects permitted information and runs the five optimizers.', 'layers'], ['03', 'Understand', 'Review evidence-backed findings and recommendations.', 'bars'], ['04', 'Improve', 'Prioritize fixes and track changes over time.', 'check']].map(([n, t, d, ic], i) => `<li data-reveal style="--i:${i}"><span class="lp-flow-ic">${icon(ic, 20)}</span><span class="lp-num">${n}</span><h3>${t}</h3><p>${d}</p></li>`).join('')}</ol></div></section>
-
-  <section class="lp-sec lp-dark" id="lp-studio" tabindex="-1"><div class="lp-wrap lp-studio">
-    <div class="lp-show-copy" data-reveal><p class="lp-kicker">Roblox Studio integration</p><h2>Your Roblox game.<br>Automatically understood.</h2><p>Install the read-only LaunchPad Studio plugin, pair it with a one-time code, and sync. LaunchPad reads only experiences Roblox has authorized for your account, and never changes your game.</p>
-      <ul class="lp-ticks">${['Read-only: never edits, deletes or publishes', 'Script reading is a separate, optional permission', 'Unchanged games aren\'t re-analyzed', 'Light and Max plans'].map(x => `<li>${icon('check', 16)}${x}</li>`).join('')}</ul>
-      <p class="tiny" style="opacity:.7;margin-top:18px">Demo animation. The real scan runs inside Roblox Studio through the plugin; your browser can't read Studio projects on its own.</p></div>
-    <div class="lp-plugin" id="lpPlugin" data-reveal role="img" aria-label="Demo animation of the LaunchPad Studio plugin scanning a game in six stages">
-      <div class="lp-plugin-top">${logo()}<b>LaunchPad Studio</b><span class="chip sm">Connected</span></div>
-      <div class="lp-plugin-meta"><div><span>Experience</span><b>[UPD]Pull a pet!</b></div><div><span>Permissions</span><b>Read-only · scripts allowed</b></div></div>
-      <ol class="lp-scanlist">${scanStages.map((s, i) => `<li data-i="${i}"><span class="lp-sdot"></span><span>${s}</span><em>${scanDetail[i]}</em></li>`).join('')}</ol>
-      <div class="lp-plugin-bar"><i id="lpScanBar"></i></div>
-      <div class="lp-plugin-foot"><span id="lpScanText">Ready to sync</span><span class="tiny">Last sync: just now</span></div></div></div></section>
-
-  <section class="lp-sec" id="lp-examples" tabindex="-1"><div class="lp-wrap"><div class="lp-head" data-reveal><p class="lp-kicker">Sample games</p><h2>Pick a game. See its reports.</h2><p class="lede">Three real Roblox experiences, analyzed with LaunchPad's demo data.</p></div>
-    <div class="lp-tabs" role="tablist" aria-label="Example games">${D.map((d, i) => `<button class="lp-tab" role="tab" id="lpTab${i}" aria-controls="lpPanel" aria-selected="${i === 0}" data-lp="tab" data-i="${i}"><span class="game-art" style="width:28px;height:28px;border-radius:7px">${gameArt(d.g)}</span>${esc(d.g.name)}</button>`).join('')}</div>
-    <div id="lpPanel" role="tabpanel" aria-labelledby="lpTab0" data-reveal>${lpExample(D[0])}</div>
-    <p class="tiny muted" style="margin-top:18px">Scores, timings, metrics and economy values are LaunchPad demo data, not the games' real analytics. Game names and artwork belong to their creators, who aren't affiliated with or endorsing LaunchPad.</p></div></section>
-
-  <section class="lp-sec lp-alt" id="lp-pricing" tabindex="-1"><div class="lp-wrap"><div class="lp-head" data-reveal><p class="lp-kicker">Pricing</p><h2>Start free. Upgrade when you want it automatic.</h2><p class="lede">The demo and manual optimizers are free. Light and Max add Roblox Studio sync and automatic analysis.</p></div>
+  <section class="lp-sec lp-alt" id="lp-pricing" tabindex="-1"><div class="lp-wrap"><h2 class="lp-h2">Two plans. Clear prices.</h2>
     <div id="lpPricing">${pricingCards('landing')}</div></div></section>
 
-  <section class="lp-sec" id="lp-faq" tabindex="-1"><div class="lp-wrap lp-faq"><div class="lp-head"><p class="lp-kicker">FAQ</p><h2>Questions, answered honestly.</h2></div>
-    ${[['What is LaunchPad?', 'A workspace with five optimizers that look at your Roblox game\'s page, artwork, first session, retention and progression, then explain what\'s working and what to improve next.'],
-      ['How do the five optimizers work?', 'Sync your game with the Studio plugin, paste a scan, or enter details yourself. Each optimizer applies its own transparent scoring rules and calculations, then gives category scores, strengths and recommendations that explain exactly why they appear.'],
-      ['Does LaunchPad connect directly to Roblox?', 'Yes, with your permission. You authorize experiences through Roblox\'s official sign-in, then pair the read-only LaunchPad Studio plugin. LaunchPad never asks for your Roblox password and never changes your game. Creator Dashboard analytics aren\'t imported yet. LaunchPad is independent and isn\'t affiliated with Roblox Corporation.'],
-      ['What does the Studio plugin read?', 'Object names, starter UI text, proximity prompts, spawn points and number values. If you allow it, it also reads script code inside Studio to find saves, rewards and price tables. Only feature names, script paths and numbers leave Studio, never your code.'],
-      ['What if my game is missing something?', 'If the scan confirms something is missing, such as a save system, return rewards, a description or thumbnails, that area scores low and the fix goes to the top of your list. If LaunchPad simply can\'t see something, it says so instead of guessing.'],
-      ['Is the analysis done by AI?', 'No. The analysis is rule-based scoring and real calculations on the information collected or entered. No AI model or image-recognition service is connected.'],
-      ['How much does LaunchPad cost?', 'The demo and manual optimizers are free. Light is $9.99/month or $99.99/year. Max is $49.99/month or $200/year, a $399.88 saving on twelve monthly payments. Annual plans are charged upfront and renew automatically until you cancel. Payments are handled by Paddle.'],
-      ['Does LaunchPad guarantee more players?', 'No. Scores are LaunchPad\'s own assessment. They help you decide what to fix, but real growth shows up in your real game data.']]
+  <section class="lp-track" id="lp-optimizers" tabindex="-1"><div class="lp-track-pin">
+    <div class="lp-wrap lp-track-head"><h2 class="lp-h2">Five optimizers. One workspace.</h2><div class="lp-track-ctl"><ol class="lp-track-dots">${OPTIMIZERS.map((o, i) => `<li><button data-lp="track" data-i="${i}" aria-label="${o.name}" aria-current="${i === 0}"></button></li>`).join('')}</ol>
+      <button class="icon-btn" data-lp="track-prev" aria-label="Previous optimizer">${icon('back', 18)}</button><button class="icon-btn" data-lp="track-next" aria-label="Next optimizer">${icon('arrow', 18)}</button></div></div>
+    <div class="lp-track-rail" id="lpRail">${OPTIMIZERS.map((o, i) => `<article class="lp-tcard" data-i="${i}"><span class="lp-num">0${i + 1}</span><h3>${o.name}</h3><p>${esc(o.analyzes.join(' · '))}</p><div class="lp-tcard-pv">${lpPreview([fish, sae, fish, fish, sae][i], o.id)}</div></article>`).join('')}</div></div></section>
+
+  <section class="lp-story" id="lp-journey" tabindex="-1"><div class="lp-story-pin"><div class="lp-wrap lp-story-in">
+    <div class="lp-story-copy"><h2 class="lp-h2">Your Roblox game.<br>Automatically understood.</h2>
+      <svg class="lp-blueprint" viewBox="0 0 680 120" aria-hidden="true"><path class="lp-bp-base" d="M40 60 H640"/><path class="lp-bp-line" id="lpBp" d="M40 60 H640" pathLength="1"/>
+        ${nodeX.map((x, i) => `<g class="lp-bp-node" data-i="${i}"><circle cx="${x}" cy="60" r="16"/><text x="${x}" y="104" text-anchor="middle">${stages[i][2]}</text></g>`).join('')}</svg>
+      <ol class="lp-story-steps">${stages.map(([t], i) => `<li data-i="${i}"><b>${t}</b></li>`).join('')}</ol>
+      <p class="lp-fine">Demo animation. The real scan runs in the read-only LaunchPad Studio plugin, never in your browser.</p></div>
+    <div class="lp-story-frame">${stageUI.map((h, i) => `<div class="lp-story-ui" data-i="${i}">${h}</div>`).join('')}</div>
+  </div></div></section>
+
+  <section class="lp-sec" id="lp-compare"><div class="lp-wrap lp-cmp-wrap"><h2 class="lp-h2">Compare thumbnails side by side.</h2>
+    <div class="lp-cmp" id="lpCmp" style="--x:50%"><img src="${t2.preview}" alt="${esc(tfa.g.name)} thumbnail 2" data-name="${esc(tfa.g.name)}"><img class="lp-cmp-top" src="${t1.preview}" alt="${esc(tfa.g.name)} thumbnail 1" data-name="${esc(tfa.g.name)}">
+      <span class="lp-cmp-tag l">Thumbnail 1</span><span class="lp-cmp-tag r">Thumbnail 2</span>
+      <input type="range" min="0" max="100" value="50" aria-label="Compare thumbnail 1 and thumbnail 2" class="lp-cmp-range"><span class="lp-cmp-handle" aria-hidden="true"></span></div>
+    <p class="lp-fine">${esc(tfa.g.name)} · ${t1.w}×${t1.h} and ${t2.w}×${t2.h} · creator artwork, shown as a reference</p></div></section>
+
+  <section class="lp-deck" id="lp-reports"><div class="lp-wrap"><h2 class="lp-h2">Reports that show their work.</h2>
+    <div class="lp-deck-stack">
+      <article class="lp-dcard" style="--n:0"><div class="lp-pv-head"><b>Game Page report</b><span class="lp-pv-score"><b>${gp.score}</b>/100</span>${demoChip}</div><div class="lp-dgrid"><div>${gp.categories.slice(0, 5).map(c => `<div class="lp-srow"><span>${esc(c.label)}</span><span class="lp-sbar"><i style="width:${c.score ?? 0}%"></i></span><b>${c.score ?? '—'}</b></div>`).join('')}</div><div>${tfa.r['game-page'].recs.slice(0, 2).map(x => `<div class="lp-rec2"><span class="pri ${x.priority}">${x.priority}</span><b>${esc(x.title)}</b></div>`).join('')}<p class="lp-fine">Evidence: listing text · loop · genre</p></div></div></article>
+      <article class="lp-dcard" style="--n:1"><div class="lp-pv-head"><b>Retention report · ${esc(fish.g.name)}</b>${demoChip}</div><div class="lp-dgrid"><div class="lp-draw" id="lpRet">${lineChart({ labels: ['Day 1', 'Day 7', 'Day 30'], series: [{ name: 'Previous', values: [rIn.pd1, rIn.pd7, rIn.pd30], color: 'var(--faint)', dash: true }, { name: 'Now', values: [rIn.d1, rIn.d7, rIn.d30], color: 'var(--text)' }], yFmt: v => Math.round(v) + '%', h: 200, title: 'Retention, demo data' })}</div>
+        <ul class="lp-stats">${[['Day 1', rIn.d1], ['Day 7', rIn.d7], ['Day 30', rIn.d30]].map(([l, v]) => `<li><b><span data-to="${Math.round(v)}">0</span>%</b><span>${l}</span></li>`).join('')}</ul></div></article>
+      <article class="lp-dcard" style="--n:2"><div class="lp-pv-head"><b>Progression report · ${esc(sae.g.name)}</b>${demoChip}</div><ol class="lp-steps2" id="lpSteps">${pg.rows.map((x, i) => `<li style="--i:${i}" class="${x.spike ? 'spike' : ''}"><span>${esc(x.name)}</span><i style="--w:${Math.min(100, x.time / Math.max(...pg.rows.map(y => y.time)) * 100)}%"></i><b>${fmtMin(x.time)}</b></li>`).join('')}</ol></article>
+    </div></div></section>
+
+  <section class="lp-sec lp-alt" id="lp-examples" tabindex="-1"><div class="lp-wrap"><h2 class="lp-h2">Pick a game. See its reports.</h2>
+    <div class="lp-tabs" role="tablist" aria-label="Example games">${D.map((d, i) => `<button class="lp-tab" role="tab" id="lpTab${i}" aria-controls="lpPanel" aria-selected="${i === 0}" data-lp="tab" data-i="${i}"><span class="game-art" style="width:28px;height:28px;border-radius:7px">${gameArt(d.g)}</span>${esc(d.g.name)}</button>`).join('')}</div>
+    <div id="lpPanel" class="lp-panel-morph" role="tabpanel" aria-labelledby="lpTab0">${lpExample(D[0])}</div>
+    <p class="lp-fine">Scores are LaunchPad demo data, not the games' real analytics. Names and artwork belong to their creators, who aren't affiliated with LaunchPad.</p></div></section>
+
+  <section class="lp-sec" id="lp-faq" tabindex="-1"><div class="lp-wrap lp-faq"><h2 class="lp-h2">FAQ</h2>
+    ${[['Is the analysis done by AI?', 'No. It\'s transparent rule-based scoring and real calculations on what LaunchPad can see or you enter.'],
+      ['What does the Studio plugin read?', 'Object names, UI text, prompts, spawns and number values. Script code only if you allow it; your code never leaves Studio.'],
+      ['Does LaunchPad guarantee more players?', 'No. It shows what to fix first. Real results show up in your own game data.'],
+      ['Is LaunchPad made by Roblox?', 'No. It\'s an independent tool.']]
       .map(([q, a]) => `<details><summary>${q}</summary><p class="muted">${a}</p></details>`).join('')}</div></section>
 
-  <section class="lp-final-wrap"><div class="lp-wrap"><div class="lp-final" data-reveal><h2>Make every player count.</h2><p>Find what's holding your game back, then fix the right thing first.</p><div class="lp-cta-row" style="justify-content:center">${primary}<button class="btn ghost lg" data-lp="demo">Explore the platform</button></div></div></div></section>
+  <section class="lp-final-wrap"><div class="lp-wrap"><div class="lp-final"><h2 class="lp-swap" aria-label="Make every player count.">Make every <span class="lp-swap-word" id="lpSwap">player</span> count.</h2><div class="lp-cta-row" style="justify-content:center">${primary}<a class="btn ghost lg" href="#lp-pricing">See pricing</a></div></div></div></section>
 
-  <footer class="lp-foot"><div class="lp-wrap"><div class="lp-foot-grid"><div class="lp-foot-brand"><a class="brand lp-brand" href="#lp-top">${logo()}<b>LaunchPad</b></a><p class="muted small">Evidence-based game analysis for Roblox developers.</p></div>
-    <div><b>Product</b><a href="#lp-optimizers">Five optimizers</a><a href="#lp-studio">Roblox Studio</a><a href="#lp-pricing">Pricing</a></div>
-    <div><b>Resources</b><a href="#lp-how">Guides</a><a href="#lp-examples">Sample games</a><a href="#lp-faq">FAQ</a><a href="/legal/request?kind=support">Support</a></div>
+  <footer class="lp-foot"><div class="lp-wrap"><div class="lp-foot-grid"><div class="lp-foot-brand"><a class="brand lp-brand" href="#lp-top">${logo()}<b>LaunchPad</b></a><p class="muted small">Game analysis for Roblox developers.</p></div>
+    <div><b>Product</b><a href="#lp-optimizers">Optimizers</a><a href="#lp-journey">Roblox Studio</a><a href="#lp-pricing">Pricing</a></div>
+    <div><b>Resources</b><a href="#lp-examples">Sample games</a><a href="#lp-faq">FAQ</a><a href="/legal/request?kind=support">Support</a></div>
     <div><b>Company</b><a href="#lp-top">About</a><a href="/legal/request?kind=support">Contact</a></div>
     <div><b>Legal</b><a href="/legal/terms">Terms</a><a href="/legal/privacy">Privacy</a><a href="/legal/cookies">Cookies</a><a href="/legal/copyright">Copyright</a></div></div>
-    <div class="lp-foot-base"><span>© ${new Date().getFullYear()} LaunchPad</span><span>LaunchPad is an independent product and is not affiliated with, endorsed by or sponsored by Roblox Corporation. Roblox is a trademark of Roblox Corporation.</span></div></div></footer>`;
+    <div class="lp-foot-base"><span>© ${new Date().getFullYear()} LaunchPad</span><span>Not affiliated with, endorsed by or sponsored by Roblox Corporation. Roblox is a trademark of Roblox Corporation.</span></div></div></footer>`;
 
   const v = $('#view'), links = $('#lpLinks'), burger = $('.lp-burger');
   const closeMenus = except => $$('.lp-dd button[aria-expanded="true"]', v).forEach(b => { if (b !== except) b.setAttribute('aria-expanded', 'false'); });
+  // Hero tabs: a spring-eased indicator slides under the active tab while the preview morphs.
+  const tabInd = $('.lp-tab-ind', v), placeInd = b => { tabInd.style.width = b.offsetWidth + 'px'; tabInd.style.transform = `translateX(${b.offsetLeft}px)`; };
+  requestAnimationFrame(() => placeInd($('[data-lp="pv"][aria-selected="true"]', v)));
+  // Horizontal track.
+  const rail = $('#lpRail'), dots = $$('.lp-track-dots button', v), track = $('#lp-optimizers');
+  const trackGo = i => { const pinned = track.classList.contains('pinned'); if (pinned) { const r = track.getBoundingClientRect(), top = scrollY + r.top, span = r.height - innerHeight; scrollTo({ top: top + span * (i / (OPTIMIZERS.length - 1)) + 2, behavior: reducedMotion() ? 'auto' : 'smooth' }); } else rail.children[i].scrollIntoView({ behavior: reducedMotion() ? 'auto' : 'smooth', inline: 'start', block: 'nearest' }); };
+  const trackActive = () => dots.findIndex(d => d.getAttribute('aria-current') === 'true');
+  const setDot = i => dots.forEach((d, j) => d.setAttribute('aria-current', j === i));
   v.onclick = e => {
     if (e.target.closest('.lp-links a')) { links.classList.remove('open'); burger.setAttribute('aria-expanded', 'false'); closeMenus(); }
+    const tr = e.target.closest('[data-track]'); if (tr) setTimeout(() => trackGo(+tr.dataset.track), 350);
     const b = e.target.closest('[data-lp]'); if (!b) { if (!e.target.closest('.lp-dd')) closeMenus(); return; }
     const k = b.dataset.lp;
     if (k === 'menu') { const o = links.classList.toggle('open'); b.setAttribute('aria-expanded', o); }
@@ -2744,38 +2854,42 @@ function pageLanding() {
     else if (k === 'analyze') go('#/studio');
     else if (k === 'demo') enterDemo();
     else if (k === 'demo-game') enterDemo(b.dataset.id);
-    else if (k === 'demo-opt') { if (authed) go('#/optimizers/' + b.dataset.opt); else enterDemo(null, b.dataset.opt); }
-    else if (k === 'gp') { $('#lpGp').dataset.v = b.dataset.v; $$('[data-lp="gp"]', v).forEach(x => x.setAttribute('aria-pressed', x === b)); }
-    else if (k === 'art') { $$('[data-lp="art"]', v).forEach(x => x.setAttribute('aria-selected', x === b)); const s = $('#lpArt'); s.classList.remove('swap'); void s.offsetWidth; s.innerHTML = lpArtPanel(D[+b.dataset.i]); s.classList.add('swap'); }
-    else if (k === 'tab') { $$('.lp-tab').forEach(t => t.setAttribute('aria-selected', t === b)); const panel = $('#lpPanel'); panel.setAttribute('aria-labelledby', b.id); panel.innerHTML = lpExample(D[+b.dataset.i]); }
+    else if (k === 'pv') { $$('[data-lp="pv"]', v).forEach(x => x.setAttribute('aria-selected', x === b)); placeInd(b); lpMorph($('#lpPv'), lpPreview(fish, b.dataset.k)); }
+    else if (k === 'track') trackGo(+b.dataset.i);
+    else if (k === 'track-prev') trackGo(Math.max(0, trackActive() - 1));
+    else if (k === 'track-next') trackGo(Math.min(OPTIMIZERS.length - 1, trackActive() + 1));
+    else if (k === 'tab') { $$('.lp-tab').forEach(t => t.setAttribute('aria-selected', t === b)); const panel = $('#lpPanel'); panel.setAttribute('aria-labelledby', b.id); lpMorph(panel, lpExample(D[+b.dataset.i])); }
   };
   v.onkeydown = e => {
     if (e.key === 'Escape') { const open = $('.lp-dd button[aria-expanded="true"]', v); if (open) { closeMenus(); open.focus(); } }
-    if (/Arrow(Left|Right)/.test(e.key) && e.target.closest('.lp-tabs')) { const tabs = $$('.lp-tab'), i = tabs.indexOf(document.activeElement), n = tabs[(i + (e.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length]; n.focus(); n.click(); }
+    const list = e.target.closest('.lp-tabs,.lp-tabs2'); if (list && /Arrow(Left|Right)/.test(e.key)) { const tabs = $$('[role="tab"]', list), i = tabs.indexOf(document.activeElement), n = tabs[(i + (e.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length]; n.focus(); n.click(); }
   };
-  lpReveal(v);
-  // Scroll state for the sticky nav border.
   const nav = $('#lpNav'), onScroll = () => { if (!nav.isConnected) return window.removeEventListener('scroll', onScroll); nav.classList.toggle('scrolled', scrollY > 8); };
   window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
-  // Hero: the scan badge cycles through stages, then settles on "complete".
-  const hs = $('#lpHeroScan span'); let hi = 0; lpLoop(hs, 1400, () => { hi = (hi + 1) % 8; hs.textContent = hi < 6 ? scanStages[hi] + '…' : 'Scan complete'; hs.parentElement.classList.toggle('busy', hi < 6); });
-  // First session: the active step walks through the journey.
-  const jl = $$('#lpJourney li'); let ji = 0; const jset = () => jl.forEach((li, i) => { li.classList.toggle('on', i === ji); li.classList.toggle('done', i < ji); });
-  if (reducedMotion()) { ji = jl.length; jset(); } else { jset(); lpLoop($('#lpJourney'), 1600, () => { ji = (ji + 1) % (jl.length + 1); jset(); }); }
-  // Progression: highlight one upgrade at a time and explain it.
-  const prow = $$('.lp-ptable tbody tr'), ps = $('#lpPStep'); let pi = 0;
-  const pset = () => { const r = pg.rows[pi]; prow.forEach((tr, i) => tr.classList.toggle('on', i === pi)); ps.innerHTML = `<b>${esc(r.name)}</b><span>${fmtNum(r.cost)} cost ÷ ${fmtNum(r.income)}/min = <b>${fmtMin(r.time)}</b> to unlock${r.spike ? ' · <em>difficulty spike</em>' : r.gap ? ' · <em>long gap</em>' : ''}</span>${demoChip}`; };
-  pset(); lpLoop(ps, 2200, () => { pi = (pi + 1) % pg.rows.length; pset(); });
-  // Studio: six scan stages advance, then the plugin reports the result.
-  const sl = $$('#lpPlugin .lp-scanlist li'), bar = $('#lpScanBar'), st = $('#lpScanText'); let si = -1;
-  const sset = () => { sl.forEach((li, i) => { li.classList.toggle('done', i < si); li.classList.toggle('on', i === si); }); bar.style.width = `${Math.max(0, Math.min(si, sl.length)) / sl.length * 100}%`; st.textContent = si < 0 ? 'Ready to sync' : si < sl.length ? scanStages[si] + '…' : 'Synced. 5 reports updated'; };
-  if (reducedMotion()) { si = sl.length; sset(); } else { sset(); lpLoop($('#lpPlugin'), 1200, () => { si = si >= sl.length + 2 ? -1 : si + 1; sset(); }); }
-}
-function lpArtPanel(d) {
-  const th = d.r.thumbnail.result, t = d.g.thumbs[0];
-  return `<div class="lp-stage-top"><b>${esc(d.g.name)}</b><span class="chip sample sm">Demo data</span></div><div class="lp-art2"><img class="lp-thumb" src="${t.preview}" alt="${esc(d.g.name)} thumbnail" data-name="${esc(d.g.name)}"><span class="game-art lp-icon">${gameArt(d.g)}</span></div>
-  <div class="lp-gp-notes"><div><p class="lp-plabel">File checks</p><p class="small">${icon('check', 14)} Thumbnail ${t.w}×${t.h} · 16:9</p><p class="small">${icon('check', 14)} Icon ${d.g.icon.w}×${d.g.icon.h} · square</p></div>
-  <div><p class="lp-plabel">Assessment · ${th.score}</p>${th.categories.filter(c => c.score != null).slice(0, 3).map(c => `<p class="small"><span class="lp-mini-bar"><i style="width:${c.score}%"></i></span>${esc(c.label)} <b>${c.score}</b></p>`).join('')}</div></div>`;
+
+  // Horizontal feature track: vertical scroll moves the rail sideways.
+  if (lpScene(track, p => { const max = rail.scrollWidth - rail.clientWidth; rail.style.transform = `translate3d(${-max * p}px,0,0)`; setDot(Math.round(p * (OPTIMIZERS.length - 1))); })) track.classList.add('pinned');
+  else rail.addEventListener('scroll', () => setDot(Math.round(rail.scrollLeft / Math.max(1, rail.scrollWidth - rail.clientWidth) * (OPTIMIZERS.length - 1))), { passive: true });
+
+  // Scan journey: the blueprint line draws with scroll; nodes, steps and the interface state follow.
+  const story = $('#lp-journey'), bp = $('#lpBp'), nodes = $$('.lp-bp-node', v), steps = $$('.lp-story-steps li', v), uis = $$('.lp-story-ui', v);
+  const storySet = p => { const s = Math.min(stages.length - 1, Math.floor(p * stages.length)); bp.style.strokeDashoffset = 1 - p; [nodes, steps, uis].forEach(list => list.forEach((n, i) => { n.classList.toggle('on', i === s); n.classList.toggle('done', i < s); })); };
+  if (lpScene(story, storySet)) story.classList.add('pinned'); else { storySet(1); story.classList.add('static'); }
+
+  // Thumbnail compare: drag (or arrow keys on the range) moves a clip-path divider.
+  const cmp = $('#lpCmp'), rng = $('.lp-cmp-range', cmp); rng.oninput = () => cmp.style.setProperty('--x', rng.value + '%');
+  lpOnce(cmp, () => { if (reducedMotion()) return; cmp.animate([{ '--x': '50%' }, { '--x': '72%' }, { '--x': '50%' }], { duration: 1400, easing: 'cubic-bezier(.65,0,.35,1)' }); });
+
+  // Report deck: cards stick and stack; the one underneath scales back as the next arrives. Chart and timeline animate once.
+  const deck = $$('.lp-dcard', v);
+  if (!reducedMotion() && !matchMedia('(max-width: 880px)').matches) deck.forEach((c, i) => { const next = deck[i + 1]; if (next) lpScene($('.lp-deck-stack', v), () => { const r = next.getBoundingClientRect(), k = Math.min(1, Math.max(0, 1 - (r.top - 120) / innerHeight)); c.style.transform = `scale(${1 - k * .05}) translateY(${-k * 14}px)`; c.style.filter = `brightness(${1 - k * .06})`; }); });
+  lpOnce($('#lpRet'), () => { $('#lpRet').classList.add('in'); $$('#lp-reports [data-to]').forEach(lpCount); });
+  lpOnce($('#lpSteps'), () => $('#lpSteps').classList.add('in'));
+  lpOnce($('#lpPv'), () => $$('#lpPv [data-to]').forEach(lpCount));
+
+  // Final headline: one word swaps through related phrases (pausable; static with reduced motion).
+  const words = ['player', 'update', 'thumbnail', 'player'], sw = $('#lpSwap'); let wi = 0;
+  lpLoop(sw, 2600, () => { wi = (wi + 1) % words.length; sw.animate([{ transform: 'translateY(0)', opacity: 1 }, { transform: 'translateY(-60%)', opacity: 0 }], { duration: 220, easing: 'ease-in' }).onfinish = () => { sw.textContent = words[wi]; sw.animate([{ transform: 'translateY(60%)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 320, easing: 'cubic-bezier(.16,1,.3,1)' }); }; });
 }
 function page404(msg) {
   $('#view').innerHTML = `<div class="card empty" style="margin-top:30px">${orbitBuddy(150, 'lav', 'wow')}<h1>This page wandered off</h1><p class="muted">${esc(msg || "We couldn't find that page. It might have been moved, or the link has a typo.")}</p><a class="btn" href="#/home">Back to Overview</a></div>`;

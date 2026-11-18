@@ -73,6 +73,7 @@ export const throttles = {
   billing: new Throttle(20, 15 * 60e3),
   forms: new Throttle(10, 60 * 60e3),
   api: new Throttle(600, 60e3),
+  events: new Throttle(120, 60e3),
 };
 
 // Security log. Never pass passwords, tokens, cookies or source code in `detail`.

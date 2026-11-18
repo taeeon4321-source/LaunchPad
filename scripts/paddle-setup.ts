@@ -31,6 +31,10 @@ for (const p of PLANS) {
     let price = prices.find((x: any) => x.billing_cycle?.interval === interval && x.billing_cycle?.frequency === 1 && x.unit_price.amount === amount && x.unit_price.currency_code === 'USD');
     if (!price) price = await call('POST', '/prices', { product_id: prod.id, name: label, description: `${p.name} ${label.toLowerCase()} (${interval === 'year' ? 'billed once a year, upfront' : 'billed every month'})`,
       unit_price: { amount, currency_code: 'USD' }, billing_cycle: { interval, frequency: 1 }, quantity: { minimum: 1, maximum: 1 }, tax_mode: 'account_setting' });
+    // Retire superseded prices for this plan and interval so checkout can only use the current amount.
+    for (const old of prices.filter((x: any) => x.id !== price.id && x.billing_cycle?.interval === interval && x.billing_cycle?.frequency === 1)) {
+      await call('PATCH', `/prices/${old.id}`, { status: 'archived' }); console.log(`Archived ${p.name} ${label} ${old.id} ($${(Number(old.unit_price.amount) / 100).toFixed(2)})`);
+    }
     out[`PADDLE_PRICE_${p.key.toUpperCase()}_${interval === 'month' ? 'MONTHLY' : 'ANNUAL'}`] = price.id;
     console.log(`${p.name} ${label}: ${price.id}  $${(Number(price.unit_price.amount) / 100).toFixed(2)} ${price.unit_price.currency_code} every ${price.billing_cycle.frequency} ${price.billing_cycle.interval}`);
   }

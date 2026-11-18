@@ -46,6 +46,8 @@ export const config = {
   email: { provider: env('EMAIL_PROVIDER', 'outbox'), apiKey: env('EMAIL_API_KEY'), from: env('EMAIL_FROM', 'LaunchPad <no-reply@example.invalid>') },
   // Plan limits are business decisions; unset (null) means "no limit configured yet". See BILLING.md.
   planLimits: JSON.parse(env('PLAN_LIMITS_JSON', '{}')) as Record<string, Record<string, number | null>>,
+  // A/B experiments shown to visitors, e.g. {"pricing_cta":["choose","start"]}. Empty = no experiments running.
+  experiments: JSON.parse(env('EXPERIMENTS_JSON', '{}')) as Record<string, string[]>,
   retention: {
     rawScanDays: Number(env('RETENTION_SCAN_SNAPSHOT_DAYS', '90')),
     securityEventDays: Number(env('RETENTION_SECURITY_EVENT_DAYS', '365')),

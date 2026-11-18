@@ -8,7 +8,7 @@ import { securityEvent, throttles } from '../security.ts';
 
 export default async function billingRoutes(app: FastifyInstance) {
   app.get('/api/plans', async () => ({
-    currency: 'USD', plans: publicCatalog(), paymentsAvailable: configured.paddle(),
+    currency: 'USD', plans: publicCatalog(), paymentsAvailable: configured.paddle(), experiments: config.experiments,
     paddle: configured.paddle() ? { environment: config.paddle.environment, clientToken: config.paddle.clientToken } : null, // client tokens are public by design
   }));
 

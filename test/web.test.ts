@@ -40,7 +40,16 @@ test('legal pages show version and review status; request forms work and validat
 
 test('plans endpoint exposes only public data', async () => {
   const r = (await client(app).call('GET', '/api/plans')).json;
-  assert.deepEqual(r.plans.map((p: any) => [p.plan, p.prices.month, p.prices.year]), [['light', 999, 9999], ['max', 4999, 20000]]);
-  assert.equal(r.plans[1].display.saving, '$399.88');
+  assert.deepEqual(r.plans.map((p: any) => [p.plan, p.prices.month, p.prices.year]), [['light', 999, 9999], ['max', 4999, 19999]]);
+  assert.equal(r.plans[1].display.saving, '$399.89');
   assert.ok(!JSON.stringify(r).match(/apiKey|webhookSecret/));
+});
+
+test('analytics: allow-listed, anonymous, admin-only reports', async () => {
+  const c = client(app);
+  assert.equal((await app.inject({ method: 'POST', url: '/api/events', remoteAddress: '10.9.9.9', headers: { 'content-type': 'application/json', origin: 'http://localhost:8787' }, payload: JSON.stringify({ name: 'pricing_view', session: 's1', props: { ctx: 'landing' } }) })).statusCode, 204);
+  assert.equal((await c.call('POST', '/api/events', { name: 'drop_table' })).status, 400);
+  const row = await db.one("select * from analytics_events where name = 'pricing_view'");
+  assert.deepEqual(Object.keys(row).sort(), ['at', 'id', 'name', 'props', 'session', 'variants'], 'no user id or IP column');
+  assert.equal((await c.call('GET', '/api/admin/analytics')).status, 401);
 });

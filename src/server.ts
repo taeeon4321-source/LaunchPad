@@ -16,6 +16,7 @@ import legalRoutes, { seedLegal } from './routes/legal.ts';
 import billingRoutes from './routes/billing.ts';
 import robloxRoutes from './routes/roblox.ts';
 import adminRoutes from './routes/admin.ts';
+import analyticsRoutes from './routes/analytics.ts';
 
 declare module 'fastify' { interface FastifyReply { cspNonce: string } }
 
@@ -78,7 +79,7 @@ export async function buildApp(opts: { memoryDb?: boolean; worker?: boolean } = 
     return reply.code(500).send({ error: 'Something went wrong on our side. Please try again.' });
   });
 
-  for (const r of [authRoutes, meRoutes, dataRoutes, legalRoutes, billingRoutes, robloxRoutes, adminRoutes]) await app.register(r);
+  for (const r of [authRoutes, meRoutes, dataRoutes, legalRoutes, billingRoutes, robloxRoutes, adminRoutes, analyticsRoutes]) await app.register(r);
   app.get('/healthz', async () => ({ ok: true }));
 
   // Pages: inline scripts get this response's CSP nonce.
