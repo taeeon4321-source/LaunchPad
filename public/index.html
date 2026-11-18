@@ -653,13 +653,13 @@ a.card:hover,.card.hoverable:hover,.game-card:hover{border-color:var(--border-st
 
 /* first-run tour: spotlight + anchored card */
 .tour{position:fixed;inset:0;z-index:200}
-.tour-shade{position:absolute;inset:0;transition:background .3s}.tour-shade.dim{background:rgba(20,20,20,.42)}
-.tour-spot{position:absolute;border-radius:12px;box-shadow:0 0 0 2px var(--cream),0 0 0 9999px rgba(20,20,20,.42);pointer-events:none;transition:left .45s cubic-bezier(.16,1,.3,1),top .45s cubic-bezier(.16,1,.3,1),width .45s cubic-bezier(.16,1,.3,1),height .45s cubic-bezier(.16,1,.3,1),opacity .2s}
-.tour-pop{position:absolute;max-width:calc(100vw - 24px);background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow-lg);padding:18px 18px 14px;transition:left .45s cubic-bezier(.16,1,.3,1),top .45s cubic-bezier(.16,1,.3,1);outline:none}
+.tour-shade{position:absolute;inset:0}.tour-shade.dim{background:rgba(20,20,20,.42)}
+.tour-spot{position:absolute;border-radius:12px;box-shadow:0 0 0 2px var(--cream),0 0 0 9999px rgba(20,20,20,.42);pointer-events:none}
+.tour-pop{position:absolute;max-width:calc(100vw - 24px);background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow-lg);padding:18px 18px 14px;outline:none}
 .tour-pop h2{font-size:1.08rem;margin:10px 0 6px;letter-spacing:-.02em}.tour-pop p{margin:0 0 8px;font-size:.9rem;line-height:1.5}
 .tour-note{color:var(--muted);font-size:.8rem!important}
 .tour-list{margin:4px 0 10px;padding-left:18px;font-size:.86rem;display:grid;gap:3px}
-.tour-prog{display:flex;align-items:center;gap:5px}.tour-prog i{height:4px;width:14px;border-radius:9px;background:var(--border);transition:width .35s cubic-bezier(.34,1.4,.64,1),background .2s}
+.tour-prog{display:flex;align-items:center;gap:5px}.tour-prog i{height:4px;width:14px;border-radius:9px;background:var(--border)}
 .tour-prog i.done{background:var(--muted)}.tour-prog i.on{width:26px;background:var(--text)}.tour-prog span{margin-left:auto;font-size:.74rem;color:var(--muted)}
 .tour-act{display:flex;align-items:center;gap:8px;margin-top:12px}.tour-act .tour-skip{margin-right:auto;border:0;background:none;color:var(--muted);font:500 .84rem var(--font-body);cursor:pointer;padding:6px 2px}
 .tour-act .tour-skip:hover{color:var(--text)}
@@ -667,9 +667,10 @@ a.card:hover,.card.hoverable:hover,.game-card:hover{border-color:var(--border-st
 .tour-done circle{stroke-dasharray:151;stroke-dashoffset:151;animation:tourDraw .6s cubic-bezier(.65,0,.35,1) forwards}.tour-done path{stroke-dasharray:36;stroke-dashoffset:36;animation:tourDraw .35s .45s ease-out forwards}
 @keyframes tourDraw{to{stroke-dashoffset:0}}
 .hint{display:flex;align-items:center;gap:14px;justify-content:space-between;flex-wrap:wrap;border:1px dashed var(--border-strong);border-radius:14px;padding:14px 16px;margin-bottom:20px;font-size:.9rem}
-@media (prefers-reduced-motion:reduce){.tour-spot,.tour-pop,.tour-prog i{transition:none}.tour-done circle,.tour-done path{animation:none;stroke-dashoffset:0}}
-:root[data-motion="reduce"] .tour-spot,:root[data-motion="reduce"] .tour-pop{transition:none}
+@media (prefers-reduced-motion:reduce){.tour-done circle,.tour-done path{animation:none;stroke-dashoffset:0}}
+:root[data-motion="reduce"] .tour-done circle,:root[data-motion="reduce"] .tour-done path{animation:none;stroke-dashoffset:0}
 
+.rec-more{margin-top:8px;font-size:.88rem}.rec-more summary{cursor:pointer;color:var(--muted);font-weight:600;font-size:.82rem;list-style:none}.rec-more summary::before{content:"+ "}.rec-more[open] summary::before{content:"− "}.rec-more p{margin:6px 0 0}
 /* plans, settings tabs, studio sync */
 .tabs{display:flex;gap:4px;flex-wrap:wrap;border-bottom:1px solid var(--border);margin-bottom:8px}.tabs a{padding:9px 14px;border-radius:10px 10px 0 0;color:var(--muted);text-decoration:none;font-weight:600;font-size:.92rem}.tabs a[aria-current]{color:var(--text);box-shadow:inset 0 -2px 0 var(--text)}
 .sync-steps{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:14px}.sync-step{display:flex;gap:12px;align-items:flex-start}.sync-n{flex:0 0 28px;height:28px;border-radius:50%;border:1.5px solid var(--border);display:grid;place-items:center;font-weight:700;font-size:.85rem}.sync-step.done .sync-n{background:var(--text);color:var(--bg);border-color:var(--text)}
@@ -744,23 +745,23 @@ const GENRES = {
 
 const OPTIMIZERS = [
   { id: 'game-page', name: 'Game Page', full: 'Game Page Optimizer', icon: 'page', tone: 'sage', tag: 'Presentation',
-    blurb: "See whether your title and description actually tell players what's fun about your game.",
+    blurb: 'Does your listing explain the fun?',
     analyzes: ['Title and opening hook', 'Gameplay, keywords and your USP', 'Readability and call to action'],
     receives: ['Score with 8 category scores', 'Alternative titles and a rewritten description', 'Before/after listing preview'] },
   { id: 'thumbnail', name: 'Thumbnail & Icon', full: 'Thumbnail & Icon Optimizer', icon: 'image', tone: 'orange', tag: 'Presentation',
-    blurb: 'Honest feedback on your icon and thumbnails, plus fresh concepts you can build or generate.',
+    blurb: 'Feedback and concepts for your icon and thumbnails.',
     analyzes: ['Real file checks: size, ratio, format', 'Clarity, focal point and contrast', 'Readability at small sizes'],
     receives: ['Creative score', '3 thumbnail + 2 icon concepts', 'Copy-ready image prompts'] },
   { id: 'first-session', name: 'First Session', full: 'First Session Optimizer', icon: 'flag', tone: 'blue', tag: 'Player experience',
-    blurb: 'Map the first few minutes after a player joins and find where they might get lost or bored.',
+    blurb: 'Where new players get lost in the first minutes.',
     analyzes: ['Time to first action and first reward', 'Steps, guidance and friction', 'The path into your core loop'],
     receives: ['Journey timeline', 'Friction points and likely drop-off reasons', 'A suggested tighter opening'] },
   { id: 'retention', name: 'Retention', full: 'Retention Optimizer', icon: 'users', tone: 'lav', tag: 'Player experience',
-    blurb: "Players are joining, but are they coming back? Let's look at your numbers and your reasons to return.",
+    blurb: 'Why players come back, or don\'t.',
     analyzes: ['D1 / D7 / D30 and changes over time', 'Rewards, goals and social hooks', 'New vs returning players'],
     receives: ['Retention charts', 'Experiments to try', 'A step-by-step plan'] },
   { id: 'progression', name: 'Progression', full: 'Progression Optimizer', icon: 'stairs', tone: 'gold', tag: 'Economy',
-    blurb: 'Find where your upgrade curve gets frustrating, then test fixes in a live economy simulator.',
+    blurb: 'Find where upgrades get frustrating, then test fixes.',
     analyzes: ['Costs vs income vs rewards', 'Difficulty spikes and long gaps', 'Late-game value'],
     receives: ['Progression curve', 'Suggested costs and rewards', 'Live what-if simulator'] }
 ];
@@ -1858,8 +1859,8 @@ const progInner = (d, t) => `<p class="muted small">${d} of ${t} recommendations
 const pbar = (pct, thin = true) => `<div class="pbar ${thin ? 'thin' : ''}" role="img" aria-label="${pct}%"><div class="track"><i style="width:${clamp(pct, 0, 100)}%"></i></div><b class="small">${pct}%</b></div>`;
 function recCard(x, reportId) {
   return `<article class="rec ${x.done ? 'done' : ''}" id="rec-${x.id || x.key}"><div class="rec-head"><span class="rec-mark">${recMark(x)}</span><h4>${esc(x.title)}</h4><span class="pri ${x.priority}">${x.priority}</span>${reportId ? `<label class="check small" style="padding:0;margin-left:4px"><input type="checkbox" data-rec="${x.id}" data-report="${reportId}" ${x.done ? 'checked' : ''} aria-label="Mark “${esc(x.title)}” as completed"><span class="muted">Done</span></label>` : ''}</div>
-  <dl><dt>${x.score >= 75 ? 'Opportunity' : 'Problem'}</dt><dd>${x.score >= 75 ? 'This area is already in good shape; this is a refinement. ' : ''}${esc(x.problem)}</dd><dt>Why it matters</dt><dd>${esc(x.why)}</dd><dt>Suggested fix</dt><dd>${esc(x.fix)}</dd><dt>Expected benefit</dt><dd>${esc(x.benefit)}</dd></dl>
-  <div class="trigger"><b>Why you're seeing this:</b> ${esc(x.trigger)}</div></article>`;
+  <dl><dt>${x.score >= 75 ? 'Refinement' : 'Finding'}</dt><dd>${esc(x.problem)}</dd><dt>Recommendation</dt><dd>${esc(x.fix)}</dd></dl>
+  <details class="rec-more"><summary>Why it matters</summary><p>${esc(x.why)}</p>${x.benefit ? `<p><b>Expected benefit:</b> ${esc(x.benefit)}</p>` : ''}<p class="trigger"><b>Evidence:</b> ${esc(x.trigger)}</p></details></article>`;
 }
 function renderResults(id, r, ctx) {
   const rep = ctx.report, recs = rep ? rep.recs : r.recs, live = ctx.mode === 'live';
@@ -1899,9 +1900,9 @@ function listingCard(label, title, desc, inp, score) {
 }
 EXTRAS['game-page'] = (r, ctx) => {
   const e = r.extras, inp = ctx.inputs || ctx.report.inputs, recs = ctx.report ? ctx.report.recs : r.recs;
-  return `<section class="section"><div class="section-title"><h2>Suggested titles</h2></div><div class="card flat"><ul class="list-plain">${e.titles.map(t => `<li class="row between"><span class="row" style="gap:8px"><b>${esc(t.text)}</b><span class="small muted">title score</span>${miniScore(t.score)}</span><button class="btn ghost sm" data-copy="${esc(t.text)}">${icon('copy', 16)} Copy</button></li>`).join('')}</ul><p class="tiny faint" style="margin:8px 0 0">Built from words in your loop and USP. Only use one if it's true to your game.</p></div></section>
-  <section class="section"><div class="section-title"><h2>An improved description</h2><button class="btn ghost sm" data-copy="${esc(e.improvedDesc)}">${icon('copy', 16)} Copy description</button></div><div class="copyable">${esc(e.improvedDesc)}</div><p class="tiny faint" style="margin-top:8px">Written only from what you entered. Double-check that every line matches your game before using it.</p></section>
-  <section class="section"><div class="section-title"><h2>Before &amp; after</h2><span class="small muted">A mockup preview, not the exact Roblox layout</span></div><div class="grid g2">${listingCard('Current listing', inp.title, inp.description, inp, r.score)}${listingCard('With suggestions', e.improvedTitle, e.improvedDesc, inp, e.improvedScore)}</div><p class="small muted" style="margin-top:10px">The "with suggestions" score is calculated by running the same rules on the suggested title and description.</p></section>
+  return `<section class="section"><div class="section-title"><h2>Suggested titles</h2></div><div class="card flat"><ul class="list-plain">${e.titles.map(t => `<li class="row between"><span class="row" style="gap:8px"><b>${esc(t.text)}</b><span class="small muted">title score</span>${miniScore(t.score)}</span><button class="btn ghost sm" data-copy="${esc(t.text)}">${icon('copy', 16)} Copy</button></li>`).join('')}</ul><p class="tiny faint" style="margin:8px 0 0">Only use one if it's true to your game.</p></div></section>
+  <section class="section"><div class="section-title"><h2>An improved description</h2><button class="btn ghost sm" data-copy="${esc(e.improvedDesc)}">${icon('copy', 16)} Copy description</button></div><div class="copyable">${esc(e.improvedDesc)}</div><p class="tiny faint" style="margin-top:8px">Check every line matches your game.</p></section>
+  <section class="section"><div class="section-title"><h2>Before &amp; after</h2><span class="small muted">A mockup preview, not the exact Roblox layout</span></div><div class="grid g2">${listingCard('Current listing', inp.title, inp.description, inp, r.score)}${listingCard('With suggestions', e.improvedTitle, e.improvedDesc, inp, e.improvedScore)}</div><p class="small muted" style="margin-top:10px">Same rules, run on the suggested title and description.</p></section>
   <section class="section"><h2>Improvement checklist</h2><div class="card flat">${recs.map(x => ctx.report ? `<label class="check"><input type="checkbox" data-rec="${x.id}" data-report="${ctx.report.id}" ${x.done ? 'checked' : ''}><span>${esc(x.title)} <span class="pri ${x.priority}">${x.priority}</span></span></label>` : `<div class="check">${icon('check', 18)}<span>${esc(x.title)} <span class="pri ${x.priority}">${x.priority}</span></span></div>`).join('') || '<p class="muted">Nothing on the list.</p>'}</div></section>`;
 };
 // --- Thumbnail extras
@@ -1963,9 +1964,9 @@ EXTRAS['first-session'] = (r, ctx) => {
   const e = r.extras, inp = ctx.inputs || ctx.report.inputs, st = e.stats, is = e.improvedStats, stages = (inp.stages || []).filter(s => (s.name || '').trim());
   const row = (l, a, b) => `<tr><td>${l}</td><td class="num">${fmtSec(a)}</td><td class="num">${fmtSec(b)}</td><td class="num">${a != null && b != null ? deltaTag(b - a, 's', true) : '—'}</td></tr>`;
   return `<section class="section"><div class="section-title"><h2>Your player journey</h2><span class="small muted">${plural(stages.length, 'stage')} · ${fmtSec(st.total)} total</span></div><div class="card flat">${journeyHTML(stages)}<div class="legend"><span><i style="background:var(--sage-soft);border:1px solid var(--sage)"></i>Gives a reward</span><span><i style="border:1px solid var(--orange)"></i>Has friction</span></div></div>${e.mismatch.map(m => `<p class="small muted" style="margin-top:8px">${icon('info', 16)} ${esc(m)}</p>`).join('')}</section>
-  <section class="section grid g2"><div><h2>Friction points</h2><div class="card flat">${e.friction.length ? `<ul class="list-plain">${e.friction.map(f => `<li><b>Stage ${f.i + 1}: ${esc(f.name)}</b><br><span class="small muted">${esc(f.text)}</span></li>`).join('')}</ul>` : '<p class="muted small" style="margin:0">You didn\'t note any friction. If you\'re unsure, watch a friend play for the first time and write down where they hesitate.</p>'}</div></div>
+  <section class="section grid g2"><div><h2>Friction points</h2><div class="card flat">${e.friction.length ? `<ul class="list-plain">${e.friction.map(f => `<li><b>Stage ${f.i + 1}: ${esc(f.name)}</b><br><span class="small muted">${esc(f.text)}</span></li>`).join('')}</ul>` : '<p class="muted small" style="margin:0">No friction noted. Watching a new player helps.</p>'}</div></div>
   <div><h2>Why players might leave</h2><div class="card flat">${e.leave.length ? `<ul style="margin:0">${e.leave.map(l => `<li>${esc(l)}</li>`).join('')}</ul>` : '<p class="muted small" style="margin:0">Nothing obvious from what you entered.</p>'}</div></div></section>
-  <section class="section"><div class="section-title"><h2>A suggested opening</h2>${ctx.mode === 'live' ? `<button class="btn soft sm" data-act="apply-journey">${icon('edit', 16)} Use this in the editor</button>` : ''}</div><p class="small muted">Built from your own stages: passive steps are merged, long steps are trimmed, an early reward is added after the first action and a clear next goal is added at the end. Dashed cards are new steps.</p><div class="card flat">${journeyHTML(e.improved)}</div>
+  <section class="section"><div class="section-title"><h2>A suggested opening</h2>${ctx.mode === 'live' ? `<button class="btn soft sm" data-act="apply-journey">${icon('edit', 16)} Use this in the editor</button>` : ''}</div><p class="small muted">Built from your stages. Dashed cards are new steps.</p><div class="card flat">${journeyHTML(e.improved)}</div>
   <div class="table-wrap" style="margin-top:14px"><table><thead><tr><th>Before vs after</th><th class="num">Now</th><th class="num">Suggested</th><th class="num">Change</th></tr></thead><tbody>${row('Time to first action', st.tAction, is.tAction)}${row('Time to first reward', st.tReward, is.tReward)}${row('Total opening length', st.total, is.total)}</tbody></table></div></section>`;
 };
 function applyJourney(r) {
@@ -1984,12 +1985,12 @@ EXTRAS.retention = (r, ctx) => {
   const gid = ctx.report ? ctx.report.gameId : S().selectedGameId;
   let hist = reportsFor(gid, 'retention').reverse(); if (ctx.report) hist = hist.filter(x => x.createdAt <= ctx.report.createdAt);
   const pts = hist.map(h => ({ l: fmtDate(h.createdAt).replace(/,.*/, ''), i: h.inputs })); if (ctx.mode === 'live') pts.push({ l: 'Now', i: inp });
-  const histChart = pts.length >= 2 ? lineChart({ labels: pts.map(p => p.l), series: [['d1', 'Day 1', 'var(--lav-strong)'], ['d7', 'Day 7', 'var(--blue)'], ['d30', 'Day 30', 'var(--orange)']].map(([k, n, c]) => ({ name: n, values: pts.map(p => num(p.i[k])), color: c })), yFmt: v => Math.round(v) + '%', title: 'Retention across saved reports' }) : '<p class="muted small" style="margin:0">Save at least two Retention reports for this game to see a history chart.</p>';
+  const histChart = pts.length >= 2 ? lineChart({ labels: pts.map(p => p.l), series: [['d1', 'Day 1', 'var(--lav-strong)'], ['d7', 'Day 7', 'var(--blue)'], ['d30', 'Day 30', 'var(--orange)']].map(([k, n, c]) => ({ name: n, values: pts.map(p => num(p.i[k])), color: c })), yFmt: v => Math.round(v) + '%', title: 'Retention across saved reports' }) : '<p class="muted small" style="margin:0">Save two Retention reports to see history.</p>';
   const status = (a, b) => a == null || b == null ? '<span class="faint">—</span>' : a > b ? '<span class="chip good">Improved</span>' : a < b ? '<span class="chip bad">Declined</span>' : '<span class="chip">Unchanged</span>';
-  return `<section class="section"><h2>Observations</h2><div class="card flat"><ul style="margin:0">${e.observations.map(o => `<li>${esc(o)}</li>`).join('') || '<li class="muted">Add Day 1/7/30 numbers to see observations.</li>'}</ul><p class="tiny faint" style="margin:10px 0 0">LaunchPad doesn't compare your numbers with other games, because there's no reliable public benchmark to compare against. These are just facts from what you entered.</p></div></section>
+  return `<section class="section"><h2>Observations</h2><div class="card flat"><ul style="margin:0">${e.observations.map(o => `<li>${esc(o)}</li>`).join('') || '<li class="muted">Add Day 1/7/30 numbers to see observations.</li>'}</ul><p class="tiny faint" style="margin:10px 0 0">Compared only with your own past numbers.</p></div></section>
   <section class="section grid g2"><div class="card"><h3>Day 1 · Day 7 · Day 30</h3>${bars}</div><div class="card"><h3>History</h3>${histChart}</div></section>
   <section class="section"><h2>Then vs now</h2><div class="table-wrap"><table><thead><tr><th>Metric</th><th class="num">Previous</th><th class="num">Current</th><th class="num">Change</th><th>Status</th></tr></thead><tbody>${RET_METRICS.map(([k, pk, l, u]) => { const a = num(inp[k]), b = num(inp[pk]); return `<tr><td>${l}</td><td class="num">${b ?? '—'}${b != null ? u : ''}</td><td class="num">${a ?? '—'}${a != null ? u : ''}</td><td class="num">${a != null && b != null ? deltaTag(a - b, u.trim() === '%' ? ' pts' : u) : '—'}</td><td>${status(a, b)}</td></tr>`; }).join('')}</tbody></table></div></section>
-  <section class="section grid g2"><div><h2>Experiments to try</h2><div class="card flat"><ol style="margin:0">${e.experiments.map(x => `<li style="margin-bottom:8px"><b>${esc(x.name)}</b><br><span class="small muted">Targets: ${esc(x.why)} · Watch: ${esc(x.measure)}</span></li>`).join('')}</ol><p class="tiny faint" style="margin:8px 0 0">Run one change at a time and compare periods. Other things (holidays, updates, front-page placement) can move numbers too, so treat results as hints, not proof.</p></div></div>
+  <section class="section grid g2"><div><h2>Experiments to try</h2><div class="card flat"><ol style="margin:0">${e.experiments.map(x => `<li style="margin-bottom:8px"><b>${esc(x.name)}</b><br><span class="small muted">Targets: ${esc(x.why)} · Watch: ${esc(x.measure)}</span></li>`).join('')}</ol><p class="tiny faint" style="margin:8px 0 0">Change one thing at a time. Treat results as hints, not proof.</p></div></div>
   <div><h2>Your improvement plan</h2><div class="card flat">${e.plan.map(p => `<h4 style="margin-top:6px">${esc(p.when)}</h4><ul>${p.items.map(i => `<li>${esc(i)}</li>`).join('')}</ul>`).join('') || '<p class="muted">No recommendations, so no plan needed.</p>'}</div></div></section>`;
 };
 // --- Progression extras
@@ -2021,7 +2022,7 @@ function fresh() { const host = $('#optForm'); host.innerHTML = ''; const el = d
 FORMS['game-page'] = root => {
   root = fresh();
   const g = selectedGame(), D = draft('game-page', () => demoInputs(S().selectedGameId, 'game-page') || ({ url: g?.url || '', title: g?.name || '', description: g?.description || '', genre: g?.genre || 'simulator', audience: '', loop: g?.loop || '', usp: '', icon: g?.icon || null, thumbs: [] }));
-  root.innerHTML = `<div class="card"><h2>Let's take a look at your game page</h2><p class="small muted">LaunchPad can't read Roblox pages yet, so paste your current details below. Nothing is sent anywhere.</p>
+  root.innerHTML = `<div class="card"><h2>Let's take a look at your game page</h2><p class="small muted">Paste your current listing.</p>
   <div class="form-grid">${F('url', 'url', 'Roblox game URL (optional)', D.url, { ph: 'https://www.roblox.com/games/…', hint: 'Saved for reference only. It isn\'t fetched.' })}${F('select', 'genre', 'Genre', D.genre, { options: genreOpts(), req: true })}
   ${F('text', 'title', 'Game title', D.title, { req: true, full: true, hint: `<span id="tLen">${(D.title || '').length}</span> characters` })}
   ${F('textarea', 'description', 'Game description', D.description, { req: true, full: true, rows: 6, hint: `<span id="dLen">${(D.description || '').length}</span> characters. Paste it exactly as it appears now.` })}
@@ -2042,11 +2043,11 @@ FORMS['game-page'] = root => {
 FORMS.thumbnail = root => {
   root = fresh();
   const g = selectedGame(), D = draft('thumbnail', () => demoInputs(S().selectedGameId, 'thumbnail') || ({ name: g?.name || '', genre: g?.genre || 'simulator', audience: '', feature: '', style: 'bright', focal: '', context: '', subjects: '2', textWords: 0, contrast: 3, busy: 3, showsGameplay: 3, emotion: 3, matchesGame: 4, iconSubject: 'medium', icon: g?.icon || null, thumbs: [] }));
-  root.innerHTML = `<div class="card"><h2>Your artwork</h2><p class="small muted">Images stay in your browser. LaunchPad checks size, format and proportions for real. <!-- TODO-REAL: vision model analysis --></p>
+  root.innerHTML = `<div class="card"><h2>Your artwork</h2><p class="small muted">Size, format and proportions are checked for real.</p>
   <div class="grid g2">${uploaderHTML('thIcon', 'Game icon', `Ideal: ${CONFIG.icon.w}×${CONFIG.icon.h}, PNG or JPG, up to 8 MB`, false)}${uploaderHTML('thThumbs', 'Thumbnails', `Ideal: ${CONFIG.thumb.w}×${CONFIG.thumb.h} (16:9), up to 10`, true)}</div>
   <div class="form-grid" style="margin-top:18px">${F('text', 'name', 'Game name', D.name, { req: true })}${F('select', 'genre', 'Genre', D.genre, { options: genreOpts() })}${F('text', 'audience', 'Target audience', D.audience, { ph: 'e.g. Kids 9–13' })}${F('text', 'feature', 'Main gameplay feature', D.feature, { req: true, ph: 'e.g. Hatching glowing pets' })}
   ${F('select', 'style', 'Desired visual style', D.style, { options: Object.entries(STYLES) })}${F('text', 'focal', 'Intended focal point', D.focal, { ph: 'e.g. A glowing pet next to the player, center-left' })}${F('textarea', 'context', 'Anything else about your current artwork? (optional)', D.context, { full: true, rows: 2 })}</div></div>
-  <fieldset class="card section" style="padding:20px"><legend>Your honest take</legend><p class="small muted" style="margin-top:0">LaunchPad can't see inside images yet, so these answers drive the visual feedback. Look at your current artwork while you answer.</p>
+  <fieldset class="card section" style="padding:20px"><legend>Your honest take</legend><p class="small muted" style="margin-top:0">These answers drive the visual feedback.</p>
   <div class="form-grid">${F('select', 'subjects', 'How many main subjects compete for attention?', D.subjects, { options: [['1', 'One'], ['2', 'Two'], ['3+', 'Three or more']] })}${F('number', 'textWords', 'Roughly how many words of text are on the icon?', D.textWords, { max: 40 })}
   ${F('select', 'iconSubject', 'How much of the icon does the subject fill?', D.iconSubject, { options: [['large', 'Most of it'], ['medium', 'About half'], ['small', 'A small part']] })}
   ${F('range', 'contrast', 'Contrast between subject and background (1 low – 5 high)', D.contrast)}${F('range', 'busy', 'How busy is the background? (1 calm – 5 very busy)', D.busy)}
@@ -2067,9 +2068,9 @@ FORMS['first-session'] = root => {
   const D = draft('first-session', () => demoInputs(S().selectedGameId, 'first-session') || clone(SAMPLE_INPUTS.firstSession));
   const SF = (i, f, l, v, type = 'text', ph = '') => `<div class="field"><label for="st_${i}_${f}">${l}</label><input type="${type}" id="st_${i}_${f}" data-s="${i}" data-f="${f}" value="${esc(v ?? '')}" ${ph ? `placeholder="${esc(ph)}"` : ''} ${type === 'number' ? 'min="0" inputmode="numeric"' : ''} aria-describedby="st_${i}_${f}-e"><span class="err" id="st_${i}_${f}-e"></span></div>`;
   const drawStages = () => { const n = D.stages.length; $('#fsStages', root).innerHTML = n ? D.stages.map((s, i) => `<div class="stage-card"><div class="row between" style="flex-wrap:nowrap"><div class="row" style="flex-wrap:nowrap;gap:10px;min-width:0;flex:1"><span class="stage-num" aria-hidden="true">${i + 1}</span><label class="sr-only" for="st_${i}_name">Stage ${i + 1} name</label><input type="text" id="st_${i}_name" data-s="${i}" data-f="name" value="${esc(s.name)}" placeholder="Stage name" style="font-weight:700" aria-describedby="st_${i}_name-e"></div><div class="row" style="gap:0;flex-wrap:nowrap"><button type="button" class="icon-btn" data-mv="-1" data-i="${i}" ${i === 0 ? 'disabled' : ''} aria-label="Move stage ${i + 1} up">${icon('up')}</button><button type="button" class="icon-btn" data-mv="1" data-i="${i}" ${i === n - 1 ? 'disabled' : ''} aria-label="Move stage ${i + 1} down">${icon('down')}</button><button type="button" class="icon-btn" data-del="${i}" aria-label="Delete stage ${i + 1}">${icon('trash', 18)}</button></div></div><span class="err" id="st_${i}_name-e"></span>
-    <div class="form-grid" style="margin-top:10px">${SF(i, 'sees', 'What the player sees', s.sees)}${SF(i, 'action', 'What the player needs to do', s.action)}${SF(i, 'time', 'Estimated time (seconds)', s.time, 'number')}${SF(i, 'reward', 'Reward received', s.reward, 'text', 'Leave blank if none')}${SF(i, 'next', 'What happens next', s.next)}${SF(i, 'friction', 'Anything confusing or frustrating?', s.friction, 'text', 'Be honest, this is the useful part')}</div></div>`).join('') : `<div class="empty card flat">${orbitArt({ size: 96, tone: 'blue' })}<p class="muted">No stages yet. Add the first thing players see when they join, or load a preset.</p></div>`; };
+    <div class="form-grid" style="margin-top:10px">${SF(i, 'sees', 'What the player sees', s.sees)}${SF(i, 'action', 'What the player needs to do', s.action)}${SF(i, 'time', 'Estimated time (seconds)', s.time, 'number')}${SF(i, 'reward', 'Reward received', s.reward, 'text', 'Leave blank if none')}${SF(i, 'next', 'What happens next', s.next)}${SF(i, 'friction', 'Anything confusing or frustrating?', s.friction, 'text', 'Be honest, this is the useful part')}</div></div>`).join('') : `<div class="empty card flat">${orbitArt({ size: 96, tone: 'blue' })}<p class="muted">No stages yet. Add the first thing players see, or load a preset.</p></div>`; };
   root.innerHTML = `<div class="card"><div class="row between"><h2 style="margin:0">Map the first few minutes</h2><div class="row" style="gap:8px"><label class="sr-only" for="fsPreset">Genre preset</label><select id="fsPreset" style="width:auto">${Object.keys(FS_PRESETS).map(k => `<option value="${k}">${cap(k === 'rpg' ? 'RPG' : k)} example</option>`).join('')}</select><button class="btn ghost sm" id="fsLoad">Load example</button></div></div>
-  <p class="small muted">Add each stage in order, starting from the moment a player joins. Be honest about the confusing bits: that's where the most useful feedback comes from.</p><div id="fsStages"></div><button type="button" class="btn soft sm" id="fsAdd" style="margin-top:12px">${icon('plus', 16)} Add stage</button></div>
+  <p class="small muted">Add each stage in order from the moment a player joins.</p><div id="fsStages"></div><button type="button" class="btn soft sm" id="fsAdd" style="margin-top:12px">${icon('plus', 16)} Add stage</button></div>
   <div class="card section"><h2>Timing &amp; guidance</h2><p class="small muted">Leave a time blank and LaunchPad works it out from your stages.</p><div class="form-grid">${F('number', 'tutorialDuration', 'Tutorial length (seconds)', D.tutorialDuration)}${F('number', 'tInteract', 'Time until first meaningful interaction (s)', D.tInteract, { tip: 'The first moment the player does something that feels like playing, not just walking or reading.' })}${F('number', 'tReward', 'Time until first reward (s)', D.tReward)}${F('number', 'tCore', 'Time until the core loop begins (s)', D.tCore, { tip: 'When the player starts doing the thing they will repeat for the rest of the game.' })}${F('number', 'requiredActions', 'Number of required actions', D.requiredActions)}${F('select', 'guidance', 'Guidance players get', D.guidance, { options: [['none', 'None'], ['text', 'Text instructions'], ['arrows', 'Arrows / highlights'], ['npc', 'NPC dialogue'], ['mixed', 'Arrows + short text']] })}
   <label class="check full"><input type="checkbox" data-k="skippable" ${D.skippable ? 'checked' : ''}> <span>Players can skip the tutorial</span></label></div></div>
   <div class="row section"><button class="btn lg" id="fsGo">${icon('play', 18)} Analyze first session</button></div>`;
@@ -2094,7 +2095,7 @@ FORMS.retention = root => {
   const pct = { min: 0, max: 100 };
   const group = (k, map) => `<div class="field full"><span class="label">${k === 'rewards' ? 'Reasons to come back you already have' : 'Social features you already have'}</span><div class="row" style="gap:4px 18px">${Object.entries(map).map(([v, l]) => `<label class="check"><input type="checkbox" data-group="${k}" value="${v}" ${D[k].includes(v) ? 'checked' : ''}> ${l}</label>`).join('')}</div></div>`;
   root.innerHTML = `<div class="card"><div class="row between"><h2 style="margin:0">Your numbers</h2><div class="row" style="gap:8px"><label class="btn ghost sm" for="rtImport" style="position:relative">${icon('upload', 16)} Import .json / .csv<input type="file" id="rtImport" accept=".json,.csv,text/csv,application/json" class="sr-only"></label><button type="button" class="btn ghost sm" id="rtSample">Use sample numbers</button></div></div>
-  <p class="small muted">Copy these from your Creator Dashboard analytics. LaunchPad doesn't connect to Roblox analytics yet. <!-- TODO-REAL: Creator Analytics import --> Hover the <span aria-hidden="true">ⓘ</span> icons for plain-language explanations. CSV format: one <code>metric,value</code> per line, e.g. <code>d1,22</code>.</p>
+  <p class="small muted">Copy from your Creator Dashboard. Hover <span aria-hidden="true">ⓘ</span> for definitions. CSV: one <code>metric,value</code> per line.</p>
   <div class="form-grid">${F('number', 'd1', 'Day 1 retention (%)', D.d1, { ...pct, req: true, tip: 'Of new players who joined on a given day, the share who came back the next day.' })}${F('number', 'd7', 'Day 7 retention (%)', D.d7, { ...pct, tip: 'Of new players, the share who came back 7 days after their first visit.' })}${F('number', 'd30', 'Day 30 retention (%)', D.d30, { ...pct, tip: 'Of new players, the share still playing 30 days later.' })}
   ${F('number', 'session', 'Average session (minutes)', D.session, { tip: 'How long a typical visit lasts, from joining to leaving.' })}${F('number', 'returningPct', 'Returning players (%)', D.returningPct, { ...pct, tip: 'The share of your daily players who had played before.' })}${F('number', 'dau', 'Daily active users', D.dau, { tip: 'DAU: unique players on an average day.' })}
   ${F('number', 'newPlayers', 'New players per day', D.newPlayers)}${F('number', 'returningPlayers', 'Returning players per day', D.returningPlayers)}</div>
@@ -2129,11 +2130,11 @@ FORMS.progression = root => {
   const cell = (i, f, v, type = 'number', lab) => `<td${type === 'number' ? ' class="num"' : ''}><label class="sr-only" for="pg_${i}_${f}">${lab} for stage ${i + 1}</label><input type="${type}" id="pg_${i}_${f}" data-r="${i}" data-f="${f}" value="${esc(v ?? '')}" ${type === 'number' ? 'min="0" step="any" inputmode="decimal" style="text-align:right;width:110px"' : 'style="min-width:130px"'}></td>`;
   const drawBody = () => { const n = D.stages.length; $('#pgBody', root).innerHTML = D.stages.map((s, i) => `<tr data-row="${i}"><td>${i + 1}</td>${cell(i, 'name', s.name, 'text', 'Upgrade name')}${cell(i, 'cost', s.cost, 'number', 'Cost')}${cell(i, 'income', s.income, 'number', 'Income per minute')}${cell(i, 'reward', s.reward, 'number', 'Reward')}${cell(i, 'est', s.est, 'number', 'Your estimate in minutes')}${cell(i, 'notes', s.notes, 'text', 'Notes')}<td class="num" id="pgT_${i}"><b>—</b></td><td><div class="row" style="gap:0;flex-wrap:nowrap"><button type="button" class="icon-btn" data-mv="-1" data-i="${i}" ${i === 0 ? 'disabled' : ''} aria-label="Move stage ${i + 1} up">${icon('up')}</button><button type="button" class="icon-btn" data-mv="1" data-i="${i}" ${i === n - 1 ? 'disabled' : ''} aria-label="Move stage ${i + 1} down">${icon('down')}</button><button type="button" class="icon-btn" data-del="${i}" aria-label="Delete stage ${i + 1}">${icon('trash', 18)}</button></div></td></tr>`).join(''); };
   root.innerHTML = `<div class="card"><div class="row between"><h2 style="margin:0">Your progression table</h2><div class="row" style="gap:8px"><label class="sr-only" for="pgPreset">Preset</label><select id="pgPreset" style="width:auto"><option value="simulator">Simulator example</option><option value="tycoon">Tycoon example</option><option value="incremental">Incremental example</option></select><button type="button" class="btn ghost sm" id="pgLoad">Load example</button></div></div>
-  <p class="small muted">One row per upgrade, in the order players buy them. Income and rewards are per minute. Results below update as you type.</p>
+  <p class="small muted">One row per upgrade, in buying order. Income and rewards are per minute.</p>
   <div class="row" style="margin:6px 0 14px;gap:8px"><span class="label">Income model</span>${tip('“Use my income column” takes your income numbers as-is. “Chain from rewards” starts from stage 1 income and adds each reward, so changing a reward changes every later stage.')}<div class="seg" role="group" aria-label="Income model"><button type="button" data-mode="column" aria-pressed="${!chain()}">Use my income column</button><button type="button" data-mode="chain" aria-pressed="${chain()}">Chain from rewards</button></div></div>
   <div class="table-wrap"><table><thead><tr><th>#</th><th>Upgrade</th><th class="num">Cost</th><th class="num">Income / min</th><th class="num">Reward (+/min)</th><th class="num">Your estimate (min)</th><th>Notes</th><th class="num">Calculated time</th><th><span class="sr-only">Actions</span></th></tr></thead><tbody id="pgBody"></tbody></table></div>
   <div class="row" style="margin-top:12px"><button type="button" class="btn soft sm" id="pgAdd">${icon('plus', 16)} Add stage</button>${D._undo ? `<button type="button" class="btn ghost sm" id="pgUndo">Undo applied suggestions</button>` : ''}<span id="pgErr" class="err" role="alert"></span></div></div>
-  <div class="card section"><h2>What-if simulator</h2><p class="small muted">Try changes without touching your table. Times, charts and scores below update instantly.</p><div class="form-grid">${[['cost', 'Upgrade costs'], ['income', 'Earnings per minute'], ['reward', 'Rewards']].map(([k, l]) => `<div class="field"><label for="m_${k}">${l}: <b id="m_${k}_o">×${(+D.mult[k]).toFixed(2)}</b></label><input type="range" id="m_${k}" data-m="${k}" min="0.5" max="2" step="0.05" value="${D.mult[k]}"></div>`).join('')}</div><button type="button" class="btn ghost sm" id="pgResetM" style="margin-top:12px">Reset to ×1</button></div>`;
+  <div class="card section"><h2>What-if simulator</h2><p class="small muted">Try changes without touching your table.</p><div class="form-grid">${[['cost', 'Upgrade costs'], ['income', 'Earnings per minute'], ['reward', 'Rewards']].map(([k, l]) => `<div class="field"><label for="m_${k}">${l}: <b id="m_${k}_o">×${(+D.mult[k]).toFixed(2)}</b></label><input type="range" id="m_${k}" data-m="${k}" min="0.5" max="2" step="0.05" value="${D.mult[k]}"></div>`).join('')}</div><button type="button" class="btn ghost sm" id="pgResetM" style="margin-top:12px">Reset to ×1</button></div>`;
   drawBody();
   let first = true;
   const run = () => {
@@ -2173,7 +2174,7 @@ function gameModal(game, after) {
     ${F('text', 'gName', 'Game name', g.name, { req: true, full: true })}${F('select', 'gGenre', 'Genre', g.genre, { options: genreOpts() })}${F('url', 'gUrl', 'Roblox URL (optional)', g.url, { ph: 'https://www.roblox.com/games/…' })}
     ${F('textarea', 'gDesc', 'Description', g.description, { full: true, rows: 3 })}${F('textarea', 'gLoop', 'Main gameplay loop', g.loop, { full: true, rows: 2, ph: 'What do players do over and over?' })}
     <div class="full">${uploaderHTML('gIcon', 'Icon or thumbnail', 'PNG or JPG, up to 8 MB', false)}</div></div></form>
-    <p class="tiny faint" style="margin:10px 0 0">Stored only in this browser. LaunchPad doesn't connect to your Roblox account.</p>`,
+    <p class="tiny faint" style="margin:10px 0 0">${isAuthed() ? 'Saved to your account.' : 'Saved in this browser.'}</p>`,
     actions: `<button class="btn ghost" data-close>Cancel</button><button class="btn" id="gSave">${game ? 'Save changes' : 'Add game'}</button>`,
     onMount: m => {
       bindUploader(m, 'gIcon', { get: () => g.icon, set: v => g.icon = v });
@@ -2207,7 +2208,7 @@ function recProgress(gameId) {
 
 /* ===== PAGES ===== */
 function emptyGames() {
-  return `<div class="card empty">${orbitBuddy(128)}<h2>No games yet</h2><p class="muted" style="max-width:44ch;margin:0 auto 16px">Add the game you're working on and LaunchPad will keep all its reports and scores in one place.</p><button class="btn" data-addgame>${icon('plus', 18)} Add your first game</button></div>`;
+  return `<div class="card empty">${orbitBuddy(128)}<h2>No games yet</h2><p class="muted" style="max-width:44ch;margin:0 auto 16px">Add the game you're working on.</p><button class="btn" data-addgame>${icon('plus', 18)} Add your first game</button></div>`;
 }
 function pageHome() {
   const g = selectedGame(), acct = isAuthed() ? S().account : null;
@@ -2220,7 +2221,7 @@ function pageHome() {
   const steps = [['Analyze', ran.length > 0], ['Review', ran.length === OPTIMIZERS.length], ['Optimize', rp.done > 0], ['Complete', rp.total > 0 && rp.done === rp.total]];
   const stat = (ic, val, lbl) => `<div class="card stat-card">${icon(ic, 28)}<div><b>${val}</b><span>${lbl}</span></div></div>`;
   const scoreCard = (o, r) => `<a class="card card-hover score-card" href="${r ? '#/reports/' + r.id : '#/optimizers/' + o.id}"><span class="lbl">${o.name}</span><span class="big">${r ? r.score : '—'}${r ? '<small> / 100</small>' : ''}</span>${statusBadge(r ? r.score : null)}</a>`;
-  $('#view').innerHTML = `<header class="page-head row between"><div><p class="eyebrow">${acct ? `Welcome back, ${esc(acct.name)}` : 'Welcome to LaunchPad'}</p><h1>Dashboard</h1><p class="lede" style="margin:0">Your scores, your gaps and what to fix next, all in one place.</p></div><div class="row" style="gap:10px"><button class="btn ghost" data-addgame>${icon("plus", 18)} New Game</button><a class="btn" href="#/studio">${icon("play", 18)} Scan from Studio</a></div></header>${ME && ME.entitlement.features.includes('studio_plugin') && !ME.roblox ? `<div class="hint"><span>Connect Roblox Studio to enable the automatic scanning features available on your plan.</span><a class="btn sm" href="#/studio">Connect Studio</a></div>` : S().games.some(x => x.studio) ? "" : `<div class="card sunk row between" style="margin-bottom:20px;gap:12px"><div style="min-width:0;flex:1"><b>Skip the forms: scan your game in Roblox Studio</b><p class="small muted" style="margin:2px 0 0">The read-only plugin finds your listing, saves, rewards and prices, then scores all five areas in about two minutes.</p></div><a class="btn sm" href="#/studio">Set it up</a></div>`}
+  $('#view').innerHTML = `<header class="page-head row between"><div><p class="eyebrow">${acct ? `Welcome back, ${esc(acct.name)}` : 'Welcome to LaunchPad'}</p><h1>Dashboard</h1></div><div class="row" style="gap:10px"><button class="btn ghost" data-addgame>${icon("plus", 18)} New Game</button><a class="btn" href="#/studio">${icon("play", 18)} Scan from Studio</a></div></header>${ME && ME.entitlement.features.includes('studio_plugin') && !ME.roblox ? `<div class="hint"><span>Connect Roblox Studio to enable the automatic scanning features available on your plan.</span><a class="btn sm" href="#/studio">Connect Studio</a></div>` : S().games.some(x => x.studio) ? "" : `<div class="card sunk row between" style="margin-bottom:20px;gap:12px"><div style="min-width:0;flex:1"><b>Skip the forms: scan your game in Roblox Studio</b><p class="small muted" style="margin:2px 0 0">The read-only plugin scores all five areas in about two minutes.</p></div><a class="btn sm" href="#/studio">Set it up</a></div>`}
   <div class="grid g4">${stat('games', S().games.length, plural(S().games.length, 'Game').replace(/^\d+ /, ''))}${stat('bars', S().reports.length, 'Saved reports')}${stat('trend', avgScore ?? '—', 'Avg. latest score')}${stat('staro', g ? rp.total - rp.done : 0, 'Needs work')}</div>
   ${g ? `<section class="section split"><div class="card gcard"><a class="gcard-top" href="#/games/${g.id}"><div class="game-art" style="width:64px;height:64px;border-radius:14px">${gameArt(g)}</div><div style="min-width:0;flex:1"><div class="row" style="gap:8px"><h3 style="margin:0;font-size:1.15rem">${esc(g.name)}</h3>${sampleChip(g)}</div><span class="muted">${esc(GENRES[g.genre]?.label || g.genre)}</span></div>${icon('chev', 20)}</a>
     <div class="gcard-stats"><div>${icon('bars', 24)}<div><b>${avgScore ?? '—'}</b><span>Avg. score</span></div></div><div>${icon('layers', 24)}<div><b>${ran.length}/${OPTIMIZERS.length}</b><span>Optimizers run</span></div></div><div>${icon('trend', 24)}<div><b>${rp.done}/${rp.total}</b><span>Recs done</span></div></div></div></div>
@@ -2228,14 +2229,13 @@ function pageHome() {
   <section class="section"><div class="section-title"><h2>Scores</h2><a class="link-more" href="#/optimizers">All optimizers ${icon('chev', 16)}</a></div><div class="grid g5">${OPTIMIZERS.map((o, i) => scoreCard(o, latest[i])).join('')}</div></section>
   <section class="section split"><div class="card"><div class="section-title"><h3 style="margin:0">Recent Analysis</h3><a class="link-more" href="#/reports">View all ${icon('chev', 16)}</a></div>${recent.length ? recent.map(r => `<a class="lrow" href="#/reports/${r.id}"><span class="game-art" style="width:46px;height:46px;border-radius:11px">${gameArt(gameById(r.gameId) || { name: r.gameName })}</span><span style="min-width:0"><b style="display:block">${esc(OPT[r.optimizer].name)}</b><span class="small muted">${esc(r.gameName)} · ${timeAgo(r.createdAt)}</span></span>${statusBadge(r.score)}<span class="lbar">${pbar(r.score)}</span><span class="chev">${icon('chev', 18)}</span></a>`).join('') : '<p class="muted small" style="margin:0">No reports yet.</p>'}</div>
     <div class="card"><h3>Next Up</h3>${open.length ? open.map(({ x, r }) => `<label class="check"><input type="checkbox" data-rec="${x.id}" data-report="${r.id}" data-rerender="home"><span style="flex:1;min-width:0">${esc(x.title)}<br><span class="tiny muted">${esc(OPT[r.optimizer].name)} · ${x.priority} priority · <a href="#/reports/${r.id}">open</a></span></span></label>`).join('') : `<p class="muted small" style="margin:0">${rp.total ? 'Everything in your latest reports is done. Run the optimizers again to see how your scores changed.' : 'No recommendations yet. Run an optimizer to get started.'}</p>`}</div></section>` : `<section class="section">${emptyGames()}</section>`}
-  <section class="section grid g2"><div class="card"><h3>How LaunchPad works</h3><ol class="steps" style="padding:0;margin:14px 0 0;grid-template-columns:1fr"><li><b>Add your game</b><br><span class="small muted">Enter the details yourself. Nothing connects to your Roblox account.</span></li><li><b>Run an optimizer</b><br><span class="small muted">Each one looks at a different part of your game and explains exactly what it found.</span></li><li><b>Fix what matters</b><br><span class="small muted">Tick off prioritized recommendations as you go.</span></li><li><b>Come back and compare</b><br><span class="small muted">Re-run after your update, then check your real game stats too.</span></li></ol></div>
-  <div class="card"><h3>Recent activity</h3>${S().activity.length ? `<ul class="list-plain">${S().activity.slice(0, 6).map(a => `<li class="small"><a href="${esc(a.link || '#/home')}" style="color:inherit;text-decoration:none">${esc(a.text)}</a><br><span class="tiny muted">${timeAgo(a.t)}</span></li>`).join('')}</ul>` : '<p class="muted small" style="margin:0">Nothing yet.</p>'}</div></section>`;
+  <section class="section"><div class="card"><h3>Recent activity</h3>${S().activity.length ? `<ul class="list-plain">${S().activity.slice(0, 6).map(a => `<li class="small"><a href="${esc(a.link || '#/home')}" style="color:inherit;text-decoration:none">${esc(a.text)}</a><br><span class="tiny muted">${timeAgo(a.t)}</span></li>`).join('')}</ul>` : '<p class="muted small" style="margin:0">Nothing yet.</p>'}</div></section>`;
   animateCounts($('#view'));
 }
 function pageGames() {
   const games = S().games, sel = S().selectedGameId;
   const hint = isAuthed() && !ownGames().length ? `<div class="hint"><span>Your games will appear here once you add your first Roblox experience.</span><button class="btn sm" data-addgame>${icon('plus', 16)} Add your first game</button></div>` : '';
-  $('#view').innerHTML = `<header class="page-head row between"><div><p class="eyebrow">Workspace</p><h1>My Games</h1><p class="lede">Every report and score is saved under a game, so you can see how it improves over time.</p></div><button class="btn" data-addgame>${icon('plus', 18)} Add game</button></header>
+  $('#view').innerHTML = `<header class="page-head row between"><div><h1>My Games</h1></div><button class="btn" data-addgame>${icon('plus', 18)} Add game</button></header>
   ${hint}${games.length ? `<div class="grid g2">${games.map(g => { const rp = recProgress(g.id), n = reportsFor(g.id).length; return `<article class="card game-card ${g.id === sel ? 'selected' : ''}"><div class="row" style="gap:14px;flex-wrap:nowrap;align-items:flex-start"><div class="game-art" style="width:64px;height:64px;border-radius:14px">${gameArt(g)}</div><div style="min-width:0;flex:1"><div class="row" style="gap:6px"><h3 style="margin:0"><a href="#/games/${g.id}" style="text-decoration:none">${esc(g.name)}</a></h3>${sampleChip(g)}${g.id === sel ? '<span class="chip good">Selected</span>' : ''}</div><p class="tiny muted" style="margin:4px 0 0">${esc(GENRES[g.genre]?.label || '')} · added ${fmtDate(g.createdAt)}${g.url ? ` · <a href="${esc(g.url)}" target="_blank" rel="noopener noreferrer">Roblox page</a>` : ''}</p></div></div>
     <p class="small muted" style="margin:12px 0">${esc(g.loop || g.description || 'No description yet.')}</p>
     <div class="row" style="gap:6px">${OPTIMIZERS.map(o => { const r = latestReport(g.id, o.id); return `<span class="row small" style="gap:4px" title="${o.name}">${miniScore(r ? r.score : null)}<span class="tiny muted">${o.name.split(' ')[0]}</span></span>`; }).join('')}</div>
@@ -2245,7 +2245,7 @@ function pageGames() {
 }
 function pageHub() {
   const g = selectedGame(), groups = [...new Set(OPTIMIZERS.map(o => o.tag))];
-  $('#view').innerHTML = `<header class="page-head"><p class="eyebrow">Toolkit</p><h1>Optimizers</h1><p class="lede">Five tools, each looking at a different part of your game. Start wherever you think the problem is, or go in order.</p></header>
+  $('#view').innerHTML = `<header class="page-head"><h1>Optimizers</h1></header>
   ${groups.map(t => `<section class="section"><h2>${t}</h2><div class="grid g2">${OPTIMIZERS.filter(o => o.tag === t).map(o => { const r = g && latestReport(g.id, o.id); return `<article class="card tone-${o.tone}"><div class="row between" style="flex-wrap:nowrap;align-items:flex-start"><span class="opt-icon">${icon(o.icon, 22)}</span>${r ? `<span class="small muted row" style="gap:6px">Latest ${miniScore(r.score)}</span>` : ''}</div><h3 style="margin:12px 0 4px">${o.full}</h3><p class="small muted">${esc(o.blurb)}</p><div class="grid g2" style="gap:12px"><div><p class="eyebrow" style="margin:0">Looks at</p><ul class="small" style="margin:4px 0 0">${o.analyzes.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div><div><p class="eyebrow" style="margin:0">You get</p><ul class="small" style="margin:4px 0 0">${o.receives.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div></div><a class="btn" href="#/optimizers/${o.id}" style="margin-top:14px">Open ${o.name} ${icon('arrow', 16)}</a></article>`; }).join('')}</div></section>`).join('')}`;
 }
 let reportSel = [];
@@ -2255,7 +2255,7 @@ function pageReports(q) {
   list.sort((a, b) => f.sort === 'old' ? a.createdAt - b.createdAt : f.sort === 'score' ? b.score - a.score : b.createdAt - a.createdAt);
   reportSel = reportSel.filter(id => list.some(r => r.id === id));
   const sel = (id, l, opts, v) => `<div class="field" style="min-width:160px"><label for="${id}">${l}</label><select id="${id}">${opts.map(([k, t]) => `<option value="${k}" ${k === v ? 'selected' : ''}>${esc(t)}</option>`).join('')}</select></div>`;
-  $('#view').innerHTML = `<header class="page-head"><p class="eyebrow">Library</p><h1>Reports</h1><p class="lede">Every saved analysis, with its original inputs. Tick two reports from the same optimizer to compare them.</p></header>${isAuthed() && !ownReports().length ? `<div class="hint"><span>Your first scan will generate a report containing findings and recommendations.</span><a class="btn sm" href="#/studio">Start your first scan</a></div>` : ''}
+  $('#view').innerHTML = `<header class="page-head"><h1>Reports</h1><p class="lede">Tick two reports from the same optimizer to compare them.</p></header>${isAuthed() && !ownReports().length ? `<div class="hint"><span>Your first scan will generate a report containing findings and recommendations.</span><a class="btn sm" href="#/studio">Start your first scan</a></div>` : ''}
   <div class="card sunk row" style="gap:14px;align-items:flex-end;margin-bottom:18px">${sel('rfGame', 'Game', [['', 'All games'], ...games.map(g => [g.id, g.name])], f.game)}${sel('rfOpt', 'Optimizer', [['', 'All optimizers'], ...OPTIMIZERS.map(o => [o.id, o.name])], f.opt)}${sel('rfSort', 'Sort by', [['new', 'Newest first'], ['old', 'Oldest first'], ['score', 'Highest score']], f.sort)}<button class="btn" id="rfCompare" ${reportSel.length === 2 ? '' : 'disabled'}>${icon('compare', 18)} Compare selected (${reportSel.length}/2)</button></div>
   ${list.length ? `<div class="table-wrap"><table><thead><tr><th><span class="sr-only">Select to compare</span></th><th>Optimizer</th><th>Game</th><th>Date</th><th class="num">Score</th><th>Progress</th><th><span class="sr-only">Actions</span></th></tr></thead><tbody>${list.map(r => { const d = r.recs.filter(x => x.done).length; return `<tr><td><input type="checkbox" data-pick="${r.id}" ${reportSel.includes(r.id) ? 'checked' : ''} aria-label="Select ${esc(OPT[r.optimizer].name)} report from ${fmtDate(r.createdAt)} for comparison"></td><td><a href="#/reports/${r.id}"><b>${esc(OPT[r.optimizer].name)}</b></a> ${sampleChip(r)}</td><td>${esc(r.gameName)}</td><td class="small">${fmtDateTime(r.createdAt)}</td><td class="num">${miniScore(r.score)}</td><td class="small">${d}/${r.recs.length} done</td><td><div class="row" style="gap:4px;flex-wrap:nowrap"><a class="btn ghost sm" href="#/reports/${r.id}">Open</a><button class="icon-btn" data-del="${r.id}" aria-label="Delete this report">${icon('trash', 18)}</button></div></td></tr>`; }).join('')}</tbody></table></div>` : `<div class="card empty">${orbitArt({ size: 112, tone: 'lav' })}<h2>No reports here yet</h2><p class="muted">${S().reports.length ? 'Try a different filter.' : 'Run any optimizer and press "Save report" to keep it here.'}</p><a class="btn" href="#/optimizers">Open the optimizers</a></div>`}`;
   const applyFilters = () => { const p = new URLSearchParams(); const gv = $('#rfGame').value, ov = $('#rfOpt').value, sv = $('#rfSort').value; if (gv) p.set('game', gv); if (ov) p.set('opt', ov); if (sv !== 'new') p.set('sort', sv); go('#/reports' + (p.toString() ? '?' + p : '')); };
@@ -2280,7 +2280,7 @@ function pageReport(id) {
   const o = OPT[rep.optimizer], hist = reportsFor(rep.gameId, rep.optimizer).reverse(), idx = hist.findIndex(r => r.id === id), prev = idx > 0 ? hist[idx - 1] : null;
   const top = rep.recs.find(x => !x.done), dn = rep.recs.filter(x => x.done).length, rg = gameById(rep.gameId);
   $('#view').innerHTML = `<nav class="crumbs no-print" aria-label="Breadcrumb"><a href="#/games">${icon('back', 16)} My Games</a><span aria-hidden="true">/</span><a href="#/reports?game=${rep.gameId || ''}">${esc(rep.gameName)}</a><span aria-hidden="true">/</span><span>${esc(o.name)}</span></nav>
-  <header class="page-head row between"><div class="row" style="gap:18px;flex-wrap:nowrap;min-width:0">${rg && rg.thumbs && rg.thumbs[0] ? `<img class="rep-thumb" src="${rg.thumbs[0].preview}" alt="${esc(rg.name)} thumbnail" data-name="${esc(rg.name)}">` : ''}<div style="min-width:0"><h1>${esc(o.name)} Report</h1><p class="lede" style="margin:0">A complete analysis of ${esc(rep.gameName)} and what to improve. Saved ${fmtDateTime(rep.createdAt)}.</p></div></div>
+  <header class="page-head row between"><div class="row" style="gap:18px;flex-wrap:nowrap;min-width:0">${rg && rg.thumbs && rg.thumbs[0] ? `<img class="rep-thumb" src="${rg.thumbs[0].preview}" alt="${esc(rg.name)} thumbnail" data-name="${esc(rg.name)}">` : ''}<div style="min-width:0"><h1>${esc(o.name)} Report</h1><p class="lede" style="margin:0">${esc(rep.gameName)} · ${fmtDateTime(rep.createdAt)}</p></div></div>
   <div class="row no-print" style="gap:8px"><button class="btn ghost square" id="rpDl" aria-label="Download report as JSON" title="Download .json">${icon('download', 18)}</button><button class="btn ghost square" id="rpPrint" aria-label="Print report" title="Print">${icon('page', 18)}</button><button class="btn ghost square" id="rpDel" aria-label="Delete report" title="Delete">${icon('trash', 18)}</button>${prev ? `<a class="btn ghost" href="#/reports/compare/${prev.id}/${rep.id}">${icon('compare', 18)} Compare</a>` : ''}<a class="btn" href="#/optimizers/${rep.optimizer}">${icon('play', 18)} Analyze Again</a></div></header>
   <div class="split" style="margin-bottom:18px"><div class="card top-rec">${top ? `<div style="flex:1;min-width:220px"><div class="lbl">${icon('star', 16)} Top Recommendation</div><h3>${esc(top.title)}</h3><p class="muted small" style="margin:0">${esc(top.problem)}</p></div><button class="btn" id="rpTop">View Details ${icon('arrow', 16)}</button>` : `<div><div class="lbl">${icon('star', 16)} All done</div><h3>Every recommendation in this report is complete.</h3><p class="muted small" style="margin:0">Run the optimizer again to measure the change.</p></div>`}</div>
   <div class="card"><h3>Progress</h3><div id="rpProg">${progInner(dn, rep.recs.length)}</div>${hist.length > 1 ? `<p class="small" style="margin:14px 0 0"><span class="muted">Score history:</span> ${hist.map(h => h.id === id ? `<b>${h.score}</b>` : `<a href="#/reports/${h.id}">${h.score}</a>`).join(' → ')}</p>` : ''}</div></div>
@@ -2308,12 +2308,12 @@ function pageCompare(aId, bId) {
   const scanCmp = a.result.extras.scan || b.result.extras.scan, mA = scanCmp ? [] : METRICS[a.optimizer](a.inputs, a.result), mB = scanCmp ? [] : METRICS[a.optimizer](b.inputs, b.result);
   const verdict = (x, y, better) => x == null || y == null ? '<span class="faint">—</span>' : x === y ? '<span class="chip">Unchanged</span>' : !better ? '<span class="chip">Changed</span>' : (better === 'up' ? y > x : y < x) ? '<span class="chip good">Improved</span>' : '<span class="chip bad">Declined</span>';
   const list = (arr, empty) => arr.length ? `<ul class="list-plain">${arr.map(x => `<li class="small"><b>${esc(x.title)}</b> <span class="pri ${x.priority}">${x.priority}</span></li>`).join('')}</ul>` : `<p class="small muted" style="margin:0">${empty}</p>`;
-  $('#view').innerHTML = `<p class="small"><a href="#/reports">← All reports</a></p><header class="page-head"><p class="eyebrow">${esc(o.full)} · comparison</p><h1>What changed for ${esc(b.gameName)}</h1><p class="lede">${fmtDate(a.createdAt)} vs ${fmtDate(b.createdAt)}. Scores come from your saved inputs, so they only change when what you entered changes.</p></header>
+  $('#view').innerHTML = `<p class="small"><a href="#/reports">← All reports</a></p><header class="page-head"><p class="eyebrow">${esc(o.full)} · comparison</p><h1>What changed for ${esc(b.gameName)}</h1><p class="lede">${fmtDate(a.createdAt)} vs ${fmtDate(b.createdAt)}</p></header>
   <div class="card"><div class="row" style="gap:28px;justify-content:center">${[a, b].map((r, i) => `<a href="#/reports/${r.id}" style="text-decoration:none;color:inherit;text-align:center">${scoreRing(r.score, 110, (i ? 'Newer' : 'Older') + ' score')}<p class="small muted" style="margin:6px 0 0">${i ? 'Newer' : 'Older'} · ${fmtDate(r.createdAt)}</p></a>`).join(`<div style="text-align:center"><span style="font-size:1.6rem">${deltaTag(b.score - a.score)}</span><p class="tiny muted" style="margin:4px 0 8px">overall change</p>${b.score > a.score ? `<span class="achv">${star4(10)} Improved</span>` : ""}</div>`)}</div>
   <div class="table-wrap" style="margin-top:20px"><table><thead><tr><th>Category</th><th class="num">Older</th><th class="num">Newer</th><th class="num">Change</th></tr></thead><tbody>${b.result.categories.map(c => { const p = a.result.categories.find(x => x.key === c.key); return `<tr><td>${esc(c.label)}</td><td class="num">${p && p.score != null ? p.score : '—'}</td><td class="num">${c.score ?? '—'}</td><td class="num">${p && p.score != null && c.score != null ? deltaTag(c.score - p.score) : '—'}</td></tr>`; }).join('')}</tbody></table></div></div>
   <section class="section grid g2"><div class="card flat"><h3>Weaknesses you addressed</h3><p class="tiny muted">Recommended before, not flagged anymore.</p>${list(addressed, 'None of the earlier issues have cleared yet.')}</div><div class="card flat"><h3>Recommendations you completed</h3><p class="tiny muted">Ticked off on the older report.</p>${list(doneA, 'Nothing was marked complete on the older report.')}</div>
   <div class="card flat"><h3>Still needs attention</h3><p class="tiny muted">Flagged in both reports.</p>${list(still, 'Nothing carried over. Nice.')}</div><div class="card flat"><h3>New things to look at</h3><p class="tiny muted">Only flagged in the newer report.</p>${list(fresh, 'No new issues.')}</div></section>
-  <section class="section"><h2>Metrics</h2><div class="table-wrap"><table><thead><tr><th>Metric</th><th class="num">Older</th><th class="num">Newer</th><th>Result</th></tr></thead><tbody>${mB.map(([l, v, better], i) => { const pv = mA[i][1]; return `<tr><td>${esc(l)}</td><td class="num">${pv ?? '—'}</td><td class="num">${v ?? '—'}</td><td>${verdict(pv, v, better)}</td></tr>`; }).join('')}</tbody></table></div><p class="tiny faint" style="margin-top:10px">A better LaunchPad score doesn't automatically mean more players. Check your real game analytics to see whether these changes helped.</p></section>`;
+  <section class="section"><h2>Metrics</h2><div class="table-wrap"><table><thead><tr><th>Metric</th><th class="num">Older</th><th class="num">Newer</th><th>Result</th></tr></thead><tbody>${mB.map(([l, v, better], i) => { const pv = mA[i][1]; return `<tr><td>${esc(l)}</td><td class="num">${pv ?? '—'}</td><td class="num">${v ?? '—'}</td><td>${verdict(pv, v, better)}</td></tr>`; }).join('')}</tbody></table></div><p class="tiny faint" style="margin-top:10px">Scores don't guarantee more players. Check your real analytics.</p></section>`;
   animateCounts($('#view'));
 }
 // Shared by the in-app Pricing page and the landing page. No payments anywhere.
@@ -2463,76 +2463,118 @@ function maybeWelcome() {
 function tourSteps() {
   const f = ME?.entitlement?.features || [], studio = f.includes('studio_plugin'), rbx = !!ME?.roblox;
   return [
-    { target: () => $('#view .page-head'), title: 'Your development overview', body: 'This is your central workspace. Manage your games, view recent reports and access your optimization tools from here. Your scores, next recommendations and recent activity sit below.' },
-    { target: () => $('#view .page-head [data-addgame]'), title: 'Start with your game', body: 'Add a Roblox experience by hand with its name, genre, Roblox link and description. You can also create one from a Roblox Studio scan on the Studio page.' },
+    { target: () => $('#view .page-head'), title: 'Your development overview', body: 'Your games, reports and optimizers.' },
+    { target: () => $('#view .page-head [data-addgame]'), title: 'Start with your game', body: 'Add a game by hand, or create one from a Studio scan.' },
     { target: () => $('#sidebar a[href="#/studio"]'), title: 'Connect Roblox Studio',
-      body: studio ? `Included in your plan. ${rbx ? 'Roblox is connected; next, pair' : 'Connect Roblox through its official sign-in, then pair'} the read-only LaunchPad Studio plugin with a one-time code. It reads your game's structure, and script code only if you allow it. Only grant permissions you understand.`
-        : 'Automatic Studio sync is part of Light and Max. On Free you can still run the read-only plugin and paste its scan on the Studio page. Only grant permissions you understand.',
-      note: 'LaunchPad never changes your game and never asks for your Roblox password or cookies.' },
-    { target: () => [$('#sidebar a[href="#/optimizers"]'), $('#sidebar .nav .sub')], title: 'Five ways to improve your game', body: 'LaunchPad organizes game improvement into five areas:',
-      list: [['Game Page', 'your page and how it presents the game'], ['Thumbnail & Icon', 'your game\'s visual identity'], ['First Session', 'what new players experience first'], ['Retention', 'what brings players back'], ['Progression', 'goals, rewards and upgrade pacing']] },
-    { target: () => $('#sidebar a[href="#/reports"]'), title: 'Understand your results', body: 'Every analysis becomes a report: a score, category scores and recommendations ranked by priority, each saying why it appeared, with the evidence behind it. Confidence shows how much information was available. Recommendations are suggestions, not guarantees.' },
-    { target: () => $('#view .stepper')?.closest('.card'), title: 'Measure your improvements', body: 'Tick off recommendations as you fix them. Reports keep each game\'s score history, and on Reports you can pick two to compare side by side.' },
+      body: studio ? (rbx ? 'Included in your plan. Pair the read-only plugin to enable automatic scans.' : 'Included in your plan. Connect Roblox, then pair the read-only plugin.') : 'Automatic sync is part of Light and Max. On Free, paste a plugin scan instead.',
+      note: 'Read-only. Never asks for your Roblox password. Only grant permissions you understand.' },
+    { target: () => [$('#sidebar a[href="#/optimizers"]'), $('#sidebar .nav .sub')], title: 'Five ways to improve your game', body: 'Five areas of analysis:',
+      list: [['Game Page', 'presentation'], ['Thumbnail & Icon', 'visual identity'], ['First Session', 'first minutes'], ['Retention', 'reasons to return'], ['Progression', 'goals and rewards']] },
+    { target: () => $('#sidebar a[href="#/reports"]'), title: 'Understand your results', body: 'Scores, ranked recommendations and the evidence behind them. Suggestions, not guarantees.' },
+    { target: () => $('#view .stepper')?.closest('.card'), title: 'Measure your improvements', body: 'Tick off fixes, follow score history and compare reports.' },
   ];
 }
+// One timeline per step change: content out (160ms) → commit step, open/close drawer, scroll, measure →
+// spotlight, card position and content in (200ms) together. Each phase waits on the previous one's finish event.
+const TOUR_OUT = 160, TOUR_IN = 200, TOUR_EASE = 'cubic-bezier(.2,.7,.2,1)';
 let TOUR = null;
 function startTour(restart = false) {
   if (TOUR) return;
   closeModal(true); if (currentPath() !== '/home') go('#/home');
   track(restart ? 'onboarding_restart' : 'onboarding_start');
   const ov = document.createElement('div'); ov.className = 'tour';
-  ov.innerHTML = `<div class="tour-shade"></div><div class="tour-spot" aria-hidden="true"></div><div class="tour-pop" role="dialog" aria-modal="true" aria-labelledby="tourT" tabindex="-1"></div>`;
+  ov.innerHTML = `<div class="tour-shade"></div><div class="tour-spot" aria-hidden="true"></div><div class="tour-pop" role="dialog" aria-modal="true" aria-labelledby="tourT" tabindex="-1"><div class="tour-body"></div></div>`;
   document.body.appendChild(ov);
-  const reflow = () => tourPlace();
+  const reflow = () => { if (TOUR && !TOUR.busy) tourApply(tourLayout()); };
   addEventListener('resize', reflow); addEventListener('scroll', reflow, { passive: true, capture: true });
-  TOUR = { i: 0, steps: tourSteps(), ov, last: document.activeElement, off: () => { removeEventListener('resize', reflow); removeEventListener('scroll', reflow, true); } };
+  TOUR = { i: -1, steps: tourSteps(), ov, busy: false, shown: false, last: document.activeElement, off: () => { removeEventListener('resize', reflow); removeEventListener('scroll', reflow, true); } };
   // The shade swallows clicks, so nothing underneath can be triggered by accident.
-  ov.addEventListener('click', e => { const b = e.target.closest('[data-t]'); if (!b) return;
+  ov.addEventListener('click', e => { const b = e.target.closest('[data-t]'); if (!b || b.disabled) return;
     const k = b.dataset.t, i = TOUR.i;
-    if (k === 'next') { track('onboarding_step', { step: i + 1 }); i + 1 < TOUR.steps.length ? tourShow(i + 1) : tourFinish(); }
-    else if (k === 'back') tourShow(i - 1);
+    if (k === 'next') { track('onboarding_step', { step: i + 1 }); i + 1 < TOUR.steps.length ? tourGo(i + 1) : tourFinish(); }
+    else if (k === 'back') tourGo(i - 1);
     else if (k === 'skip') tourEnd('skipped'); });
   ov.addEventListener('keydown', e => {
     if (e.key === 'Escape') { e.preventDefault(); return tourEnd('dismissed'); }
-    if (e.key === 'Tab') { const f = $$('button', ov.querySelector('.tour-pop')); const a = f[0], z = f[f.length - 1]; if (e.shiftKey && document.activeElement === a) { e.preventDefault(); z.focus(); } else if (!e.shiftKey && document.activeElement === z) { e.preventDefault(); a.focus(); } }
+    if (e.key === 'Tab') { const f = $$('button:not(:disabled)', ov.querySelector('.tour-pop')); const a = f[0], z = f[f.length - 1]; if (!a) return e.preventDefault(); if (e.shiftKey && document.activeElement === a) { e.preventDefault(); z.focus(); } else if (!e.shiftKey && document.activeElement === z) { e.preventDefault(); a.focus(); } }
   });
-  tourShow(0);
+  tourGo(0);
 }
 function tourEls(s) { return [].concat(s.target()).filter(e => e && e.isConnected); }
 const drawerMode = () => getComputedStyle($('#menuBtn')).display !== 'none';
-function tourShow(i) {
-  const T = TOUR, s = T.steps[i], n = T.steps.length; T.i = i; setTour('started', i);
-  if (currentPath() !== '/home') go('#/home');
-  const els = tourEls(s), inSide = els.some(e => e.closest('#sidebar'));
-  if (drawerMode()) { $('#sidebar').classList.toggle('open', inSide); $('#scrim').classList.remove('open'); }
-  const pop = T.ov.querySelector('.tour-pop');
-  pop.innerHTML = `<div class="tour-prog" aria-label="Step ${i + 1} of ${n}">${T.steps.map((_, j) => `<i class="${j < i ? 'done' : j === i ? 'on' : ''}"></i>`).join('')}<span>${i + 1}/${n}</span></div>
-    <h2 id="tourT">${esc(s.title)}</h2><p>${esc(s.body)}</p>${s.list ? `<ol class="tour-list">${s.list.map(([a, b]) => `<li><b>${esc(a)}</b> · ${esc(b)}</li>`).join('')}</ol>` : ''}${s.note ? `<p class="tour-note">${esc(s.note)}</p>` : ''}
-    <div class="tour-act"><button class="tour-skip" data-t="skip">Skip tour</button>${i ? '<button class="btn ghost sm" data-t="back">Back</button>' : ''}<button class="btn sm" data-t="next">${i + 1 < n ? 'Next' : 'Finish'}</button></div>`;
-  const first = els[0];
-  if (first && !inSide) first.scrollIntoView({ block: 'center', behavior: reducedMotion() ? 'auto' : 'smooth' });
-  setTimeout(() => { tourPlace(); $('[data-t="next"]', pop).focus({ preventScroll: true }); }, inSide && drawerMode() ? 260 : 30);
+// Opens or closes the phone side menu and resolves when its slide has actually finished.
+function tourDrawer(open) {
+  const sb = $('#sidebar'); if (!drawerMode() || sb.classList.contains('open') === open) return Promise.resolve();
+  return new Promise(res => {
+    const done = () => { sb.removeEventListener('transitionend', end); sb.removeEventListener('transitioncancel', end); res(); }, end = e => { if (e.target === sb) done(); };
+    sb.addEventListener('transitionend', end); sb.addEventListener('transitioncancel', end);
+    sb.classList.toggle('open', open);
+    const dur = parseFloat(getComputedStyle(sb).transitionDuration) * 1000;
+    if (reducedMotion() || !dur) done(); else setTimeout(done, dur + 250); // watchdog if the slide's end event never fires
+  });
 }
-function tourPlace() {
-  if (!TOUR) return;
-  const s = TOUR.steps[TOUR.i], els = tourEls(s), spot = TOUR.ov.querySelector('.tour-spot'), pop = TOUR.ov.querySelector('.tour-pop'), shade = TOUR.ov.querySelector('.tour-shade');
-  const rects = els.map(e => e.getBoundingClientRect()).filter(r => r.width && r.height);
-  const vw = innerWidth, vh = innerHeight, m = 12;
-  if (!rects.length) { // target not on screen (for example a hidden section): centre the card without a highlight
-    spot.style.opacity = 0; shade.classList.add('dim');
-    pop.style.left = Math.max(m, (vw - pop.offsetWidth) / 2) + 'px'; pop.style.top = Math.max(m, (vh - pop.offsetHeight) / 2) + 'px'; return;
+// Waits for an animation's finish event. A cancelled one (tour closed) must not throw, and one the browser stops
+// rendering (frames paused) is finished by a watchdog, so the tour never stays frozen with disabled buttons.
+const wait = a => Promise.race([a.finished, new Promise(r => setTimeout(r, (a.effect?.getTiming().duration || 0) + 250))]).then(() => { if (a.playState === 'running') a.finish(); }, () => {});
+async function tourGo(i) {
+  const T = TOUR; if (!T || T.busy || i < 0 || i >= T.steps.length) return;
+  T.busy = true;
+  const pop = T.ov.querySelector('.tour-pop'), body = pop.querySelector('.tour-body'), spot = T.ov.querySelector('.tour-spot'), rm = reducedMotion();
+  $$('button', pop).forEach(b => { b.disabled = true; });
+  const from = { s: { left: spot.style.left, top: spot.style.top, width: spot.style.width, height: spot.style.height, opacity: getComputedStyle(spot).opacity }, p: { left: pop.style.left, top: pop.style.top } };
+  // 1. Outgoing content.
+  if (T.shown && !rm) await wait(body.animate([{ opacity: 1 }, { opacity: 0 }], { duration: TOUR_OUT, easing: TOUR_EASE, fill: 'forwards' }));
+  if (TOUR !== T) return;
+  // 2. Commit the step and get its target ready (drawer and scroll settle before anything is measured).
+  const s = T.steps[i], n = T.steps.length; T.i = i; setTour('started', i);
+  const els = tourEls(s), inSide = els.some(e => e.closest('#sidebar'));
+  body.innerHTML = `<div class="tour-prog" aria-label="Step ${i + 1} of ${n}">${T.steps.map((_, j) => `<i class="${j < i ? 'done' : j === i ? 'on' : ''}"></i>`).join('')}<span>${i + 1}/${n}</span></div>
+    <h2 id="tourT">${esc(s.title)}</h2><p>${esc(s.body)}</p>${s.list ? `<ol class="tour-list">${s.list.map(([a, b]) => `<li><b>${esc(a)}</b> · ${esc(b)}</li>`).join('')}</ol>` : ''}${s.note ? `<p class="tour-note">${esc(s.note)}</p>` : ''}
+    <div class="tour-act"><button class="tour-skip" data-t="skip">Skip tour</button>${i ? '<button class="btn ghost sm" data-t="back" disabled>Back</button>' : ''}<button class="btn sm" data-t="next" disabled>${i + 1 < n ? 'Next' : 'Finish'}</button></div>`;
+  await tourDrawer(inSide);
+  if (TOUR !== T) return;
+  if (els[0] && !inSide) els[0].scrollIntoView({ block: 'center', behavior: 'instant' });
+  const L = tourLayout(); tourApply(L);
+  // 3. Spotlight, card and content arrive together on one clock.
+  if (!rm) {
+    const opt = { duration: TOUR_IN, easing: TOUR_EASE };
+    const anims = [body.animate([{ opacity: 0, transform: 'translateY(4px)' }, { opacity: 1, transform: 'none' }], opt)];
+    if (T.shown) {
+      anims.push(pop.animate([from.p, { left: pop.style.left, top: pop.style.top }], opt));
+      if (L.spot && +from.s.opacity) anims.push(spot.animate([from.s, { left: spot.style.left, top: spot.style.top, width: spot.style.width, height: spot.style.height, opacity: 1 }], opt));
+      else anims.push(spot.animate([{ opacity: +from.s.opacity }, { opacity: L.spot ? 1 : 0 }], opt));
+    } else anims.push(spot.animate([{ opacity: 0 }, { opacity: L.spot ? 1 : 0 }], opt), pop.animate([{ opacity: 0, transform: 'translateY(6px)' }, { opacity: 1, transform: 'none' }], opt));
+    await Promise.all(anims.map(wait));
+    if (TOUR !== T) return;
   }
-  shade.classList.remove('dim'); spot.style.opacity = 1;
+  body.getAnimations().forEach(a => a.cancel()); // drop the held "faded out" frame now that the content is in
+  T.shown = true; T.busy = false;
+  $$('button', pop).forEach(b => { b.disabled = false; });
+  $('[data-t="next"]', pop).focus({ preventScroll: true });
+}
+// Where the spotlight and card go for the current step. The card prefers below, then above, right, left;
+// on phones it sits at the screen edge away from the target so it never covers it.
+function tourLayout() {
+  const T = TOUR, s = T.steps[T.i], pop = T.ov.querySelector('.tour-pop'), vw = innerWidth, vh = innerHeight, m = 12;
+  const pw = Math.min(360, vw - m * 2); pop.style.width = pw + 'px'; const ph = pop.offsetHeight;
+  const rects = tourEls(s).map(e => e.getBoundingClientRect()).filter(r => r.width && r.height && r.bottom > 0 && r.top < vh);
+  if (!rects.length) return { spot: null, x: (vw - pw) / 2, y: Math.max(m, (vh - ph) / 2) };
   const r = { left: Math.min(...rects.map(x => x.left)) - 6, top: Math.min(...rects.map(x => x.top)) - 6, right: Math.max(...rects.map(x => x.right)) + 6, bottom: Math.max(...rects.map(x => x.bottom)) + 6 };
-  Object.assign(spot.style, { left: r.left + 'px', top: r.top + 'px', width: (r.right - r.left) + 'px', height: (r.bottom - r.top) + 'px' });
-  const pw = Math.min(360, vw - m * 2), ph = pop.offsetHeight; pop.style.width = pw + 'px';
   let x, y;
-  if (vh - r.bottom >= ph + m * 2) { y = r.bottom + m; x = r.left; }               // below
-  else if (r.top >= ph + m * 2) { y = r.top - ph - m; x = r.left; }                 // above
-  else if (vw - r.right >= pw + m * 2) { x = r.right + m; y = r.top; }              // right
-  else if (r.left >= pw + m * 2) { x = r.left - pw - m; y = r.top; }                // left
-  else { x = (vw - pw) / 2; y = vh - ph - m; }                                       // big target: dock at the bottom
-  pop.style.left = Math.min(Math.max(m, x), vw - pw - m) + 'px'; pop.style.top = Math.min(Math.max(m, y), vh - ph - m) + 'px';
+  if (vw < 640) { x = m; y = (r.top + r.bottom) / 2 > vh / 2 ? m : vh - ph - m; if (y < r.bottom && y + ph > r.top) y = r.bottom + m > vh - ph - m ? m : r.bottom + m; }
+  else if (vh - r.bottom >= ph + m * 2) { y = r.bottom + m; x = r.left; }
+  else if (r.top >= ph + m * 2) { y = r.top - ph - m; x = r.left; }
+  else if (vw - r.right >= pw + m * 2) { x = r.right + m; y = r.top; }
+  else if (r.left >= pw + m * 2) { x = r.left - pw - m; y = r.top; }
+  else { x = (vw - pw) / 2; y = vh - ph - m; }
+  return { spot: r, x: Math.min(Math.max(m, x), vw - pw - m), y: Math.min(Math.max(m, y), vh - ph - m) };
+}
+function tourApply(L) {
+  const spot = TOUR.ov.querySelector('.tour-spot'), pop = TOUR.ov.querySelector('.tour-pop');
+  TOUR.ov.querySelector('.tour-shade').classList.toggle('dim', !L.spot);
+  if (L.spot) Object.assign(spot.style, { left: L.spot.left + 'px', top: L.spot.top + 'px', width: (L.spot.right - L.spot.left) + 'px', height: (L.spot.bottom - L.spot.top) + 'px', opacity: 1 });
+  else spot.style.opacity = 0;
+  pop.style.left = L.x + 'px'; pop.style.top = L.y + 'px';
 }
 function tourEnd(status) {
   if (!TOUR) return;
@@ -2690,7 +2732,7 @@ const SET_TABS = [['profile', 'Profile'], ['security', 'Security'], ['connected'
 function pageSettings(tab = 'profile') {
   const v = $('#view'), p = S().prefs;
   if (!isAuthed()) tab = 'appearance';
-  v.innerHTML = `<header class="page-head"><p class="eyebrow">Account</p><h1>Settings</h1></header>
+  v.innerHTML = `<header class="page-head"><h1>Settings</h1></header>
   ${isAuthed() ? `<nav class="tabs" aria-label="Settings sections">${SET_TABS.map(([k, l]) => `<a href="#/settings/${k}" ${k === tab ? 'aria-current="page"' : ''}>${l}</a>`).join('')}</nav>` : `<section class="card" style="margin-bottom:20px"><h2>You're in demo mode</h2><p class="muted">Your changes stay in this browser. Create an account to save your games across devices.</p><button class="btn" id="sSignup">${icon('user', 18)} Create an account</button> <button class="btn ghost" id="sLogin">Log in</button></section>`}
   <div id="setBody"><p class="muted">Loading…</p></div>`;
   $('#sSignup') && ($('#sSignup').onclick = () => authModal('signup')); $('#sLogin') && ($('#sLogin').onclick = () => authModal('login'));
@@ -2705,7 +2747,7 @@ const SETTINGS = {
       <div class="row" style="gap:8px"><label class="btn ghost sm" for="pAv">${icon('upload', 16)} ${u.hasAvatar ? 'Change' : 'Add'} photo<input type="file" id="pAv" accept="image/png,image/jpeg,image/webp" class="sr-only"></label>${u.hasAvatar ? '<button class="btn ghost sm" id="pAvDel">Remove</button>' : ''}</div></div>
       <div class="form-grid" style="margin-top:16px">${F('text', 'pName', 'Display name', u.displayName, { req: true })}<div><span class="label">Email</span><p style="margin:6px 0">${esc(u.email)} ${u.emailVerified ? '<span class="chip good sm">Verified</span>' : '<span class="chip warn sm">Not verified</span> <button class="btn ghost sm" id="pResend">Resend email</button>'}</p></div></div>
       <p class="small muted">Member since ${fmtDate(Date.parse(u.createdAt))}</p><button class="btn" id="pSave">Save profile</button>`)
-      + card('Product tour', `<p class="small muted">A one-minute walk through the dashboard, Studio connection, optimizers and reports.</p><button class="btn ghost" id="pTour">Restart the tour</button>`);
+      + card('Product tour', `<button class="btn ghost" id="pTour">Restart the tour</button>`);
     $('#pTour').onclick = () => startTour(true);
     $('#pSave').onclick = async () => { try { await api('PATCH', '/api/me', { displayName: $('#f_pName').value }); S().account.name = $('#f_pName').value.trim(); toast('Profile saved'); refreshMe(); } catch (e) { toast(e.message, 'warn'); } };
     $('#pResend') && ($('#pResend').onclick = async () => { try { await api('POST', '/api/auth/resend-verification'); toast('Check your inbox for the link.'); } catch (e) { toast(e.message, 'warn'); } });
@@ -2718,7 +2760,7 @@ const SETTINGS = {
     const u = ME.user, google = ME.identities.find(i => i.provider === 'google'), sessions = await api('GET', '/api/auth/sessions');
     el.innerHTML = card('Password', `${u.hasPassword ? `<div class="form-grid">${F('password', 'sCur', 'Current password', '')}${F('password', 'sNew', 'New password', '', { hint: 'At least 10 characters.' })}</div>` : `<p class="small muted">You sign in with Google. Set a password to also sign in with your email.</p><div class="form-grid">${F('password', 'sNew', 'New password', '', { hint: 'At least 10 characters.' })}</div>`}<button class="btn" id="sPw">${u.hasPassword ? 'Change password' : 'Set password'}</button>`)
       + card('Google', google ? `<p>Connected as <b>${esc(google.email || 'your Google account')}</b> since ${fmtDate(Date.parse(google.created_at))}.</p><button class="btn ghost" id="sGoogleOff">Disconnect Google</button>` : AUTHCFG.googleClientId ? '<p class="small muted">Connect Google to sign in with one click.</p><div id="sGoogle"></div>' : '<p class="small muted">Google sign-in isn\'t configured on this server yet.</p>')
-      + card('Two-step verification', u.mfaEnabled ? `<p><span class="chip good">On</span> Sign-ins ask for a code from your authenticator app.</p><button class="btn ghost" id="sMfaOff">Turn off</button>` : `<p class="small muted">Add a code from an authenticator app (like Google Authenticator or 1Password) to every sign-in. Required for administrators. Passkeys aren't available yet.</p><button class="btn" id="sMfaOn">Set up two-step verification</button><div id="sMfaSetup"></div>`)
+      + card('Two-step verification', u.mfaEnabled ? `<p><span class="chip good">On</span> Sign-ins ask for a code from your authenticator app.</p><button class="btn ghost" id="sMfaOff">Turn off</button>` : `<p class="small muted">A code from an authenticator app at every sign-in. Required for administrators.</p><button class="btn" id="sMfaOn">Set up two-step verification</button><div id="sMfaSetup"></div>`)
       + card('Active sessions', `<div class="table-wrap"><table><thead><tr><th>Device</th><th>Last active</th><th>IP</th><th></th></tr></thead><tbody>${sessions.map(s => `<tr><td>${esc((s.user_agent || 'Unknown').slice(0, 60))}${s.current ? ' <span class="chip sm">This device</span>' : ''}</td><td>${fmtDateTime(Date.parse(s.last_seen_at))}</td><td>${esc(s.ip || '')}</td><td>${s.current ? '' : `<button class="btn ghost sm" data-revoke="${esc(s.id)}">Sign out</button>`}</td></tr>`).join('')}</tbody></table></div><button class="btn ghost" id="sAll" style="margin-top:12px">Log out of all devices</button>`);
     $('#sPw').onclick = () => withReauth(() => api('POST', '/api/auth/password', { current: $('#f_sCur')?.value, password: $('#f_sNew').value })).then(() => { toast('Password saved. Other devices were signed out.'); refreshMe(); }, e => e.message !== 'cancelled' && toast(e.message, 'warn'));
     $('#sGoogleOff') && ($('#sGoogleOff').onclick = () => withReauth(() => api('DELETE', '/api/auth/google')).then(() => { toast('Google disconnected'); refreshMe(); }, e => e.message !== 'cancelled' && toast(e.message, 'warn')));
@@ -2739,7 +2781,7 @@ const SETTINGS = {
     el.innerHTML = (msg ? `<div class="card sunk small" role="status" style="margin-bottom:16px">${esc(msg)}</div>` : '')
       + card('Roblox', r ? `<p><b>${esc(r.username || 'Roblox user')}</b> <span class="muted">(user ID ${esc(r.userId)})</span> <span class="chip ${r.status === 'active' ? 'good' : 'warn'} sm">${esc(r.status)}</span></p><p class="small muted">Connected ${fmtDate(Date.parse(r.connectedAt))}${r.lastUsedAt ? ` · last used ${fmtDateTime(Date.parse(r.lastUsedAt))}` : ''} · permissions: ${esc(r.scopes)}</p>
         <div class="row" style="gap:8px"><button class="btn ghost" id="cRefresh">Refresh experiences</button><a class="btn ghost" href="/api/roblox/connect" id="cRe">Reconnect</a><button class="btn ghost" id="cOff">Disconnect Roblox</button></div>`
-        : canRoblox ? `<p class="small muted">Connect Roblox with its official authorization page. LaunchPad never asks for your Roblox password, and you choose which experiences it can see.</p><a class="btn" href="/api/roblox/connect" id="cOn">Connect Roblox</a>` : `<p class="small muted">Connecting Roblox is part of Light and Max.</p><a class="btn" href="#/pricing">See plans</a>`)
+        : canRoblox ? `<p class="small muted">Official Roblox sign-in. LaunchPad never asks for your password; you choose which experiences it sees.</p><a class="btn" href="/api/roblox/connect" id="cOn">Connect Roblox</a>` : `<p class="small muted">Connecting Roblox is part of Light and Max.</p><a class="btn" href="#/pricing">See plans</a>`)
       + (exps.experiences.length ? card('Experiences', `<p class="small muted">Only experiences Roblox authorized for your account can be scanned.${exps.limit != null ? ` Your plan allows ${exps.limit} active at once.` : ''}</p>${exps.experiences.map(x => `<label class="check"><input type="checkbox" data-exp="${esc(x.universe_id)}" ${x.active ? 'checked' : ''}><span>${esc(x.name || 'Experience ' + x.universe_id)} <span class="small muted">· ${esc(x.universe_id)}</span></span></label>`).join('')}`) : '')
       + card('LaunchPad Studio', inst.length ? `<div class="table-wrap"><table><thead><tr><th>Paired</th><th>Last seen</th><th>Expires</th><th></th></tr></thead><tbody>${inst.map(i => `<tr><td>${fmtDate(Date.parse(i.created_at))}</td><td>${i.last_seen_at ? fmtDateTime(Date.parse(i.last_seen_at)) : '—'}</td><td>${fmtDate(Date.parse(i.expires_at))}</td><td><button class="btn ghost sm" data-unpair="${esc(i.id)}">Unpair</button></td></tr>`).join('')}</tbody></table></div>` : '<p class="small muted">No Studio plugins paired. Pair one from the <a href="#/studio">Studio</a> page.</p>');
     $('#cOff') && ($('#cOff').onclick = () => withReauth(() => api('POST', '/api/roblox/disconnect')).then(x => { toast(x.message); refreshMe(); }, e => e.message !== 'cancelled' && toast(e.message, 'warn')));
@@ -2752,7 +2794,7 @@ const SETTINGS = {
     const c = ME.consents || {}, on = k => c[k]?.granted === true;
     el.innerHTML = card('Permissions', `<label class="check"><input type="checkbox" data-consent="scriptInspection" ${on('scriptInspection') ? 'checked' : ''}><span><b>Let LaunchPad Studio read my scripts.</b> <span class="small muted">Scripts are read inside Studio to find saves, rewards and price tables. Only feature names, script paths and numbers are sent, never your code. You can turn this off any time.</span></span></label>
       <label class="check"><input type="checkbox" data-consent="productEmails" ${on('productEmails') ? 'checked' : ''}><span><b>Product update emails.</b> <span class="small muted">Occasional news about LaunchPad. Account and billing emails are always sent.</span></span></label>`)
-      + card('Your data', `<p class="small muted">Download everything LaunchPad stores about you, or make a request about your data.</p><div class="row" style="gap:8px"><button class="btn ghost" id="pvExport">${icon('download', 16)} Export my data (.json)</button><a class="btn ghost" href="/legal/request?kind=privacy_access" target="_blank" rel="noopener">Privacy request</a><a class="btn ghost" href="/legal" target="_blank" rel="noopener">All policies</a></div>`)
+      + card('Your data', `<div class="row" style="gap:8px"><button class="btn ghost" id="pvExport">${icon('download', 16)} Export my data (.json)</button><a class="btn ghost" href="/legal/request?kind=privacy_access" target="_blank" rel="noopener">Privacy request</a><a class="btn ghost" href="/legal" target="_blank" rel="noopener">All policies</a></div>`)
       + card('Delete account', `<p class="small muted">Deletes your account, games, reports and scans, disconnects Roblox and Studio, and cancels any subscription. Billing records are kept without your name where tax law requires. Backups roll off on a schedule (see the <a href="/legal/data-requests" target="_blank" rel="noopener">deletion policy</a>). This can't be undone.</p><button class="btn danger" id="pvDelete">Delete my account</button>`);
     el.querySelectorAll('[data-consent]').forEach(x => x.onchange = async () => { try { await api('PUT', '/api/me/consents', { [x.dataset.consent]: x.checked }); toast('Saved'); await loadMe(); } catch (e) { x.checked = !x.checked; toast(e.message, 'warn'); } });
     $('#pvExport').onclick = async () => { try { download(`launchpad-export-${new Date().toISOString().slice(0, 10)}.json`, JSON.stringify(await api('GET', '/api/me/export'), null, 2)); } catch (e) { toast(e.message, 'warn'); } };
@@ -2788,7 +2830,7 @@ function pageGame(id) {
   <header class="page-head row between"><div class="row" style="gap:16px;flex-wrap:nowrap;min-width:0"><div class="game-art" style="width:72px;height:72px;border-radius:16px">${gameArt(g)}</div><div style="min-width:0"><div class="row" style="gap:8px"><h1 style="margin:0">${esc(g.name)}</h1>${sampleChip(g)}</div><p class="muted" style="margin:4px 0 0">${esc(meta)}</p></div></div>
   <div class="row" style="gap:8px">${g.url ? `<a class="btn ghost" href="${esc(g.url)}" target="_blank" rel="noopener noreferrer">${icon('external', 18)} Roblox page</a>` : ''}${S().selectedGameId !== g.id ? `<button class="btn ghost" data-select="${g.id}">Select game</button>` : ''}<button class="btn" data-run="game-page">${icon('play', 18)} Analyze</button></div></header>
   ${g.thumbs && g.thumbs.length ? `<div class="grid ${g.thumbs.length > 1 ? 'g2' : ''}">${g.thumbs.map((t, i) => `<figure class="gthumb"><img src="${t.preview}" alt="${esc(g.name)} thumbnail ${i + 1}" data-name="${esc(g.name)}"></figure>`).join('')}</div>` : ''}
-  <section class="section split"><div class="card"><h3>About</h3><p>${esc(g.loop || 'No gameplay loop added yet.')}</p>${g.description ? `<p class="small muted" style="white-space:pre-wrap;margin:0">${esc(g.description)}</p>` : ''}${g.sample ? '<p class="tiny faint" style="margin:12px 0 0">Demo text: the loop and description were written by LaunchPad from the game\'s title and artwork. They aren\'t the creator\'s own listing.</p>' : ''}</div>
+  <section class="section split"><div class="card"><h3>About</h3><p>${esc(g.loop || 'No gameplay loop added yet.')}</p>${g.description ? `<p class="small muted" style="white-space:pre-wrap;margin:0">${esc(g.description)}</p>` : ''}${g.sample ? '' : ''}</div>
   <div class="card"><h3>Progress</h3>${progInner(rp.done, rp.total)}</div></section>
   <section class="section"><div class="section-title"><h2>Optimizer reports</h2>${sampleChip(g)}</div><div class="table-wrap"><table><thead><tr><th>Optimizer</th><th class="num">Latest</th><th>Status</th><th>History</th><th><span class="sr-only">Actions</span></th></tr></thead><tbody>${rows}</tbody></table></div></section>
   ${g.sample ? `<section class="section"><div class="card sunk small"><b>Credits.</b> ${esc(g.name)} and its artwork belong to ${esc(g.creator || 'its creator')}. <a href="${esc(g.url)}" target="_blank" rel="noopener noreferrer">Play on Roblox</a>. LaunchPad isn't affiliated with Roblox Corporation or the creator. Scores and metrics here are an example analysis.</div></section>` : ''}`;
@@ -3153,12 +3195,12 @@ function studioResultsHTML(g) {
   <p>${fmtNum(sc.counts.instances)} objects, ${sc.counts.scripts} scripts, ${sc.counts.localScripts} local scripts, ${sc.counts.modules} modules, ${sc.counts.screenGuis} starter GUIs, ${sc.counts.spawns} spawn points, ${sc.counts.prompts} proximity prompts. Script code ${sc.codeRead ? `read in Studio (${sc.counts.codeRead} scripts); only feature names, paths and economy numbers were kept` : 'not read'}.</p>
   <p><b>Features found:</b> ${found.length ? found.map(([k, v]) => `${esc(FEATURE_LABELS[k])} <span class="faint">(${esc(v[0])})</span>`).join(' · ') : 'none'}</p>
   <p><b>Economy entries:</b> ${sc.economy.length ? sc.economy.slice(0, 12).map(e => `${esc(e.name)} ${fmtNum(e.cost)} <span class="faint">(${esc(e.source)})</span>`).join(' · ') : 'none'}</p>
-  <p class="tiny faint">Nothing in your game was changed. LaunchPad keeps this summary in this browser only.</p></div></details></div>`;
+  <p class="tiny faint">Nothing in your game was changed.</p></div></details></div>`;
 }
 
 function pageStudio() {
   const v = $('#view'), linked = S().games.filter(g => g.studio);
-  v.innerHTML = `<header class="page-head"><p class="eyebrow">Roblox Studio integration</p><h1>Connect your Roblox Studio</h1><p class="lede">Let LaunchPad analyze your game automatically. No more manually completing five different optimizers.</p></header>
+  v.innerHTML = `<header class="page-head"><h1>Roblox Studio</h1><p class="lede">Connect Studio to enable automatic scans.</p></header>
   <section id="stSync" style="margin-bottom:20px"></section>
   ${linked.length ? `<section class="section"><div class="section-title"><h2>Scanned games</h2></div><div class="grid g2">${linked.map(g => { const res = g.studio.results || {}, n = Object.values(res).filter(x => x.reportId).length;
     return `<article class="card"><div class="row" style="gap:12px;flex-wrap:nowrap"><span class="game-art" style="width:48px;height:48px;border-radius:12px">${gameArt(g)}</span><div style="min-width:0"><h3 style="margin:0">${esc(g.name)}</h3><p class="small muted" style="margin:2px 0 0">${g.studio.scan.place.creatorName ? esc(g.studio.scan.place.creatorName) + ' · ' : ''}Last scan ${esc(timeAgo(g.studio.lastScan))} · ${n}/5 analyzed</p></div></div>
@@ -3195,7 +3237,7 @@ async function renderStudioSync() {
     ${step(2, inst.length > 0, 'Pair LaunchPad Studio', `${inst.length ? plural(inst.length, 'plugin') + ' paired. ' : ''}Install the plugin (below), click <b>Connect</b> in it, then enter the code it shows: <span class="row" style="gap:6px;margin-top:6px"><input id="stCode" placeholder="ABCD2345" maxlength="9" autocomplete="off" style="width:150px;text-transform:uppercase"><button class="btn sm" data-st="pair">Pair</button></span>`)}
     ${step(3, snaps.length > 0, 'Sync from Studio', 'In Studio, open your experience and click <b>Sync this game with LaunchPad</b>. Each sync is analyzed here automatically; unchanged games aren\'t re-analyzed.')}</ol>
     ${snaps.length ? `<h3 style="margin-top:16px">Latest syncs</h3><ul class="list-plain">${snaps.map(s => `<li class="row between small" style="padding:6px 0;border-bottom:1px solid var(--line)"><span><b>${esc(s.data.place.name)}</b> <span class="muted">· experience ${esc(s.universe_id)}</span></span><span class="muted">${fmtDateTime(Date.parse(s.created_at))} · ${s.changes.length ? 'changed: ' + esc(s.changes.join(', ')) : 'no changes'}</span></li>`).join('')}</ul>` : ''}
-    <p class="tiny faint" style="margin:12px 0 0">The last analysis stays available when Studio is closed. LaunchPad only sees your game when you sync it.</p></div>`;
+    <p class="tiny faint" style="margin:12px 0 0">LaunchPad only sees your game when you sync it.</p></div>`;
   $$('a[data-ext]', el).forEach(a => a.onclick = e => { e.preventDefault(); location.assign(a.getAttribute('href')); });
   let fresh = 0;
   for (const s of snaps.filter(s => !s.analyzed_at)) {
