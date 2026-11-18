@@ -429,102 +429,204 @@ tr.flat td:first-child{box-shadow:inset 3px 0 0 var(--border-strong)}
 .img-fallback{display:grid;place-items:center;width:100%;height:100%;min-height:40px;background:var(--sunk);color:var(--muted);font-weight:700;letter-spacing:.04em}
 .thumb .img-fallback,.listing .img-fallback,.concept .img-fallback{aspect-ratio:16/9;height:auto}
 
-/* ===== LANDING PAGE (body.public) — charcoal + cream only; game artwork supplies the color ===== */
+/* ===== LANDING PAGE (body.public): charcoal, cream, white; game artwork supplies the only colour ===== */
 body.public .sidebar,body.public .topbar,body.public .scrim{display:none!important}
-body.public .app{display:block}
-body.public .main{max-width:none;padding:0}
-body.public #storageBanner:not(:empty){max-width:1160px;margin:12px auto 0;padding:0 16px}
-.lp-wrap{max-width:1160px;margin:0 auto;padding:0 clamp(16px,4vw,40px)}
-.lp-nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
-.lp-nav-in{display:flex;align-items:center;gap:28px;height:64px;position:relative}
-.lp-nav .brand{padding:0}
+body.public .app{display:block}body.public main.main,body.public #view{padding:0;max-width:none;margin:0}
+.lp-wrap{max-width:1200px;margin:0 auto;padding:0 clamp(16px,4vw,40px)}
+.lp-kicker{display:inline-flex;align-items:center;gap:8px;font-size:.82rem;font-weight:600;color:var(--muted);margin:0 0 18px}
+.lp-num{font:600 .8rem/1 var(--font-mono);color:var(--muted);letter-spacing:.04em}
+.lp-dim{color:var(--muted)}
+/* nav */
+.lp-nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:saturate(1.4) blur(14px);border-bottom:1px solid transparent;transition:border-color .2s}
+.lp-nav.scrolled{border-bottom-color:var(--border)}
+.lp-nav-in{display:flex;align-items:center;gap:24px;height:64px}
+.lp-brand{padding:0;gap:10px;font-size:1.02rem}.lp-brand b{letter-spacing:-.02em}
 .lp-links{display:flex;align-items:center;gap:2px;flex:1}
-.lp-links>a{padding:8px 12px;border-radius:8px;text-decoration:none;font-weight:500;font-size:.92rem;color:var(--muted);transition:background .12s,color .12s}
-.lp-links>a:hover{color:var(--text);background:var(--hover)}
+.lp-link{display:inline-flex;align-items:center;gap:4px;padding:7px 12px;border-radius:999px;border:0;background:none;font:500 .9rem var(--font-body);color:var(--muted);text-decoration:none;cursor:pointer;transition:color .15s,background .15s}
+.lp-link:hover,.lp-link[aria-expanded="true"]{color:var(--text);background:var(--hover)}
+.lp-link .ic{transition:transform .2s var(--ease)}.lp-link[aria-expanded="true"] .ic{transform:rotate(180deg)}
+.lp-dd{position:relative}
+.lp-menu{position:absolute;top:calc(100% + 10px);left:-8px;min-width:300px;background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-lg);padding:8px;display:grid;gap:2px;opacity:0;visibility:hidden;transform:translateY(-6px) scale(.98);transform-origin:top left;transition:opacity .16s,transform .2s var(--ease),visibility 0s .2s}
+.lp-menu-wide{grid-template-columns:1fr 1fr;width:620px}
+.lp-dd button[aria-expanded="true"]+.lp-menu{opacity:1;visibility:visible;transform:none;transition:opacity .16s,transform .2s var(--ease)}
+.lp-mi{display:flex;gap:12px;align-items:flex-start;padding:10px 12px;border-radius:10px;text-decoration:none;color:var(--text);transition:background .12s}
+.lp-mi:hover,.lp-mi:focus-visible{background:var(--hover)}
+.lp-mi b{display:block;font-size:.9rem;font-weight:600}.lp-mi small{display:block;color:var(--muted);font-size:.8rem;line-height:1.4;margin-top:2px}
+.lp-mi-ic{flex:0 0 34px;height:34px;border-radius:9px;border:1px solid var(--border);display:grid;place-items:center;background:var(--bg)}
 .lp-nav-cta{margin-left:auto;display:flex;gap:8px}
 .lp-burger{display:none;margin-left:auto}
-@media (max-width:880px){.lp-burger{display:inline-grid}.lp-links{display:none;position:absolute;left:-16px;right:-16px;top:64px;background:var(--bg);border-bottom:1px solid var(--border);flex-direction:column;align-items:stretch;padding:10px 16px 18px;box-shadow:var(--shadow-md)}.lp-links.open{display:flex}.lp-links>a{padding:12px}.lp-nav-cta{margin:10px 0 0;flex-direction:column}.lp-nav-cta .btn{width:100%;height:40px}}
-.px{display:inline-block;width:6px;height:6px;background:var(--text);box-shadow:8px 0 0 var(--text),16px 0 0 var(--border-strong);margin-right:18px;flex:none}
-.lp-hero{padding:76px 0 96px;scroll-margin-top:64px;outline:none}
-.lp-hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.08fr);gap:56px;align-items:center}
-.lp-hero h1{font-size:clamp(2.5rem,5.6vw,4.1rem);letter-spacing:-.045em;line-height:1.02;margin-bottom:22px}
-.lp-hero .lede{font-size:1.14rem;max-width:52ch}
-.lp-reassure{display:flex;gap:8px;align-items:center;color:var(--muted);font-size:.9rem;margin:22px 0 0}
-@media (max-width:980px){.lp-hero-grid{grid-template-columns:1fr;gap:44px}.lp-hero{padding:48px 0 64px}}
-.lp-window{background:var(--surface);border:1px solid var(--border);border-radius:16px;box-shadow:0 1px 2px rgba(41,42,39,.04),0 28px 60px rgba(41,42,39,.12);overflow:hidden}
-.lp-chrome{display:flex;gap:6px;align-items:center;height:38px;padding:0 14px;border-bottom:1px solid var(--border);background:var(--bg)}
-.lp-chrome span{width:9px;height:9px;border-radius:2px;background:var(--border-strong)}
-.lp-chrome em{font-style:normal;font-size:.78rem;color:var(--muted);margin-left:10px}
-.lp-win-body{display:grid;grid-template-columns:52px minmax(0,1fr)}
-.lp-win-side{border-right:1px solid var(--border);padding:14px 0;display:flex;flex-direction:column;align-items:center;gap:6px;color:var(--muted);background:var(--bg)}
-.lp-win-side span{width:34px;height:34px;display:grid;place-items:center;border-radius:9px}
-.lp-win-side .on{background:var(--text);color:var(--bg)}
-.lp-win-main{padding:18px;display:grid;gap:16px;min-width:0}
-.lp-win-top{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px;align-items:center}
-.lp-thumb{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:10px;border:1px solid var(--border);display:block;background:var(--sunk)}
-.lp-srow{display:grid;grid-template-columns:118px minmax(0,1fr) 26px;gap:10px;align-items:center;font-size:.8rem;padding:3px 0}
-.lp-sbar{height:6px;border-radius:99px;background:var(--sunk);overflow:hidden}
-.lp-sbar i{display:block;height:100%;background:var(--text);border-radius:99px}
+/* hero */
+.lp-hero{padding:clamp(56px,9vw,112px) 0 72px;outline:none}
+.lp-hero-copy{max-width:860px;margin:0 auto;text-align:center}
+.lp-hero h1{font-size:clamp(2.6rem,6.6vw,5.2rem);line-height:.98;letter-spacing:-.055em;font-weight:700;margin:0 0 24px}
+.lp-hero .lede{font-size:clamp(1.05rem,1.6vw,1.22rem);max-width:56ch;margin:0 auto;color:var(--muted)}
+.lp-cta-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:32px}
+.lp-reassure{margin:18px 0 0;font-size:.82rem;color:var(--faint)}
+/* app preview */
+.lp-app{margin:64px auto 0;max-width:1080px;background:var(--surface);border:1px solid var(--border);border-radius:16px;box-shadow:0 1px 0 var(--border),0 30px 80px -30px rgba(41,42,39,.35);overflow:hidden}
+.lp-chrome{display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid var(--border);background:var(--bg)}
+.lp-chrome>span{width:10px;height:10px;border-radius:50%;background:var(--border-strong)}
+.lp-chrome em{font:normal .78rem var(--font-mono);color:var(--muted);margin:0 auto 0 10px}
+.lp-app-body{display:grid;grid-template-columns:180px 1fr;min-height:380px}
+.lp-app-side{border-right:1px solid var(--border);padding:16px 10px;display:flex;flex-direction:column;gap:2px;background:var(--bg)}
+.lp-app-side>svg{margin:0 0 14px 6px}
+.lp-app-side span{display:flex;align-items:center;gap:10px;padding:7px 10px;border-radius:8px;color:var(--muted);font-size:.84rem}
+.lp-app-side span em{font-style:normal}.lp-app-side span.on{background:var(--text);color:var(--bg)}
+.lp-app-main{padding:20px 22px;min-width:0}
+.lp-app-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.lp-scan{display:inline-flex;align-items:center;gap:8px;font-size:.8rem;border:1px solid var(--border);border-radius:999px;padding:5px 12px;color:var(--muted)}
+.lp-scan i{width:7px;height:7px;border-radius:50%;background:var(--text)}.lp-scan.busy i{animation:lpPulse 1s infinite}
+.lp-app-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:14px}
+.lp-panel{border:1px solid var(--border);border-radius:12px;padding:16px;min-width:0}
+.lp-plabel{font-size:.74rem;font-weight:600;color:var(--muted);margin:0 0 10px}
+.lp-health{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+.lp-srow{display:grid;grid-template-columns:118px 1fr 28px;gap:10px;align-items:center;font-size:.82rem;padding:4px 0}
 .lp-srow b{text-align:right;font-variant-numeric:tabular-nums}
-.lp-recp{border:1px solid var(--border);border-radius:10px;padding:10px 12px;display:flex;gap:10px;align-items:flex-start;font-size:.84rem;background:var(--bg)}
-@media (max-width:520px){.lp-win-body{grid-template-columns:1fr}.lp-win-side{display:none}.lp-win-top{grid-template-columns:1fr}.lp-srow{grid-template-columns:96px minmax(0,1fr) 24px}}
-.lp-sec{padding:96px 0;border-top:1px solid var(--border);scroll-margin-top:64px;outline:none}
-.lp-head{max-width:660px;margin-bottom:44px}
-.lp-head h2,.lp-h2{font-size:clamp(1.85rem,3.6vw,2.6rem);letter-spacing:-.035em;line-height:1.1}
-.lp-h3{font-size:1.45rem;letter-spacing:-.025em}
-@media (max-width:700px){.lp-sec{padding:64px 0}}
-.lp-journey{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr))}
-.lp-journey li{position:relative;padding-right:18px}
-.lp-journey li::before{content:"";position:absolute;top:21px;left:52px;right:8px;border-top:2px dashed var(--border-strong)}
-.lp-journey li:last-child::before{display:none}
-.lp-journey .node{width:44px;height:44px;border-radius:12px;background:var(--text);color:var(--bg);display:grid;place-items:center}
-.lp-journey h3{font-size:1rem;margin:0 0 4px}
-@media (max-width:860px){.lp-journey{grid-template-columns:1fr;gap:22px}.lp-journey li{display:grid;grid-template-columns:44px 1fr;column-gap:16px;padding:0}.lp-journey li>*:not(.node){grid-column:2}.lp-journey .node{grid-row:1/span 3}.lp-journey li::before{display:none}.lp-journey p.tiny{margin-top:0!important}}
-.lp-feature{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:56px;align-items:center;padding:52px 0;border-top:1px solid var(--border)}
-.lp-feature:first-of-type{border-top:0;padding-top:8px}
-.lp-feature.flip .lp-copy{order:2}
-.lp-ticks{list-style:none;padding:0;margin:18px 0 24px;display:grid;gap:9px}
-.lp-ticks li{display:flex;gap:10px;align-items:center}
-.lp-shot{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:22px;box-shadow:var(--shadow-md);position:relative;min-width:0}
-.lp-shot>.chip.sample{position:absolute;top:16px;right:16px;z-index:2}
-.lp-shot .jstep{flex:1 0 116px;margin-right:18px;padding:10px}.lp-shot .jstep::after{right:-14px;width:10px}
-.lp-ba{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px}
-.lp-ba>div{border:1px solid var(--border);border-radius:12px;padding:14px;background:var(--bg)}
-.lp-big{display:block;font-size:2rem;font-weight:700;letter-spacing:-.04em;line-height:1.1;margin:2px 0 6px}
-.lp-art{position:relative}
-.lp-icon{position:absolute;right:14px;bottom:-18px;width:76px;height:76px;border-radius:16px;border:3px solid var(--surface);box-shadow:var(--shadow-md)}
-@media (max-width:900px){.lp-feature{grid-template-columns:1fr;gap:28px}.lp-feature.flip .lp-copy{order:0}}
-.lp-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
-@media (max-width:860px){.lp-steps{grid-template-columns:1fr}}
-.lp-step{font-size:.75rem;font-weight:700;letter-spacing:.12em;color:var(--muted);margin-bottom:10px}
-.lp-mini{border:1px solid var(--border);border-radius:12px;padding:16px;background:var(--surface);margin-top:18px;font-size:.85rem;box-shadow:var(--shadow)}
-.lp-field{border:1.5px solid var(--border);border-radius:9px;height:36px;display:flex;align-items:center;justify-content:space-between;padding:0 10px;color:var(--muted);margin-top:6px;background:var(--surface)}
-.lp-mini .btn{pointer-events:none}
+.lp-sbar{height:6px;border-radius:99px;background:var(--sunk);overflow:hidden}.lp-sbar i{display:block;height:100%;width:0;background:var(--text);border-radius:inherit;transition:width 1s var(--ease) calc(var(--i)*120ms + 300ms)}
+.in .lp-sbar i{width:var(--w)}
+.lp-recs{display:grid;gap:8px}
+.lp-rec{display:flex;gap:10px;align-items:flex-start;padding:10px;border:1px solid var(--border);border-radius:10px;font-size:.84rem;opacity:0;transform:translateY(6px);transition:opacity .45s,transform .45s var(--ease);transition-delay:calc(var(--i)*160ms + 700ms)}
+.lp-rec div{min-width:0}.lp-rec b{display:block;font-weight:600}.in .lp-rec{opacity:1;transform:none}
+.lp-recent div{display:flex;justify-content:space-between;font-size:.82rem;padding:6px 0;border-top:1px solid var(--border)}
+/* sections */
+.lp-sec{padding:clamp(72px,10vw,128px) 0;scroll-margin-top:64px;outline:none}
+.lp-alt{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.lp-dark{background:var(--charcoal);color:var(--cream);--text:#F7F6F1;--muted:#B5B1A7;--faint:#8A867D;--border:#3A3B37;--border-strong:#55564F;--surface:#31322E;--bg:#2E2F2B;--sunk:#3A3B37;--hover:#3A3B37}
+.lp-dark .chip{border-color:var(--border-strong);color:var(--text)}
+.lp-head{max-width:760px;margin-bottom:56px}
+.lp-head h2,.lp-studio h2{font-size:clamp(2rem,4.4vw,3.3rem);line-height:1.04;letter-spacing:-.045em;font-weight:700;margin:0 0 16px}
+.lp-head .lede{color:var(--muted);font-size:1.08rem;max-width:60ch}
+.lp-show{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(28px,5vw,72px);align-items:center;padding:clamp(40px,6vw,72px) 0;border-top:1px solid var(--border)}
+.lp-show:first-of-type{border-top:0}.lp-dark .lp-show,.lp-sec>.lp-wrap>.lp-show:only-child{border-top:0;padding:0}
+.lp-show.flip .lp-show-copy{order:2}
+.lp-show h3{font-size:clamp(1.5rem,2.6vw,2rem);letter-spacing:-.035em;margin:12px 0 12px;font-weight:650}
+.lp-show-copy p{color:var(--muted);max-width:46ch;font-size:1.02rem}
+.lp-sticky{align-items:start}.lp-sticky .lp-show-copy{position:sticky;top:100px}
+.lp-stage{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;box-shadow:0 20px 50px -30px rgba(41,42,39,.3);min-width:0}
+.lp-stage-top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px;font-size:.88rem}
+.lp-stage.swap{animation:lpSwap .4s var(--ease)}
+/* game page */
+.lp-gp-flip{display:grid}.lp-gp-side{grid-area:1/1;transition:opacity .45s,transform .45s var(--ease)}
+.lp-gp[data-v="after"] .lp-gp-before,.lp-gp[data-v="before"] .lp-gp-after{opacity:0;transform:translateY(8px);pointer-events:none}
+.lp-listing{font-size:.95rem;line-height:1.55;border:1px solid var(--border);background:var(--bg);border-radius:10px;padding:14px;margin:0 0 12px;min-height:96px}
+.lp-gp-cats{display:grid;grid-template-columns:1fr 1fr;gap:6px 16px;font-size:.82rem}.lp-gp-cats div{display:flex;justify-content:space-between;border-bottom:1px solid var(--border);padding:5px 0}
+.lp-gp-score{display:flex;justify-content:space-between;align-items:baseline;margin-top:12px}.lp-gp-score b{font-size:2rem;letter-spacing:-.04em}
+.lp-gp-notes{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;padding-top:14px;border-top:1px solid var(--border)}.lp-gp-notes p.small{margin:0 0 6px;display:flex;gap:6px;align-items:center}
+/* artwork */
+.lp-pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.lp-pills button{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:999px;padding:6px 12px 6px 6px;font:500 .84rem var(--font-body);cursor:pointer;transition:border-color .15s,background .15s}
+.lp-pills button[aria-selected="true"]{border-color:var(--text);background:var(--text);color:var(--bg)}
+.lp-art2{position:relative}.lp-thumb{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:12px;display:block;border:1px solid var(--border)}
+.lp-icon{position:absolute;right:14px;bottom:-18px;width:76px;height:76px;border-radius:18px;border:3px solid var(--surface);box-shadow:var(--shadow-md)}
+.lp-art2+.lp-gp-notes{margin-top:30px}
+.lp-mini-bar{display:inline-block;width:46px;height:5px;border-radius:9px;background:var(--sunk);overflow:hidden;vertical-align:middle;margin-right:6px}.lp-mini-bar i{display:block;height:100%;background:var(--text)}
+/* journey */
+.lp-facts{list-style:none;padding:0;margin:24px 0 0;display:flex;gap:28px;flex-wrap:wrap}.lp-facts b{display:block;font-size:1.7rem;letter-spacing:-.04em}.lp-facts span{font-size:.8rem;color:var(--muted)}
+.lp-journey2{list-style:none;margin:0;padding:0;position:relative}
+.lp-journey2::before{content:"";position:absolute;left:13px;top:14px;bottom:14px;width:2px;background:var(--border)}
+.lp-journey2 li{position:relative;display:grid;grid-template-columns:28px 1fr auto;gap:12px;padding:10px 8px;border-radius:10px;transition:background .3s}
+.lp-journey2 li b{display:block;font-size:.9rem}.lp-journey2 li.on{background:var(--hover)}
+.lp-jdot{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--border-strong);background:var(--surface);display:grid;place-items:center;font-size:.75rem;font-weight:700;z-index:1;transition:background .3s,color .3s,border-color .3s}
+.lp-journey2 li.done .lp-jdot,.lp-journey2 li.on .lp-jdot{background:var(--text);color:var(--bg);border-color:var(--text)}
+.lp-friction{display:inline-flex;gap:5px;align-items:center;font-size:.76rem;border:1px dashed var(--border-strong);border-radius:99px;padding:2px 9px;margin-top:6px}
+/* charts draw in */
+.lp-draw .chart path[fill="none"],.lp-draw .chart polyline{stroke-dasharray:1600;stroke-dashoffset:1600;transition:stroke-dashoffset 1.6s var(--ease) .2s}
+.in .lp-draw .chart path[fill="none"],.in .lp-draw .chart polyline,.lp-show.in .lp-draw .chart path[fill="none"]{stroke-dashoffset:0}
+/* progression */
+.lp-pstep{margin-top:22px;border:1px solid var(--border);border-radius:12px;padding:14px;display:grid;gap:6px;font-size:.9rem;min-height:92px}.lp-pstep em{font-style:normal;font-weight:700;text-decoration:underline}
+.lp-ptable tr{transition:background .3s}.lp-ptable tr.on{background:var(--hover)}.lp-ptable tr.on td:first-child{box-shadow:inset 2px 0 0 var(--text)}
+/* how it works */
+.lp-flow{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(4,1fr);gap:16px;counter-reset:f}
+.lp-flow li{position:relative;padding:24px;border:1px solid var(--border);border-radius:16px;background:var(--bg);transition-delay:calc(var(--i)*120ms)!important}
+.lp-flow li::after{content:"";position:absolute;top:44px;right:-17px;width:16px;height:1px;background:var(--border-strong)}.lp-flow li:last-child::after{display:none}
+.lp-flow-ic{width:40px;height:40px;border-radius:11px;background:var(--text);color:var(--bg);display:grid;place-items:center;margin-bottom:18px}
+.lp-flow-ic .ic{color:var(--bg)}
+.lp-flow h3{font-size:1.15rem;margin:8px 0 6px}.lp-flow p{color:var(--muted);font-size:.92rem;margin:0}
+/* studio */
+.lp-studio{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,6vw,80px);align-items:center}
+.lp-studio>.lp-show-copy p{color:var(--muted)}
+.lp-ticks{list-style:none;padding:0;margin:22px 0 0;display:grid;gap:10px}.lp-ticks li{display:flex;gap:10px;align-items:center;font-size:.95rem}
+.lp-plugin{background:#232421;border:1px solid var(--border);border-radius:16px;padding:18px;font-size:.88rem;box-shadow:0 30px 70px -30px rgba(0,0,0,.7)}
+.lp-plugin-top{display:flex;align-items:center;gap:10px;padding-bottom:14px;border-bottom:1px solid var(--border)}.lp-plugin-top .chip{margin-left:auto}
+.lp-plugin-meta{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}.lp-plugin-meta span{display:block;font-size:.74rem;color:var(--muted)}
+.lp-scanlist{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+.lp-scanlist li{display:grid;grid-template-columns:16px 1fr auto;gap:10px;align-items:center;padding:8px 6px;border-radius:8px;color:var(--faint);transition:color .3s,background .3s}
+.lp-scanlist li em{font-style:normal;font-size:.76rem;opacity:0;transition:opacity .3s}
+.lp-scanlist li.on{background:var(--hover);color:var(--text)}.lp-scanlist li.done{color:var(--text)}.lp-scanlist li.done em{opacity:.75}
+.lp-sdot{width:12px;height:12px;border-radius:50%;border:1.5px solid var(--border-strong)}
+.lp-scanlist li.on .lp-sdot{border-color:var(--text);border-top-color:transparent;animation:lpSpin .8s linear infinite}
+.lp-scanlist li.done .lp-sdot{background:var(--text);border-color:var(--text)}
+.lp-plugin-bar{height:4px;border-radius:9px;background:var(--border);margin:14px 0 10px;overflow:hidden}.lp-plugin-bar i{display:block;height:100%;width:0;background:var(--text);transition:width .6s var(--ease)}
+.lp-plugin-foot{display:flex;justify-content:space-between;gap:10px;color:var(--muted)}
+/* examples */
 .lp-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
-.lp-tab{display:inline-flex;align-items:center;gap:10px;font:inherit;font-weight:600;font-size:.9rem;height:44px;padding:0 16px 0 8px;border-radius:12px;border:1.5px solid var(--border);background:var(--surface);color:var(--text);cursor:pointer;transition:border-color .12s,background .12s}
-.lp-tab:hover{border-color:var(--border-strong)}
+.lp-tab{display:inline-flex;align-items:center;gap:10px;padding:7px 14px 7px 7px;border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:999px;font:500 .9rem var(--font-body);cursor:pointer;transition:border-color .15s,background .15s}
 .lp-tab[aria-selected="true"]{background:var(--text);color:var(--bg);border-color:var(--text)}
-.lp-ex{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:32px;align-items:start}
-@media (max-width:900px){.lp-ex{grid-template-columns:1fr}}
-.lp-why{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:64px;align-items:start}
-@media (max-width:900px){.lp-why{grid-template-columns:1fr;gap:28px}}
-.lp-points{list-style:none;padding:0;margin:0;display:grid;gap:0}
-.lp-points li{display:flex;gap:16px;align-items:flex-start;padding:18px 0;border-bottom:1px solid var(--border)}
-.lp-points li:first-child{padding-top:4px}
-.lp-faq details{border-bottom:1px solid var(--border);padding:20px 0;max-width:820px}
-.lp-faq summary{font-weight:600;font-size:1.04rem}
-.lp-final{background:var(--text);color:var(--bg);border-radius:20px;padding:72px 28px;text-align:center}
-.lp-final h2{font-size:clamp(1.9rem,4vw,2.8rem);letter-spacing:-.035em;color:var(--bg)}
-.lp-final p{color:color-mix(in srgb,var(--bg) 75%,transparent);max-width:46ch;margin:0 auto}
-:root[data-theme] .lp-final .btn:not(.ghost):not(.soft):not(.danger){background:var(--bg);color:var(--text);border-color:var(--bg)}
-:root[data-theme] .lp-final .btn.ghost{background:transparent;color:var(--bg);border-color:var(--bg)}
-.lp-final .btn.ghost:hover{background:color-mix(in srgb,var(--bg) 12%,transparent)}
-.lp-foot{border-top:1px solid var(--border);padding:52px 0 36px;font-size:.9rem}
-.lp-foot-grid{display:grid;grid-template-columns:1.5fr repeat(3,minmax(0,1fr));gap:32px}
-.lp-foot-grid b{display:block;margin-bottom:8px}
-.lp-foot-grid a:not(.brand),.lp-foot-grid button{display:block;color:var(--muted);text-decoration:none;padding:4px 0;background:none;border:0;font:inherit;cursor:pointer;text-align:left}
-.lp-foot-grid a:not(.brand):hover,.lp-foot-grid button:hover{color:var(--text)}
-@media (max-width:760px){.lp-foot-grid{grid-template-columns:1fr 1fr}}
+.lp-ex{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
+.lp-sbar{display:block}
+/* faq, final, footer */
+.lp-faq details{border-bottom:1px solid var(--border);padding:22px 0;max-width:860px}
+.lp-faq summary{font-weight:600;font-size:1.06rem;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px}
+.lp-faq summary::after{content:"+";font-weight:400;color:var(--muted);transition:transform .2s var(--ease)}.lp-faq details[open] summary::after{transform:rotate(45deg)}
+.lp-faq details p{margin:12px 0 0;max-width:70ch}
+.lp-final-wrap{padding:0 0 clamp(72px,10vw,120px)}
+.lp-final{text-align:center;background:var(--charcoal);color:var(--cream);border-radius:24px;padding:clamp(48px,8vw,96px) 24px}
+.lp-final h2{font-size:clamp(2rem,4.6vw,3.4rem);letter-spacing:-.045em;margin:0 0 12px}.lp-final p{color:#B5B1A7;margin:0}
+.lp-final .btn:not(.ghost){background:var(--cream)!important;color:var(--charcoal)!important;border-color:var(--cream)!important}
+.lp-final .btn.ghost{color:var(--cream)!important;border-color:#55564F!important;background:transparent!important}
+.lp-foot{border-top:1px solid var(--border);padding:56px 0 40px;background:var(--bg)}
+.lp-foot-grid{display:grid;grid-template-columns:1.4fr repeat(4,1fr);gap:28px}
+.lp-foot-grid b{display:block;font-size:.85rem;margin-bottom:12px}
+.lp-foot-grid a:not(.brand){display:block;color:var(--muted);text-decoration:none;font-size:.88rem;padding:4px 0;transition:color .15s}.lp-foot-grid a:not(.brand):hover{color:var(--text)}
+.lp-foot-brand p{max-width:30ch;margin-top:12px}
+.lp-foot-base{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:48px;padding-top:20px;border-top:1px solid var(--border);font-size:.78rem;color:var(--faint)}.lp-foot-base span:last-child{max-width:70ch}
+/* reveal motion */
+[data-reveal]{opacity:0;transform:translateY(18px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+[data-reveal].in{opacity:1;transform:none}
+@keyframes lpPulse{50%{opacity:.25}}@keyframes lpSpin{to{transform:rotate(360deg)}}@keyframes lpSwap{from{opacity:.3;transform:translateY(6px)}}
+@media (prefers-reduced-motion:reduce){[data-reveal]{opacity:1;transform:none;transition:none}.lp-sbar i,.lp-rec,.lp-gp-side{transition:none}.lp-draw .chart path,.lp-draw .chart polyline{stroke-dasharray:none!important}}
+:root[data-motion="reduce"] [data-reveal]{opacity:1;transform:none;transition:none}
+/* responsive */
+@media (max-width:980px){.lp-show,.lp-studio,.lp-ex{grid-template-columns:1fr}.lp-show.flip .lp-show-copy{order:0}.lp-sticky .lp-show-copy{position:static}.lp-flow{grid-template-columns:1fr 1fr}.lp-flow li::after{display:none}.lp-app-grid{grid-template-columns:1fr}.lp-foot-grid{grid-template-columns:1fr 1fr 1fr}.lp-foot-brand{grid-column:1/-1}}
+@media (max-width:880px){.lp-burger{display:inline-grid}
+  .lp-links{display:none;position:absolute;left:0;right:0;top:64px;background:var(--bg);border-bottom:1px solid var(--border);flex-direction:column;align-items:stretch;padding:12px 16px 20px;gap:4px;max-height:calc(100vh - 64px);overflow:auto}
+  .lp-links.open{display:flex;animation:lpSwap .25s var(--ease)}.lp-nav-in{position:relative}
+  .lp-link{padding:12px;border-radius:10px;justify-content:space-between;font-size:1rem}
+  .lp-menu,.lp-menu-wide{position:static;width:auto;min-width:0;box-shadow:none;border:0;padding:0 0 6px;grid-template-columns:1fr;display:none;opacity:1;visibility:visible;transform:none}
+  .lp-dd button[aria-expanded="true"]+.lp-menu{display:grid}
+  .lp-nav-cta{margin:12px 0 0;flex-direction:column}.lp-nav-cta .btn{width:100%}}
+@media (max-width:640px){.lp-app-body{grid-template-columns:1fr}.lp-app-side{display:none}.lp-srow{grid-template-columns:96px 1fr 24px}.lp-flow{grid-template-columns:1fr}.lp-gp-notes,.lp-gp-cats,.lp-plugin-meta{grid-template-columns:1fr}.lp-foot-grid{grid-template-columns:1fr 1fr}.lp-cta-row .btn{flex:1 1 100%}.lp-chrome em{display:none}}
+/* ===== DESIGN SYSTEM v2: shared tokens, type scale and motion for public and signed-in pages ===== */
+:root{--font-mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;--dur-1:120ms;--dur-2:200ms;--dur-3:360ms;--ease-out:cubic-bezier(.16,1,.3,1);
+  --s-1:4px;--s-2:8px;--s-3:12px;--s-4:16px;--s-5:24px;--s-6:32px;--s-7:48px;--s-8:64px;--r-xl:16px;--ring:0 0 0 3px color-mix(in srgb,var(--text) 18%,transparent)}
+.page-head h1{font-size:clamp(1.75rem,3vw,2.35rem);letter-spacing:-.04em;font-weight:700;line-height:1.08}
+.page-head .lede{color:var(--muted);max-width:62ch}
+h2{letter-spacing:-.03em}.eyebrow{letter-spacing:.02em}
+/* buttons: tactile, never bouncy */
+.btn{transition:background var(--dur-1),color var(--dur-1),border-color var(--dur-1),transform var(--dur-2) var(--ease-out),box-shadow var(--dur-2)}
+.btn:not(:disabled):hover{transform:translateY(-1px)}.btn:not(:disabled):active{transform:translateY(0) scale(.98)}
+.btn:focus-visible,.icon-btn:focus-visible,.lp-link:focus-visible,.lp-tab:focus-visible{outline:none;box-shadow:var(--ring)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn[aria-busy="true"]{position:relative;color:transparent!important;pointer-events:none}
+.btn[aria-busy="true"]::after{content:"";position:absolute;inset:0;margin:auto;width:16px;height:16px;border-radius:50%;border:2px solid var(--on-accent);border-top-color:transparent;animation:lpSpin .7s linear infinite}
+.btn.ghost[aria-busy="true"]::after{border-color:var(--text);border-top-color:transparent}
+/* cards and surfaces */
+.card{border-radius:var(--r-xl);transition:border-color var(--dur-2),box-shadow var(--dur-2),transform var(--dur-2) var(--ease-out)}
+a.card:hover,.card.hoverable:hover,.game-card:hover{border-color:var(--border-strong);box-shadow:var(--shadow-md);transform:translateY(-1px)}
+/* sidebar */
+.nav a{transition:background var(--dur-1),color var(--dur-1)}
+.nav a:not([aria-current]):hover{background:var(--hover)}
+/* tables */
+.table-wrap table th{font-size:.78rem;font-weight:600;color:var(--muted);background:var(--bg)}
+.table-wrap table tbody tr{transition:background var(--dur-1)}.table-wrap table tbody tr:hover{background:var(--bg)}
+/* loading */
+.skeleton{background:linear-gradient(90deg,var(--sunk),var(--hover),var(--sunk));background-size:200% 100%;animation:lpShimmer 1.4s infinite;border-radius:8px;min-height:14px}
+@keyframes lpShimmer{to{background-position:-200% 0}}
+/* modals and toasts enter smoothly */
+.modal-wrap{animation:lpFade var(--dur-2) ease}.modal{animation:lpRise var(--dur-3) var(--ease-out)}
+@keyframes lpFade{from{opacity:0}}@keyframes lpRise{from{opacity:0;transform:translateY(10px) scale(.985)}}
+@media (prefers-reduced-motion:reduce){.btn,.card,.modal,.modal-wrap{transition:none;animation:none}.btn:hover{transform:none}}
+:root[data-motion="reduce"] .btn:hover,:root[data-motion="reduce"] .card:hover{transform:none}
 
 /* plans, settings tabs, studio sync */
 .plan-toggle{margin:0 0 18px}.plan-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;max-width:920px}.plan{display:flex;flex-direction:column;gap:6px}.plan .btn{margin-top:8px;align-self:flex-start}
@@ -2333,10 +2435,10 @@ function pricingCards(ctx = 'app') {
   const price = (p, big, unit) => `<p class="plan-price"><b>${big}</b> <span class="muted">/ ${unit}</span></p>`;
   return `<div class="plan-toggle seg" role="group" aria-label="Billing period"><button type="button" data-int="month" aria-pressed="${!yr}">Monthly</button><button type="button" data-int="year" aria-pressed="${yr}">Annually</button></div>
   <div class="plan-grid">
-    <article class="card plan"><div class="row between"><h2 style="margin:0">Light</h2>${yr ? `<span class="chip">Save ${L.display.percent}%</span>` : ''}</div><p class="muted small">For solo developers who want automatic analysis.</p>
-      ${yr ? price(L, L.display.annual, 'year') + `<p class="small">About ${L.display.effectiveMonthly}/month, charged ${L.display.annual} upfront for the full year. Save ${L.display.saving} a year versus paying ${L.display.monthly} monthly.</p>` : price(L, L.display.monthly, 'month') + `<p class="small muted">Billed monthly. Or choose annual: ${L.display.annual}/year and save ${L.display.percent}%.</p>`}
+    <article class="card plan"><div class="row between"><h2 style="margin:0">Light</h2>${yr ? `<span class="chip">${L.display.percent}% off</span>` : ''}</div><p class="muted small">For solo developers who want automatic analysis.</p>
+      ${yr ? price(L, L.display.annual, 'year') + `<p class="small"><b>Save ${L.display.saving} annually: ${L.display.percent}% off.</b> About ${L.display.effectiveMonthly}/month, charged ${L.display.annual} upfront for the full year.</p>` : price(L, L.display.monthly, 'month') + `<p class="small muted">Billed monthly. Or choose annual: ${L.display.annual}/year and save ${L.display.percent}%.</p>`}
       ${btn(L)}${feats(L)}</article>
-    <article class="card plan featured"><div class="row between"><h2 style="margin:0">Max</h2>${yr ? `<span class="chip plan-badge">SAVE ${M.display.percent}%</span>` : '<span class="chip">Most capable</span>'}</div><p class="muted small">Everything in Light, plus deeper analysis and more room.</p>
+    <article class="card plan featured"><div class="row between"><h2 style="margin:0">Max</h2>${yr ? `<span class="chip plan-badge">SAVE ${M.display.saving} PER YEAR · ${M.display.percent}% OFF</span>` : '<span class="chip">Most capable</span>'}</div><p class="muted small">Everything in Light, plus deeper analysis and more room.</p>
       ${yr ? price(M, M.display.annual.replace('.00', ''), 'year') + `<p><b>An incredible ${M.display.saving} annual saving.</b></p><p class="small">Get Max annually for just ${M.display.annual.replace('.00', '')} instead of ${M.display.twelveMonthly} when paying monthly. Save ${M.display.saving}: that's a ${M.display.percent}% discount. About ${M.display.effectiveMonthly}/month, charged ${M.display.annual} upfront for the full year.</p>`
         : price(M, M.display.monthly, 'month') + `<p class="small muted">Billed monthly. Or choose annual: ${M.display.annual.replace('.00', '')}/year and save ${M.display.saving}.</p>`}
       ${btn(M)}<p class="tiny faint" style="margin:10px 0 0">Everything in Light, plus:</p>${feats(M, L.features)}</article>
@@ -2506,106 +2608,174 @@ function lpExample(d) {
   <p class="eyebrow">Top refinements</p><ul class="list-plain">${lpRecs(d).slice(0, 3).map(x => `<li class="small"><b>${esc(x.title)}</b><br><span class="muted">${esc(x.opt)}</span></li>`).join('')}</ul>
   <button class="btn" style="margin-top:16px" data-lp="demo-game" data-id="${d.g.id}">Explore analysis ${icon('arrow', 18)}</button></div></div>`;
 }
+// Landing page: product demos are built from the real app components and real analyzer output on the demo games (labelled Demo data).
+// Motion: IntersectionObserver adds .in when a block enters the viewport; small interval loops run only while their element is on the page.
+function lpLoop(el, ms, fn) { if (!el || reducedMotion()) return; const t = setInterval(() => { if (!el.isConnected) return clearInterval(t); if (!document.hidden) fn(); }, ms); }
+function lpReveal(root) {
+  const items = $$('[data-reveal]', root);
+  if (reducedMotion() || !('IntersectionObserver' in window)) return items.forEach(e => e.classList.add('in'));
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -12% 0px' });
+  items.forEach(e => io.observe(e));
+}
 function pageLanding() {
-  const D = lpData(), [sae, tfa, fish] = D, authed = isAuthed(), top = lpRecs(fish)[0];
-  const ctas = big => authed ? `<button class="btn ${big ? 'lg' : ''}" data-lp="workspace">Open your workspace ${icon('arrow', 18)}</button>` : `<button class="btn ${big ? 'lg' : ''}" data-lp="signup">Get started free</button><button class="btn ghost ${big ? 'lg' : ''}" data-lp="demo">${icon('play', 18)} Explore the demo</button>`;
-  const tick = l => `<ul class="lp-ticks">${l.map(x => `<li>${icon('check', 16)}${x}</li>`).join('')}</ul>`;
-  const feature = (i, o, tagline, ticks, shot, flip) => `<div class="lp-feature ${flip ? 'flip' : ''}"><div class="lp-copy"><span class="opt-icon">${icon(o.icon, 22)}</span><p class="eyebrow" style="margin-top:18px">Optimizer 0${i}</p><h3 class="lp-h3">${o.full}</h3><p class="lede">${tagline}</p>${tick(ticks)}<button class="btn ghost sm" data-lp="demo-opt" data-opt="${o.id}">Try it in the demo ${icon('arrow', 16)}</button></div><div class="lp-shot">${lpDemo}${shot}</div></div>`;
-  // Game Page before/after: the same rules scored on an earlier rough description vs the current demo listing.
+  const D = lpData(), [sae, tfa, fish] = D, authed = isAuthed();
   const gpIn = demoInputs(tfa.g.id, 'game-page'), rough = 'throw food to animals. feed them to get money and unlock new worlds. there are lots of animals like phoenix and more coming soon';
-  const before = analyzeGamePage({ ...gpIn, description: rough }, { noExtras: true }).score;
-  const fsStages = demoInputs(fish.g.id, 'first-session').stages, rIn = demoInputs(fish.g.id, 'retention'), pg = sae.r.progression.result.extras;
-  const thR = sae.r.thumbnail;
-  $('#view').innerHTML = `<header class="lp-nav"><div class="lp-wrap lp-nav-in"><a class="brand" href="#lp-top">${logo()}<b>LaunchPad</b></a>
-    <button class="icon-btn lp-burger" data-lp="menu" aria-expanded="false" aria-controls="lpLinks" aria-label="Open menu">${icon('menu', 22)}</button>
-    <nav class="lp-links" id="lpLinks" aria-label="Site"><a href="#lp-product">Product</a><a href="#lp-optimizers">Optimizers</a><a href="#lp-how">How it works</a><a href="#lp-examples">Examples</a><a href="#lp-pricing">Pricing</a>
-    <div class="lp-nav-cta">${authed ? `<button class="btn sm" data-lp="workspace">Open workspace</button>` : `<button class="btn ghost sm" data-lp="login">Log in</button><button class="btn sm" data-lp="signup">Get started free</button>`}</div></nav></div></header>
+  const roughR = analyzeGamePage({ ...gpIn, description: rough }, { noExtras: true }), goodR = tfa.r['game-page'].result;
+  const fsStages = demoInputs(fish.g.id, 'first-session').stages, fsR = fish.r['first-session'].result, rIn = demoInputs(fish.g.id, 'retention'), pg = sae.r.progression.result.extras;
+  const recs = lpRecs(fish), demoChip = '<span class="chip sample sm">Demo data</span>';
+  const primary = authed ? `<button class="btn lg" data-lp="analyze">Analyze your game ${icon('arrow', 18)}</button>` : `<button class="btn lg" data-lp="signup">Analyze your game ${icon('arrow', 18)}</button>`;
+  const menuItem = (ic, t, d, attrs) => `<a class="lp-mi" ${attrs}><span class="lp-mi-ic">${icon(ic, 18)}</span><span><b>${t}</b><small>${d}</small></span></a>`;
+  const productMenu = OPTIMIZERS.map((o, i) => menuItem(o.icon, o.full, o.blurb.split('.')[0] + '.', `href="#lp-opt-${i + 1}"`)).join('') + menuItem('play', 'Roblox Studio integration', 'Pair the read-only plugin and sync your game.', 'href="#lp-studio"');
+  const resMenu = [['games', 'Sample games', 'Three real games, analyzed with demo data.', 'href="#lp-examples"'], ['layers', 'How it works', 'From your game to a ranked list of fixes.', 'href="#lp-how"'], ['info', 'FAQ', 'Straight answers about scores and data.', 'href="#lp-faq"'], ['page', 'Policies', 'Terms, privacy and data requests.', 'href="/legal"'], ['user', 'Support', 'Contact the LaunchPad team.', 'href="/legal/request?kind=support"']].map(x => menuItem(...x)).join('');
+  const scoreRows = d => OPTIMIZERS.map((o, i) => `<div class="lp-srow" style="--i:${i}"><span>${o.name}</span><span class="lp-sbar"><i style="--w:${d.r[o.id].score}%"></i></span><b>${d.r[o.id].score}</b></div>`).join('');
+  const scanStages = ['Connecting to Studio', 'Scanning project structure', 'Collecting permitted assets', 'Inspecting relevant systems', 'Analyzing game progression', 'Generating reports'];
+  const scanDetail = ['Paired · LaunchPad Studio', '8,907 objects · 42 scripts', 'Icon, listing text, UI text', 'Saves, offline income, leaderboard', '7 priced unlocks found', '5 reports ready'];
+  const listing = (txt, r) => `<p class="lp-listing">${esc(txt.split('\n')[0])}</p><div class="lp-gp-cats">${r.categories.slice(0, 4).map(c => `<div><span>${esc(c.label)}</span><b>${c.score ?? '—'}</b></div>`).join('')}</div>`;
 
-  <section class="lp-hero" id="lp-top" tabindex="-1"><div class="lp-wrap lp-hero-grid"><div>
-    <p class="eyebrow"><span class="px" aria-hidden="true"></span>For Roblox developers</p>
-    <h1>Find what's holding your Roblox game back.</h1>
-    <p class="lede">Scan your game in Roblox Studio and get a score for your page, thumbnails, first minutes, retention and progression. Every gap is ranked, so you know what to fix first.</p>
-    <div class="row" style="margin-top:28px">${ctas(true)}</div>
-    <p class="lp-reassure">${icon('check', 14)} Free · Read-only Studio plugin · Never asks for your Roblox password</p>
-    ${authed ? `<p class="small muted">You're signed in as ${esc(S().account.name)}.</p>` : ''}</div>
-    <div class="lp-window" role="img" aria-label="Preview of a LaunchPad report for the demo game Fish It!, with an average score of ${fish.avg}">
-      <div class="lp-chrome"><span></span><span></span><span></span><em>Reports / Fish It!</em></div>
-      <div class="lp-win-body"><div class="lp-win-side">${['home', 'games', 'layers', 'bars', 'gear'].map((n, i) => `<span class="${i === 3 ? 'on' : ''}">${icon(n, 18)}</span>`).join('')}</div>
-      <div class="lp-win-main"><div class="lp-win-top">${lpThumb(fish.g)}<div style="text-align:center">${scoreRing(fish.avg, 96, 'Overall score')}<p class="tiny muted" style="margin:6px 0 4px">Overall LaunchPad score</p>${lpDemo}</div></div>
-        <div>${lpRows(fish)}</div>
-        <div class="lp-recp">${icon('star', 16)}<div style="flex:1;min-width:0"><b>${esc(top.title)}</b><br><span class="muted">${esc(top.opt)} · ${top.priority} priority</span></div></div>
-        <div><div class="row between tiny muted" style="margin-bottom:6px"><span>Recommendations completed</span><span>2 of ${lpRecs(fish).length}</span></div>${pbar(Math.round(200 / lpRecs(fish).length))}</div></div></div></div></div></section>
+  $('#view').innerHTML = `<header class="lp-nav" id="lpNav"><div class="lp-wrap lp-nav-in"><a class="brand lp-brand" href="#lp-top">${logo()}<b>LaunchPad</b></a>
+    <nav class="lp-links" id="lpLinks" aria-label="Site">
+      <div class="lp-dd"><button class="lp-link" data-lp="dd" aria-expanded="false" aria-controls="ddProduct">Product ${icon('down', 14)}</button><div class="lp-menu lp-menu-wide" id="ddProduct" role="menu">${productMenu}</div></div>
+      <a class="lp-link" href="#lp-optimizers">Features</a><a class="lp-link" href="#lp-studio">For Developers</a><a class="lp-link" href="#lp-pricing">Pricing</a>
+      <div class="lp-dd"><button class="lp-link" data-lp="dd" aria-expanded="false" aria-controls="ddRes">Resources ${icon('down', 14)}</button><div class="lp-menu" id="ddRes" role="menu">${resMenu}</div></div>
+      <div class="lp-nav-cta">${authed ? `<button class="btn sm" data-lp="workspace">Open workspace</button>` : `<button class="btn ghost sm" data-lp="login">Log in</button><button class="btn sm" data-lp="signup">Get started</button>`}</div>
+    </nav><button class="icon-btn lp-burger" data-lp="menu" aria-expanded="false" aria-controls="lpLinks" aria-label="Open menu">${icon('menu', 22)}</button></div></header>
 
-  <section class="lp-sec" id="lp-product" tabindex="-1"><div class="lp-wrap"><div class="lp-head"><p class="eyebrow"><span class="px" aria-hidden="true"></span>The product</p><h2>Five scores. One list of what to fix.</h2><p class="lede">A game grows when its page explains the fun, its art earns the click, the first minutes hook new players, there's a reason to come back, and every upgrade feels worth it. LaunchPad scores all five.</p></div>
-    <ol class="lp-journey">${[['page', 'Game presentation', 'Does your page explain the fun at a glance?'], ['image', 'Visual appeal', 'Will your icon and thumbnail earn the click?'], ['flag', 'First player experience', 'Do new players reach the fun fast?'], ['users', 'Player retention', 'Is there a reason to come back tomorrow?'], ['stairs', 'Progression', 'Does every upgrade feel worth working for?']].map(([ic, t, d], i) => `<li><span class="node">${icon(ic, 20)}</span><p class="tiny muted" style="margin:14px 0 2px">0${i + 1}</p><h3>${t}</h3><p class="small muted">${d}</p></li>`).join('')}</ol></div></section>
-
-  <section class="lp-sec" id="lp-optimizers" tabindex="-1"><div class="lp-wrap"><div class="lp-head"><p class="eyebrow"><span class="px" aria-hidden="true"></span>Optimizers</p><h2>What each score looks at.</h2><p class="lede">Each optimizer has its own rules. Every score explains itself, and every recommendation says why it appeared.</p></div>
-    ${feature(1, OPT['game-page'], 'Make sure your game page clearly communicates why someone should play.', ['Title evaluation', 'Description feedback', 'Listing score', 'Before-and-after comparison'],
-      `<p class="eyebrow">Listing score · ${esc(tfa.g.name)}</p><div class="lp-ba"><div><span class="tiny muted">Before</span><b class="lp-big">${before}</b><p class="small muted">${esc(rough.slice(0, 92))}…</p></div><div><span class="tiny muted">After</span><b class="lp-big">${tfa.r['game-page'].score}</b><p class="small">${esc(tfa.g.description.split('\n')[0].slice(0, 92))}…</p></div></div>${catBars(tfa.r['game-page'].result.categories.slice(0, 3).map(c => ({ ...c, source: '' })))}`)}
-    ${feature(2, OPT.thumbnail, 'Make your game\'s first impression count.', ['Thumbnail preview', 'Visual feedback', 'Alternative creative concepts', 'Icon evaluation'],
-      `<div class="lp-art">${lpThumb(sae.g)}<span class="game-art lp-icon">${gameArt(sae.g)}</span></div><div class="grid g2" style="gap:14px;margin-top:16px"><div><p class="eyebrow">Feedback</p>${thR.result.strengths.slice(0, 2).map(c => `<p class="small" style="margin:0 0 8px"><b>${esc(c.label)} ${c.score}</b><br><span class="muted">${esc(c.note)}</span></p>`).join('')}</div><div><p class="eyebrow">Concepts to try</p>${thR.result.extras.concepts.slice(0, 4).map(c => `<p class="small" style="margin:0 0 6px">${icon(c.kind === 'icon' ? 'grid' : 'image', 14)} ${esc(c.name)} <span class="muted">· ${c.kind}</span></p>`).join('')}</div></div>`, true)}
-    ${feature(3, OPT['first-session'], 'Give new players a reason to stay.', ['Player journey timeline', 'Time to first reward', 'Tutorial flow', 'Friction points'],
-      `<p class="eyebrow">First minutes · ${esc(fish.g.name)}</p>${journeyHTML(fsStages)}<div class="row" style="gap:8px;margin-top:6px"><span class="chip sm">First reward at ${fmtSec(fish.r['first-session'].result.extras.stats.tReward)}</span>${fish.r['first-session'].result.extras.friction.slice(0, 1).map(f => `<span class="chip warn sm">Friction: ${esc(f.name)}</span>`).join('')}</div>`)}
-    ${feature(4, OPT.retention, 'Understand why players return — or don\'t.', ['Day 1, 7 and 30 charts', 'Player activity', 'Comparisons with earlier periods', 'Improvement recommendations'],
-      `<p class="eyebrow">Retention · ${esc(fish.g.name)}</p>${barChart({ labels: ['Day 1', 'Day 7', 'Day 30'], series: [{ name: 'Previous period', values: [rIn.pd1, rIn.pd7, rIn.pd30], color: 'var(--lav)', dash: true }, { name: 'This period', values: [rIn.d1, rIn.d7, rIn.d30], color: 'var(--text)' }], yFmt: v => Math.round(v) + '%', h: 200, title: 'Retention by day, demo data' })}<p class="small muted" style="margin:10px 0 0">${esc(fish.r.retention.result.extras.observations[1] || '')}</p>`, true)}
-    ${feature(5, OPT.progression, 'Make every upgrade feel worth working for.', ['Upgrade progression', 'Economy values', 'Progression curve', 'Balancing suggestions'],
-      `<p class="eyebrow">Time to unlock · ${esc(sae.g.name)}</p>${lineChart({ labels: pg.rows.map((x, i) => i + 1), series: [{ name: 'Current', values: pg.rows.map(x => x.time), color: 'var(--text)' }, { name: 'Suggested', values: pg.suggested.map(x => x.time), color: 'var(--orange)', dash: true }], yFmt: v => fmtMin(v), h: 200, title: 'Minutes to unlock each upgrade, demo data' })}<div class="table-wrap" style="margin-top:12px"><table><thead><tr><th>Upgrade</th><th class="num">Cost</th><th class="num">Income/min</th></tr></thead><tbody>${pg.rows.slice(-3).map(x => `<tr><td>${esc(x.name)}</td><td class="num">${fmtNum(x.cost)}</td><td class="num">${fmtNum(x.income)}</td></tr>`).join('')}</tbody></table></div>`)}
+  <section class="lp-hero" id="lp-top" tabindex="-1"><div class="lp-wrap">
+    <div class="lp-hero-copy" data-reveal><p class="lp-kicker"><span class="px" aria-hidden="true"></span>For Roblox developers</p>
+      <h1>Build better Roblox games.<br><span class="lp-dim">Make every player count.</span></h1>
+      <p class="lede">LaunchPad analyzes your Roblox game, identifies what is holding it back, and shows you exactly what to improve.</p>
+      <div class="lp-cta-row">${primary}<button class="btn ghost lg" data-lp="demo">Explore the platform</button></div>
+      <p class="lp-reassure">Free to start · Read-only Studio plugin · Never asks for your Roblox password</p></div>
+    <div class="lp-app" id="lpHeroApp" data-reveal role="img" aria-label="Animated preview of the LaunchPad workspace analyzing the demo game ${esc(fish.g.name)}. Demo data.">
+      <div class="lp-chrome"><span></span><span></span><span></span><em>launchpad / ${esc(fish.g.name)}</em>${demoChip}</div>
+      <div class="lp-app-body"><aside class="lp-app-side">${logo()}${[['home', 'Dashboard'], ['games', 'My Games'], ['layers', 'Optimizers'], ['bars', 'Reports'], ['play', 'Studio']].map(([n, l], i) => `<span class="${i === 0 ? 'on' : ''}">${icon(n, 16)}<em>${l}</em></span>`).join('')}</aside>
+      <div class="lp-app-main">
+        <div class="lp-app-head"><div class="row" style="gap:12px;flex-wrap:nowrap"><span class="game-art" style="width:44px;height:44px;border-radius:11px">${gameArt(fish.g)}</span><div><b>${esc(fish.g.name)}</b><br><span class="tiny muted">${esc(fish.g.genreLabel)}</span></div></div><span class="lp-scan" id="lpHeroScan"><i></i><span>Scan complete</span></span></div>
+        <div class="lp-app-grid">
+          <div class="lp-panel"><p class="lp-plabel">Game health</p><div class="lp-health">${scoreRing(fish.avg, 84, 'Overall score')}<div class="small muted">Average of five optimizer scores</div></div><div class="lp-rows">${scoreRows(fish)}</div></div>
+          <div class="lp-panel"><p class="lp-plabel">Top recommendations</p><div class="lp-recs">${recs.slice(0, 3).map((x, i) => `<div class="lp-rec" style="--i:${i}"><span class="pri ${x.priority}">${x.priority}</span><div><b>${esc(x.title)}</b><span class="tiny muted">${esc(x.opt)}</span></div></div>`).join('')}</div>
+            <p class="lp-plabel" style="margin-top:16px">Recent analysis</p><div class="lp-recent">${OPTIMIZERS.slice(0, 3).map(o => `<div><span>${o.name}</span><span class="tiny muted">${fish.r[o.id].score} · Saved</span></div>`).join('')}</div></div>
+        </div></div></div></div>
   </div></section>
 
-  <section class="lp-sec" id="lp-how" tabindex="-1"><div class="lp-wrap"><div class="lp-head"><p class="eyebrow"><span class="px" aria-hidden="true"></span>How it works</p><h2>Scan, answer, fix.</h2><p class="lede">About two minutes from opening Studio to a ranked list of fixes. No forms to fill in first.</p></div>
-    <div class="lp-steps">
-      <div><p class="lp-step">STEP 01</p><h3>Scan in Studio</h3><p class="muted">Open your place and run the LaunchPad Studio plugin. It only reads, so your game is never changed.</p><div class="lp-mini" aria-hidden="true"><b class="small">LaunchPad Studio</b><div class="lp-field" style="margin-top:10px;justify-content:flex-start;gap:8px">${icon('check', 15)} Also read script code</div><div class="btn sm" style="margin-top:12px;width:100%;justify-content:center">Scan this game</div><p class="tiny muted" style="margin:10px 0 0">Scanned 8,907 objects and 42 scripts.</p></div></div>
-      <div><p class="lp-step">STEP 02</p><h3>Answer what Studio can't see</h3><p class="muted">Paste the scan into LaunchPad. It asks at most three quick questions, all optional.</p><div class="lp-mini" aria-hidden="true"><span class="tiny muted">Does your Roblox page have thumbnails?</span><div class="lp-field between">No ${icon('down', 16)}</div><span class="tiny muted" style="display:block;margin-top:10px">What do players do over and over?</span><div class="lp-field">Hatch pets, earn coins, unlock…</div><div class="btn sm" style="margin-top:12px">${icon('play', 15)} Analyze my game</div></div></div>
-      <div><p class="lp-step">STEP 03</p><h3>Fix the biggest gaps</h3><p class="muted">Get five scores and a list of fixes, most important first. Tick them off as you go.</p><div class="lp-mini" aria-hidden="true"><div class="row" style="gap:12px;flex-wrap:nowrap">${scoreRing(tfa.r['game-page'].score, 52, 'Score')}<div><b>Game Page report</b><br><span class="tiny muted">Saved · ${esc(tfa.g.name)}</span></div></div>${['Add a couple more thumbnails', 'Ask players to favorite', 'Shorten the opening line'].map((t, i) => `<div class="row" style="flex-wrap:nowrap;gap:10px;margin-top:10px"><span class="rec-mark">${recMark({ done: i < 2, priority: 'Low' })}</span><span class="${i < 2 ? 'muted' : ''}" style="${i < 2 ? 'text-decoration:line-through' : ''}">${t}</span></div>`).join('')}</div></div>
-    </div></div></section>
+  <section class="lp-sec" id="lp-optimizers" tabindex="-1"><div class="lp-wrap">
+    <div class="lp-head" data-reveal><p class="lp-kicker">The platform</p><h2>Everything your game needs to improve, in one place.</h2><p class="lede">Five optimizers, each with its own rules and its own evidence. Here they are on real Roblox games, with demo data.</p></div>
 
-  <section class="lp-sec" id="lp-examples" tabindex="-1"><div class="lp-wrap"><div class="lp-head"><p class="eyebrow"><span class="px" aria-hidden="true"></span>Examples</p><h2>See what better game analysis looks like.</h2><p class="lede">Three popular Roblox games, analyzed with LaunchPad's demo data. Pick one to preview its analysis.</p></div>
+    <article class="lp-show" id="lp-opt-1" data-reveal><div class="lp-show-copy"><span class="lp-num">01</span><h3>Game Page Optimizer</h3><p>See whether your title and description tell players what's fun. LaunchPad scores the listing, then shows a clearer version built from your own gameplay loop.</p>
+      <div class="seg" role="group" aria-label="Listing version"><button type="button" data-lp="gp" data-v="before" aria-pressed="false">Original</button><button type="button" data-lp="gp" data-v="after" aria-pressed="true">Improved</button></div></div>
+      <div class="lp-stage lp-gp" id="lpGp" data-v="after"><div class="lp-stage-top"><b>${esc(tfa.g.name)}</b>${demoChip}</div>
+        <div class="lp-gp-flip"><div class="lp-gp-side lp-gp-before">${listing(rough, roughR)}<div class="lp-gp-score"><span>Listing score</span><b>${roughR.score}</b></div></div>
+        <div class="lp-gp-side lp-gp-after">${listing(tfa.g.description, goodR)}<div class="lp-gp-score"><span>Listing score</span><b>${goodR.score}</b></div></div></div>
+        <div class="lp-gp-notes"><div><p class="lp-plabel">Working</p>${goodR.strengths.slice(0, 2).map(c => `<p class="small">${icon('check', 14)} ${esc(c.label)}</p>`).join('')}</div><div><p class="lp-plabel">Next</p>${goodR.weaknesses.slice(0, 2).map(c => `<p class="small">${icon('arrow', 14)} ${esc(c.label)}</p>`).join('')}</div></div></div></article>
+
+    <article class="lp-show flip" id="lp-opt-2" data-reveal><div class="lp-show-copy"><span class="lp-num">02</span><h3>Thumbnail &amp; Icon Optimizer</h3><p>Real file checks on size, shape and format, plus structured feedback on focus, contrast and readability. Pick a game to compare.</p>
+      <div class="lp-pills" role="tablist" aria-label="Example artwork">${D.map((d, i) => `<button role="tab" aria-selected="${i === 0}" data-lp="art" data-i="${i}"><span class="game-art" style="width:22px;height:22px;border-radius:6px">${gameArt(d.g)}</span>${esc(d.g.name)}</button>`).join('')}</div>
+      <p class="tiny muted" style="margin-top:12px">No image-recognition AI is connected: visual scores come from file checks and the developer's answers.</p></div>
+      <div class="lp-stage" id="lpArt">${lpArtPanel(D[0])}</div></article>
+
+    <article class="lp-show" id="lp-opt-3" data-reveal><div class="lp-show-copy"><span class="lp-num">03</span><h3>First Session Optimizer</h3><p>Map the first minutes from spawn to the first reward. LaunchPad times each step and flags where new players get stuck.</p>
+      <ul class="lp-facts"><li><b>${fmtSec(fsR.extras.stats.tAction)}</b><span>to first action</span></li><li><b>${fmtSec(fsR.extras.stats.tReward)}</b><span>to first reward</span></li><li><b>${fsR.extras.friction.length}</b><span>friction points</span></li></ul></div>
+      <div class="lp-stage"><div class="lp-stage-top"><b>First minutes · ${esc(fish.g.name)}</b>${demoChip}</div><ol class="lp-journey2" id="lpJourney">${fsStages.map((s, i) => `<li data-i="${i}"><span class="lp-jdot">${i + 1}</span><div><b>${esc(s.name)}</b><span class="small muted">${esc(s.action)}${s.reward ? ` · Reward: ${esc(s.reward)}` : ''}</span>${s.friction ? `<span class="lp-friction">${icon('flag', 12)} ${esc(s.friction)}</span>` : ''}</div><span class="tiny muted">${s.time}s</span></li>`).join('')}</ol></div></article>
+  </div></section>
+
+  <section class="lp-sec lp-dark" id="lp-retention"><div class="lp-wrap"><article class="lp-show flip" id="lp-opt-4" data-reveal><div class="lp-show-copy"><span class="lp-num">04</span><h3>Retention Optimizer</h3><p>Day 1, 7 and 30 against your previous period, session length and returning players, next to the design reasons players come back.</p>
+      <ul class="lp-facts">${[['Day 1', rIn.d1, rIn.pd1], ['Day 7', rIn.d7, rIn.pd7], ['Day 30', rIn.d30, rIn.pd30]].map(([l, v, p]) => `<li><b>${v}%</b><span>${l} · ${v >= p ? '+' : ''}${(v - p).toFixed(1)} pts</span></li>`).join('')}</ul></div>
+      <div class="lp-stage lp-draw"><div class="lp-stage-top"><b>Retention · ${esc(fish.g.name)}</b>${demoChip}</div>${lineChart({ labels: ['Day 1', 'Day 7', 'Day 30'], series: [{ name: 'Previous period', values: [rIn.pd1, rIn.pd7, rIn.pd30], color: 'var(--faint)', dash: true }, { name: 'This period', values: [rIn.d1, rIn.d7, rIn.d30], color: 'var(--text)' }], yFmt: v => Math.round(v) + '%', h: 220, title: 'Retention by day, demo data' })}
+        <div class="lp-gp-notes"><div><p class="lp-plabel">Session length</p><p class="small">${rIn.psession} → <b>${rIn.session} min</b></p></div><div><p class="lp-plabel">Returning players</p><p class="small">${rIn.preturning}% → <b>${rIn.returningPct}%</b></p></div></div></div></article></div></section>
+
+  <section class="lp-sec" id="lp-progression"><div class="lp-wrap"><article class="lp-show lp-sticky" id="lp-opt-5" data-reveal><div class="lp-show-copy"><span class="lp-num">05</span><h3>Progression Optimizer</h3><p>Cost ÷ income per minute gives the real time to each unlock. LaunchPad flags difficulty spikes (an unlock that takes 2.5× longer than the one before) and long gaps, then suggests smoother costs.</p>
+      <div class="lp-pstep" id="lpPStep" aria-live="polite"></div></div>
+      <div class="lp-stage lp-draw"><div class="lp-stage-top"><b>Time to unlock · ${esc(sae.g.name)}</b>${demoChip}</div>${lineChart({ labels: pg.rows.map((x, i) => i + 1), series: [{ name: 'Current', values: pg.rows.map(x => x.time), color: 'var(--text)' }, { name: 'Suggested', values: pg.suggested.map(x => x.time), color: 'var(--faint)', dash: true }], yFmt: v => fmtMin(v), h: 220, title: 'Minutes to unlock each upgrade, demo data' })}
+        <div class="table-wrap"><table class="lp-ptable"><thead><tr><th>Upgrade</th><th class="num">Cost</th><th class="num">Income/min</th><th class="num">Unlock</th></tr></thead><tbody>${pg.rows.map((x, i) => `<tr data-i="${i}"><td>${esc(x.name)}</td><td class="num">${fmtNum(x.cost)}</td><td class="num">${fmtNum(x.income)}</td><td class="num">${fmtMin(x.time)}</td></tr>`).join('')}</tbody></table></div></div></article></div></section>
+
+  <section class="lp-sec lp-alt" id="lp-how" tabindex="-1"><div class="lp-wrap"><div class="lp-head" data-reveal><p class="lp-kicker">How it works</p><h2>From your Roblox game to a clearer growth strategy.</h2></div>
+    <ol class="lp-flow">${[['01', 'Connect', 'Connect Roblox and pair LaunchPad Studio.', 'play'], ['02', 'Analyze', 'LaunchPad collects permitted information and runs the five optimizers.', 'layers'], ['03', 'Understand', 'Review evidence-backed findings and recommendations.', 'bars'], ['04', 'Improve', 'Prioritize fixes and track changes over time.', 'check']].map(([n, t, d, ic], i) => `<li data-reveal style="--i:${i}"><span class="lp-flow-ic">${icon(ic, 20)}</span><span class="lp-num">${n}</span><h3>${t}</h3><p>${d}</p></li>`).join('')}</ol></div></section>
+
+  <section class="lp-sec lp-dark" id="lp-studio" tabindex="-1"><div class="lp-wrap lp-studio">
+    <div class="lp-show-copy" data-reveal><p class="lp-kicker">Roblox Studio integration</p><h2>Your Roblox game.<br>Automatically understood.</h2><p>Install the read-only LaunchPad Studio plugin, pair it with a one-time code, and sync. LaunchPad reads only experiences Roblox has authorized for your account, and never changes your game.</p>
+      <ul class="lp-ticks">${['Read-only: never edits, deletes or publishes', 'Script reading is a separate, optional permission', 'Unchanged games aren\'t re-analyzed', 'Light and Max plans'].map(x => `<li>${icon('check', 16)}${x}</li>`).join('')}</ul>
+      <p class="tiny" style="opacity:.7;margin-top:18px">Demo animation. The real scan runs inside Roblox Studio through the plugin; your browser can't read Studio projects on its own.</p></div>
+    <div class="lp-plugin" id="lpPlugin" data-reveal role="img" aria-label="Demo animation of the LaunchPad Studio plugin scanning a game in six stages">
+      <div class="lp-plugin-top">${logo()}<b>LaunchPad Studio</b><span class="chip sm">Connected</span></div>
+      <div class="lp-plugin-meta"><div><span>Experience</span><b>[UPD]Pull a pet!</b></div><div><span>Permissions</span><b>Read-only · scripts allowed</b></div></div>
+      <ol class="lp-scanlist">${scanStages.map((s, i) => `<li data-i="${i}"><span class="lp-sdot"></span><span>${s}</span><em>${scanDetail[i]}</em></li>`).join('')}</ol>
+      <div class="lp-plugin-bar"><i id="lpScanBar"></i></div>
+      <div class="lp-plugin-foot"><span id="lpScanText">Ready to sync</span><span class="tiny">Last sync: just now</span></div></div></div></section>
+
+  <section class="lp-sec" id="lp-examples" tabindex="-1"><div class="lp-wrap"><div class="lp-head" data-reveal><p class="lp-kicker">Sample games</p><h2>Pick a game. See its reports.</h2><p class="lede">Three real Roblox experiences, analyzed with LaunchPad's demo data.</p></div>
     <div class="lp-tabs" role="tablist" aria-label="Example games">${D.map((d, i) => `<button class="lp-tab" role="tab" id="lpTab${i}" aria-controls="lpPanel" aria-selected="${i === 0}" data-lp="tab" data-i="${i}"><span class="game-art" style="width:28px;height:28px;border-radius:7px">${gameArt(d.g)}</span>${esc(d.g.name)}</button>`).join('')}</div>
-    <div id="lpPanel" role="tabpanel" aria-labelledby="lpTab0">${lpExample(D[0])}</div>
+    <div id="lpPanel" role="tabpanel" aria-labelledby="lpTab0" data-reveal>${lpExample(D[0])}</div>
     <p class="tiny muted" style="margin-top:18px">Scores, timings, metrics and economy values are LaunchPad demo data, not the games' real analytics. Game names and artwork belong to their creators, who aren't affiliated with or endorsing LaunchPad.</p></div></section>
 
-  <section class="lp-sec" id="lp-why" tabindex="-1"><div class="lp-wrap lp-why"><div><p class="eyebrow"><span class="px" aria-hidden="true"></span>Why LaunchPad</p><h2 class="lp-h2">Built for developers, not marketers.</h2><p class="lede">LaunchPad started from a simple frustration: most growth advice is written for marketers. Independent Roblox creators need feedback they can act on tonight, in plain language, about their own game.</p><p class="muted">It won't promise you a front-page hit. It will show you what's already working, what's worth fixing next, and whether your changes are moving things in the right direction.</p></div>
-    <ul class="lp-points">${[['info', 'Simple explanations', 'Every score says why, in plain words. No dashboards full of jargon.'], ['edit', 'Based on evidence', 'Every finding says where it came from: your Studio scan, Roblox, or your answers. Missing systems score low, and nothing LaunchPad can\'t see is guessed.'], ['games', 'Game-specific', 'A tycoon isn\'t judged like an obby. Feedback follows your genre and your gameplay loop.'], ['check', 'Progress tracking', 'Tick off recommendations and compare reports over time.'], ['layers', 'One workspace', 'Presentation, art, first session, retention and progression in one place.']].map(([ic, t, d]) => `<li>${icon(ic, 20)}<div><b>${t}</b><p class="small muted" style="margin:2px 0 0">${d}</p></div></li>`).join('')}</ul></div></section>
-
-  <section class="lp-sec" id="lp-pricing" tabindex="-1"><div class="lp-wrap"><div class="lp-head"><p class="eyebrow"><span class="px" aria-hidden="true"></span>Pricing</p><h2>Start free. Upgrade when you want it automatic.</h2><p class="lede">The demo and manual optimizers are free. Light and Max add Roblox Studio sync and automatic analysis.</p></div>
+  <section class="lp-sec lp-alt" id="lp-pricing" tabindex="-1"><div class="lp-wrap"><div class="lp-head" data-reveal><p class="lp-kicker">Pricing</p><h2>Start free. Upgrade when you want it automatic.</h2><p class="lede">The demo and manual optimizers are free. Light and Max add Roblox Studio sync and automatic analysis.</p></div>
     <div id="lpPricing">${pricingCards('landing')}</div></div></section>
 
-  <section class="lp-sec" id="lp-faq" tabindex="-1"><div class="lp-wrap lp-faq"><div class="lp-head"><p class="eyebrow"><span class="px" aria-hidden="true"></span>FAQ</p><h2>Questions, answered honestly.</h2></div>
+  <section class="lp-sec" id="lp-faq" tabindex="-1"><div class="lp-wrap lp-faq"><div class="lp-head"><p class="lp-kicker">FAQ</p><h2>Questions, answered honestly.</h2></div>
     ${[['What is LaunchPad?', 'A workspace with five optimizers that look at your Roblox game\'s page, artwork, first session, retention and progression, then explain what\'s working and what to improve next.'],
-      ['Is LaunchPad specifically for Roblox developers?', 'Yes. Genres, examples, terminology and recommendations are written for Roblox experiences like simulators, tycoons, obbies and RPGs.'],
-      ['How do the five optimizers work?', 'Scan your game with the Studio plugin, or enter its details yourself. Each optimizer applies its own transparent scoring rules and calculations, then gives category scores, strengths and recommendations that explain exactly why they appear.'],
-      ['Does LaunchPad connect directly to Roblox?', 'Partly. The LaunchPad Studio plugin scans your open place, and you paste its summary into LaunchPad. It reads your public listing from Roblox, but it never asks for your password and never changes your game. Automatic sync and Creator Dashboard analytics aren\'t available yet. LaunchPad is an independent product and isn\'t affiliated with Roblox Corporation.'],
+      ['How do the five optimizers work?', 'Sync your game with the Studio plugin, paste a scan, or enter details yourself. Each optimizer applies its own transparent scoring rules and calculations, then gives category scores, strengths and recommendations that explain exactly why they appear.'],
+      ['Does LaunchPad connect directly to Roblox?', 'Yes, with your permission. You authorize experiences through Roblox\'s official sign-in, then pair the read-only LaunchPad Studio plugin. LaunchPad never asks for your Roblox password and never changes your game. Creator Dashboard analytics aren\'t imported yet. LaunchPad is independent and isn\'t affiliated with Roblox Corporation.'],
       ['What does the Studio plugin read?', 'Object names, starter UI text, proximity prompts, spawn points and number values. If you allow it, it also reads script code inside Studio to find saves, rewards and price tables. Only feature names, script paths and numbers leave Studio, never your code.'],
       ['What if my game is missing something?', 'If the scan confirms something is missing, such as a save system, return rewards, a description or thumbnails, that area scores low and the fix goes to the top of your list. If LaunchPad simply can\'t see something, it says so instead of guessing.'],
-      ['Are the analysis results generated by real AI?', 'No. In this version the analysis is simulated with rule-based scoring and real math on the information you provide, and every report is labelled that way. No AI model or image-recognition service is connected yet.'],
+      ['Is the analysis done by AI?', 'No. The analysis is rule-based scoring and real calculations on the information collected or entered. No AI model or image-recognition service is connected.'],
       ['How much does LaunchPad cost?', 'The demo and manual optimizers are free. Light is $9.99/month or $99.99/year. Max is $49.99/month or $200/year, a $399.88 saving on twelve monthly payments. Annual plans are charged upfront and renew automatically until you cancel. Payments are handled by Paddle.'],
-      ['Does LaunchPad guarantee more players?', 'No. LaunchPad scores are its own assessment of the information you enter. They can help you make better decisions, but real growth shows up in your real game data, and no tool can promise more players.']]
-      .map(([q, a]) => `<details><summary>${q}</summary><p class="muted" style="margin:12px 0 0;max-width:70ch">${a}</p></details>`).join('')}</div></section>
+      ['Does LaunchPad guarantee more players?', 'No. Scores are LaunchPad\'s own assessment. They help you decide what to fix, but real growth shows up in your real game data.']]
+      .map(([q, a]) => `<details><summary>${q}</summary><p class="muted">${a}</p></details>`).join('')}</div></section>
 
-  <section class="lp-sec" style="border-top:0;padding-top:0"><div class="lp-wrap"><div class="lp-final"><h2>Let's make your game better.</h2><p>Start understanding your game's strengths, weaknesses and opportunities.</p><div class="row" style="justify-content:center;margin-top:26px">${authed ? ctas(true) : `<button class="btn lg" data-lp="signup">Get started free</button><button class="btn ghost lg" data-lp="demo">Explore demo</button>`}</div></div></div></section>
+  <section class="lp-final-wrap"><div class="lp-wrap"><div class="lp-final" data-reveal><h2>Make every player count.</h2><p>Find what's holding your game back, then fix the right thing first.</p><div class="lp-cta-row" style="justify-content:center">${primary}<button class="btn ghost lg" data-lp="demo">Explore the platform</button></div></div></div></section>
 
-  <footer class="lp-foot"><div class="lp-wrap"><div class="lp-foot-grid"><div><a class="brand" href="#lp-top" style="padding:0 0 10px">${logo()}<b>LaunchPad</b></a><p class="muted small" style="max-width:34ch">Practical game feedback for independent Roblox developers.</p></div>
-    <div><b class="small">Product</b><a href="#lp-product">Product</a><a href="#lp-optimizers">Optimizers</a><a href="#lp-pricing">Pricing</a></div>
-    <div><b class="small">Company</b><a href="#lp-why">About</a><a href="/legal/request?kind=support">Contact</a></div>
-    <div><b class="small">Legal</b><a href="/legal/privacy">Privacy</a><a href="/legal/terms">Terms</a><a href="/legal">All policies</a></div></div>
-    <p class="tiny muted" style="margin:36px 0 0;border-top:1px solid var(--border);padding-top:20px">LaunchPad is an independent product and is not affiliated with, endorsed by or sponsored by Roblox Corporation. Roblox is a trademark of Roblox Corporation. Example game names and artwork belong to their creators.</p></div></footer>`;
+  <footer class="lp-foot"><div class="lp-wrap"><div class="lp-foot-grid"><div class="lp-foot-brand"><a class="brand lp-brand" href="#lp-top">${logo()}<b>LaunchPad</b></a><p class="muted small">Evidence-based game analysis for Roblox developers.</p></div>
+    <div><b>Product</b><a href="#lp-optimizers">Five optimizers</a><a href="#lp-studio">Roblox Studio</a><a href="#lp-pricing">Pricing</a></div>
+    <div><b>Resources</b><a href="#lp-how">Guides</a><a href="#lp-examples">Sample games</a><a href="#lp-faq">FAQ</a><a href="/legal/request?kind=support">Support</a></div>
+    <div><b>Company</b><a href="#lp-top">About</a><a href="/legal/request?kind=support">Contact</a></div>
+    <div><b>Legal</b><a href="/legal/terms">Terms</a><a href="/legal/privacy">Privacy</a><a href="/legal/cookies">Cookies</a><a href="/legal/copyright">Copyright</a></div></div>
+    <div class="lp-foot-base"><span>© ${new Date().getFullYear()} LaunchPad</span><span>LaunchPad is an independent product and is not affiliated with, endorsed by or sponsored by Roblox Corporation. Roblox is a trademark of Roblox Corporation.</span></div></div></footer>`;
 
-  const links = $('#lpLinks'), burger = $('.lp-burger');
-  $('#view').onclick = e => {
-    if (e.target.closest('.lp-links a')) { links.classList.remove('open'); burger.setAttribute('aria-expanded', 'false'); }
-    const b = e.target.closest('[data-lp]'); if (!b) return;
+  const v = $('#view'), links = $('#lpLinks'), burger = $('.lp-burger');
+  const closeMenus = except => $$('.lp-dd button[aria-expanded="true"]', v).forEach(b => { if (b !== except) b.setAttribute('aria-expanded', 'false'); });
+  v.onclick = e => {
+    if (e.target.closest('.lp-links a')) { links.classList.remove('open'); burger.setAttribute('aria-expanded', 'false'); closeMenus(); }
+    const b = e.target.closest('[data-lp]'); if (!b) { if (!e.target.closest('.lp-dd')) closeMenus(); return; }
     const k = b.dataset.lp;
     if (k === 'menu') { const o = links.classList.toggle('open'); b.setAttribute('aria-expanded', o); }
+    else if (k === 'dd') { const o = b.getAttribute('aria-expanded') !== 'true'; closeMenus(b); b.setAttribute('aria-expanded', o); }
     else if (k === 'signup') signInModal();
     else if (k === 'login') loginModal();
     else if (k === 'workspace') go('#/home');
+    else if (k === 'analyze') go('#/studio');
     else if (k === 'demo') enterDemo();
     else if (k === 'demo-game') enterDemo(b.dataset.id);
     else if (k === 'demo-opt') { if (authed) go('#/optimizers/' + b.dataset.opt); else enterDemo(null, b.dataset.opt); }
+    else if (k === 'gp') { $('#lpGp').dataset.v = b.dataset.v; $$('[data-lp="gp"]', v).forEach(x => x.setAttribute('aria-pressed', x === b)); }
+    else if (k === 'art') { $$('[data-lp="art"]', v).forEach(x => x.setAttribute('aria-selected', x === b)); const s = $('#lpArt'); s.classList.remove('swap'); void s.offsetWidth; s.innerHTML = lpArtPanel(D[+b.dataset.i]); s.classList.add('swap'); }
     else if (k === 'tab') { $$('.lp-tab').forEach(t => t.setAttribute('aria-selected', t === b)); const panel = $('#lpPanel'); panel.setAttribute('aria-labelledby', b.id); panel.innerHTML = lpExample(D[+b.dataset.i]); }
   };
-  // Arrow keys move between example tabs.
-  $('.lp-tabs').onkeydown = e => { if (!/Arrow(Left|Right)/.test(e.key)) return; const tabs = $$('.lp-tab'), i = tabs.indexOf(document.activeElement), n = tabs[(i + (e.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length]; n.focus(); n.click(); };
+  v.onkeydown = e => {
+    if (e.key === 'Escape') { const open = $('.lp-dd button[aria-expanded="true"]', v); if (open) { closeMenus(); open.focus(); } }
+    if (/Arrow(Left|Right)/.test(e.key) && e.target.closest('.lp-tabs')) { const tabs = $$('.lp-tab'), i = tabs.indexOf(document.activeElement), n = tabs[(i + (e.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length]; n.focus(); n.click(); }
+  };
+  lpReveal(v);
+  // Scroll state for the sticky nav border.
+  const nav = $('#lpNav'), onScroll = () => { if (!nav.isConnected) return window.removeEventListener('scroll', onScroll); nav.classList.toggle('scrolled', scrollY > 8); };
+  window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+  // Hero: the scan badge cycles through stages, then settles on "complete".
+  const hs = $('#lpHeroScan span'); let hi = 0; lpLoop(hs, 1400, () => { hi = (hi + 1) % 8; hs.textContent = hi < 6 ? scanStages[hi] + '…' : 'Scan complete'; hs.parentElement.classList.toggle('busy', hi < 6); });
+  // First session: the active step walks through the journey.
+  const jl = $$('#lpJourney li'); let ji = 0; const jset = () => jl.forEach((li, i) => { li.classList.toggle('on', i === ji); li.classList.toggle('done', i < ji); });
+  if (reducedMotion()) { ji = jl.length; jset(); } else { jset(); lpLoop($('#lpJourney'), 1600, () => { ji = (ji + 1) % (jl.length + 1); jset(); }); }
+  // Progression: highlight one upgrade at a time and explain it.
+  const prow = $$('.lp-ptable tbody tr'), ps = $('#lpPStep'); let pi = 0;
+  const pset = () => { const r = pg.rows[pi]; prow.forEach((tr, i) => tr.classList.toggle('on', i === pi)); ps.innerHTML = `<b>${esc(r.name)}</b><span>${fmtNum(r.cost)} cost ÷ ${fmtNum(r.income)}/min = <b>${fmtMin(r.time)}</b> to unlock${r.spike ? ' · <em>difficulty spike</em>' : r.gap ? ' · <em>long gap</em>' : ''}</span>${demoChip}`; };
+  pset(); lpLoop(ps, 2200, () => { pi = (pi + 1) % pg.rows.length; pset(); });
+  // Studio: six scan stages advance, then the plugin reports the result.
+  const sl = $$('#lpPlugin .lp-scanlist li'), bar = $('#lpScanBar'), st = $('#lpScanText'); let si = -1;
+  const sset = () => { sl.forEach((li, i) => { li.classList.toggle('done', i < si); li.classList.toggle('on', i === si); }); bar.style.width = `${Math.max(0, Math.min(si, sl.length)) / sl.length * 100}%`; st.textContent = si < 0 ? 'Ready to sync' : si < sl.length ? scanStages[si] + '…' : 'Synced. 5 reports updated'; };
+  if (reducedMotion()) { si = sl.length; sset(); } else { sset(); lpLoop($('#lpPlugin'), 1200, () => { si = si >= sl.length + 2 ? -1 : si + 1; sset(); }); }
+}
+function lpArtPanel(d) {
+  const th = d.r.thumbnail.result, t = d.g.thumbs[0];
+  return `<div class="lp-stage-top"><b>${esc(d.g.name)}</b><span class="chip sample sm">Demo data</span></div><div class="lp-art2"><img class="lp-thumb" src="${t.preview}" alt="${esc(d.g.name)} thumbnail" data-name="${esc(d.g.name)}"><span class="game-art lp-icon">${gameArt(d.g)}</span></div>
+  <div class="lp-gp-notes"><div><p class="lp-plabel">File checks</p><p class="small">${icon('check', 14)} Thumbnail ${t.w}×${t.h} · 16:9</p><p class="small">${icon('check', 14)} Icon ${d.g.icon.w}×${d.g.icon.h} · square</p></div>
+  <div><p class="lp-plabel">Assessment · ${th.score}</p>${th.categories.filter(c => c.score != null).slice(0, 3).map(c => `<p class="small"><span class="lp-mini-bar"><i style="width:${c.score}%"></i></span>${esc(c.label)} <b>${c.score}</b></p>`).join('')}</div></div>`;
 }
 function page404(msg) {
   $('#view').innerHTML = `<div class="card empty" style="margin-top:30px">${orbitBuddy(150, 'lav', 'wow')}<h1>This page wandered off</h1><p class="muted">${esc(msg || "We couldn't find that page. It might have been moved, or the link has a typo.")}</p><a class="btn" href="#/home">Back to Overview</a></div>`;
@@ -2839,7 +3009,7 @@ function studioRun() {
   setTimeout(tick, reducedMotion() ? 0 : 220);
 }
 
-const NAV = [['home', 'Dashboard', 'home'], ['games', 'My Games', 'games'], ['studio', 'Studio', 'play'], ['optimizers', 'Optimizers', 'layers'], ['reports', 'Reports', 'bars'], ['pricing', 'Pricing', 'tag'], ['settings', 'Settings', 'gear']];
+const NAV = [['home', 'Dashboard', 'home'], ['games', 'My Games', 'games'], ['optimizers', 'Optimizers', 'layers'], ['reports', 'Reports', 'bars'], ['studio', 'Roblox Studio', 'play'], ['settings', 'Settings', 'gear']];
 function currentPath() { return (curHash.replace(/^#/, '').split('?')[0] || '/home'); }
 function renderSidebar() {
   const p = currentPath(), a = isAuthed() ? S().account : null, g = selectedGame();

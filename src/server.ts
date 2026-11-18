@@ -83,7 +83,7 @@ export async function buildApp(opts: { memoryDb?: boolean; worker?: boolean } = 
 
   // Pages: inline scripts get this response's CSP nonce.
   const html = (f: string) => readFileSync(join('public', f), 'utf8');
-  const sendPage = (f: string) => async (req: any, reply: any) => reply.type('text/html; charset=utf-8').send(html(f).replace(/<script(?=[\s>])/g, `<script nonce="${reply.cspNonce}"`));
+  const sendPage = (f: string) => async (req: any, reply: any) => reply.type('text/html; charset=utf-8').header('Cache-Control', 'no-cache').send(html(f).replace(/<script(?=[\s>])/g, `<script nonce="${reply.cspNonce}"`));
   app.get('/', sendPage('index.html'));
   app.get('/admin', sendPage('admin.html'));
   // The plugin is served with this deployment's address filled in; it contains no secrets.
