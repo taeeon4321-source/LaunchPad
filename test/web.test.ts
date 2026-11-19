@@ -19,6 +19,16 @@ test('security headers and CSP nonces on pages', async () => {
   assert.ok(!/\son(click|load|error|submit)=/i.test(r.body.replace(/<script[\s\S]*?<\/script>/g, '')), 'no inline event handlers in markup');
 });
 
+test('app bundle: versioned, compressed, cached for a year; page is compressed and never cached', async () => {
+  const page = await app.inject({ url: '/', headers: { 'accept-encoding': 'gzip, br' } });
+  assert.equal(page.headers['content-encoding'], 'br'); assert.equal(page.headers['cache-control'], 'no-cache');
+  const html = (await app.inject({ url: '/' })).body, v = html.match(/\/app\.js\?v=([0-9a-f]{12})/)?.[1];
+  assert.ok(v && /\/app\.css\?v=[0-9a-f]{12}/.test(html), 'page links versioned assets');
+  const js = await app.inject({ url: `/app.js?v=${v}`, headers: { 'accept-encoding': 'gzip' } });
+  assert.equal(js.statusCode, 200); assert.equal(js.headers['content-encoding'], 'gzip'); assert.match(String(js.headers['cache-control']), /immutable/);
+  assert.equal((await app.inject({ url: `/app.js?v=${v}` })).body, readFileSync('public/app.js', 'utf8'), 'uncompressed when not accepted');
+});
+
 test('static files: no path traversal, no secrets shipped to the browser', async () => {
   for (const u of ['/..%2fpackage.json', '/%2e%2e/src/config.ts', '/../.env', '/index.html']) assert.equal((await app.inject({ url: u })).statusCode, 404, u);
   const walk = (d: string): string[] => readdirSync(d).flatMap(f => statSync(join(d, f)).isDirectory() ? walk(join(d, f)) : [join(d, f)]);

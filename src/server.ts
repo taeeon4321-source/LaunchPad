@@ -1,8 +1,10 @@
 import Fastify, { type FastifyInstance } from 'fastify';
 import cookie from '@fastify/cookie';
-import { readFileSync, existsSync, createReadStream } from 'node:fs';
+import { readFileSync, existsSync, createReadStream, statSync } from 'node:fs';
 import { extname, join, normalize } from 'node:path';
-import { randomBytes } from 'node:crypto';
+import { createHash, randomBytes } from 'node:crypto';
+import { brotliCompress, gzip, constants as Z } from 'node:zlib';
+import { promisify } from 'node:util';
 import { assertProductionConfig, config } from './config.ts';
 import { connect } from './db.ts';
 import { HttpError, ip, loadSession } from './http.ts';
@@ -23,6 +25,26 @@ declare module 'fastify' { interface FastifyReply { cspNonce: string } }
 // Requests without cookies (Paddle webhooks, the Studio plugin's bearer token) are exempt from the browser-origin check.
 const NO_ORIGIN_CHECK = [/^\/api\/billing\/webhook$/, /^\/api\/plugin\//];
 const MIME: Record<string, string> = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css', '.png': 'image/png', '.webp': 'image/webp', '.svg': 'image/svg+xml', '.lua': 'text/plain; charset=utf-8', '.json': 'application/json' };
+
+const TEXT = new Set(['.js', '.css', '.svg', '.json']);
+// Files are re-read when they change on disk (so edits show without a restart); compressed copies are cached per version.
+const textCache = new Map<string, { mtime: number; body: string; hash?: string; packed: Map<string, Buffer> }>();
+const entry = (f: string) => { const m = statSync(f).mtimeMs; let e = textCache.get(f); if (!e || e.mtime !== m) textCache.set(f, e = { mtime: m, body: readFileSync(f, 'utf8'), packed: new Map() }); return e; };
+const readText = (f: string) => entry(f).body;
+// Brotli or gzip for text responses. Static files are compressed once at maximum quality; pages per response (they carry a nonce).
+const br = promisify(brotliCompress), gz = promisify(gzip);
+async function sendText(req: any, reply: any, body: string, file = '') {
+  const ae = String(req.headers['accept-encoding'] ?? ''), enc = /\bbr\b/.test(ae) ? 'br' : /\bgzip\b/.test(ae) ? 'gzip' : '';
+  reply.header('Vary', 'Accept-Encoding');
+  if (!enc || body.length < 1024) return reply.send(body);
+  const cache = file ? entry(file).packed : null;
+  let out = cache?.get(enc);
+  if (!out) {
+    out = enc === 'br' ? await br(body, { params: { [Z.BROTLI_PARAM_QUALITY]: file ? 11 : 5, [Z.BROTLI_PARAM_SIZE_HINT]: body.length } }) : await gz(body, { level: file ? 9 : 6 });
+    cache?.set(enc, out);
+  }
+  return reply.header('Content-Encoding', enc).send(out);
+}
 
 function csp(nonce: string) {
   return [
@@ -82,9 +104,11 @@ export async function buildApp(opts: { memoryDb?: boolean; worker?: boolean } = 
   for (const r of [authRoutes, meRoutes, dataRoutes, legalRoutes, billingRoutes, robloxRoutes, adminRoutes, analyticsRoutes]) await app.register(r);
   app.get('/healthz', async () => ({ ok: true }));
 
-  // Pages: inline scripts get this response's CSP nonce.
+  // Pages: inline scripts get this response's CSP nonce; app.css/app.js get a content version so browsers can cache them for a year.
   const html = (f: string) => readFileSync(join('public', f), 'utf8');
-  const sendPage = (f: string) => async (req: any, reply: any) => reply.type('text/html; charset=utf-8').header('Cache-Control', 'no-cache').send(html(f).replace(/<script(?=[\s>])/g, `<script nonce="${reply.cspNonce}"`));
+  const ver = (f: string) => { const e = entry(join('public', f)); return e.hash ??= createHash('sha256').update(e.body).digest('hex').slice(0, 12); };
+  const sendPage = (f: string) => async (req: any, reply: any) => sendText(req, reply.type('text/html; charset=utf-8').header('Cache-Control', 'no-cache'),
+    html(f).replace('__V_CSS__', () => ver('app.css')).replace('__V_JS__', () => ver('app.js')).replace(/<script(?=[\s>])/g, `<script nonce="${reply.cspNonce}"`));
   app.get('/', sendPage('index.html'));
   app.get('/admin', sendPage('admin.html'));
   // The plugin is served with this deployment's address filled in; it contains no secrets.
@@ -94,7 +118,8 @@ export async function buildApp(opts: { memoryDb?: boolean; worker?: boolean } = 
     const rel = normalize(decodeURIComponent((req.params as any)['*'] || '')).replace(/^([.][.][\\/])+/, '');
     const file = join('public', rel);
     if (!file.startsWith('public') || rel.includes('..') || !existsSync(file) || extname(file) === '.html') return reply.code(404).send({ error: 'Not found' });
-    return reply.type(MIME[extname(file)] ?? 'application/octet-stream').header('Cache-Control', 'public, max-age=3600').send(createReadStream(file));
+    reply.type(MIME[extname(file)] ?? 'application/octet-stream').header('Cache-Control', (req.query as any)?.v ? 'public, max-age=31536000, immutable' : 'public, max-age=3600');
+    return TEXT.has(extname(file)) ? sendText(req, reply, readText(file), file) : reply.send(createReadStream(file));
   });
 
   if (opts.worker !== false) { const stop = startWorker(); app.addHook('onClose', async () => stop()); }
