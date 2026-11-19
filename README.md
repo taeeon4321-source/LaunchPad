@@ -32,4 +32,4 @@ LaunchPad Studio plugin (plugin/LaunchPadStudio.lua) ── read-only scan ─�
 
 The five optimizers run in the browser with the same rules as before. Synced scans are stored server-side and analyzed when the developer opens the Studio page (see ROBLOX_INTEGRATION.md).
 
-Docs: [SECURITY](docs/SECURITY.md) · [AUTHENTICATION](docs/AUTHENTICATION.md) · [ADMIN_GUIDE](docs/ADMIN_GUIDE.md) · [PRIVACY_AND_DATA](docs/PRIVACY_AND_DATA.md) · [LEGAL_REVIEW_CHECKLIST](docs/LEGAL_REVIEW_CHECKLIST.md) · [ROBLOX_INTEGRATION](docs/ROBLOX_INTEGRATION.md) · [BILLING](docs/BILLING.md) · [DEPLOYMENT](docs/DEPLOYMENT.md) · [INCIDENT_RESPONSE](docs/INCIDENT_RESPONSE.md) · [TESTING](docs/TESTING.md)
+Docs: [SECURITY](docs/SECURITY.md) · [AUTHENTICATION](docs/AUTHENTICATION.md) · [ADMIN_GUIDE](docs/ADMIN_GUIDE.md) · [PRIVACY_AND_DATA](docs/PRIVACY_AND_DATA.md) · [LEGAL_REVIEW_CHECKLIST](docs/LEGAL_REVIEW_CHECKLIST.md) · [ROBLOX_INTEGRATION](docs/ROBLOX_INTEGRATION.md) · [BILLING](docs/BILLING.md) · [DEPLOYMENT](docs/DEPLOYMENT.md) · [INCIDENT_RESPONSE](docs/INCIDENT_RESPONSE.md) · [TESTING](docs/TESTING.md) · [ANALYTICS](docs/ANALYTICS.md)

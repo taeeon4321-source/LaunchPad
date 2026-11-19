@@ -32,7 +32,7 @@ export async function entitlementSummary(userId: string) {
     ?? { plan: await recomputeEntitlement(userId) };
   const plan = (e.plan || 'free') as Plan;
   return { plan, interval: e.billing_interval ?? null, status: e.status ?? null, periodEnd: e.current_period_end ?? null, nextBilledAt: e.next_billed_at ?? null, scheduledChange: e.scheduled_change ?? null, features: planFeatures(plan),
-    limits: Object.fromEntries((['connected_experiences', 'monthly_scans', 'sync_interval_minutes', 'report_history_days'] as LimitKey[]).map(k => [k, planLimit(plan, k)])) };
+    limits: Object.fromEntries((['connected_experiences', 'monthly_scans', 'sync_interval_minutes', 'report_history_days', 'analytics_history_days', 'dashboards'] as LimitKey[]).map(k => [k, planLimit(plan, k)])) };
 }
 
 // Usage counting for configurable allowances (e.g. monthly scans). Returns false when the configured limit is reached.

@@ -6,9 +6,24 @@ import { registerJob } from './jobs.ts';
 import { provider, reconcileSubscriptions } from './billing.ts';
 import { decrypt, securityEvent } from './security.ts';
 import { changedSections, sectionHashes } from './scan.ts';
+import { syncGame } from './sync.ts';
+import { canAccess, getUsageLimit } from './entitlements.ts';
+import { enqueue } from './jobs.ts';
 
 export function registerHandlers() {
   registerJob('send_email', p => deliver(p.id));
+  registerJob('analytics_sync', async p => { await syncGame(p); });
+  // Hourly: plans with scheduled sync refresh every linked game once its plan interval has passed.
+  registerJob('analytics_schedule', async () => {
+    const links = (await db.query("select user_id, game_id, last_sync_at from analytics_links where credential_id is not null and status <> 'unauthorized'")).rows;
+    for (const l of links) {
+      if (!(await canAccess(l.user_id, 'scheduled_sync'))) continue;
+      const every = (await getUsageLimit(l.user_id, 'sync_interval_minutes')) ?? 1440;
+      if (l.last_sync_at && Date.now() - new Date(l.last_sync_at).getTime() < every * 60e3) continue;
+      await db.query('update analytics_links set last_sync_at = now() where user_id = $1 and game_id = $2', [l.user_id, l.game_id]);
+      await enqueue('analytics_sync', { userId: l.user_id, gameId: l.game_id, index: 0 }, { key: `analytics-auto:${l.user_id}:${l.game_id}:${new Date().toISOString().slice(0, 13)}` });
+    }
+  });
   registerJob('reconcile_subscriptions', () => reconcileSubscriptions());
 
   registerJob('process_scan', async p => {
@@ -46,6 +61,9 @@ export function registerHandlers() {
     await db.query("delete from pairing_codes where expires_at < now() - interval '1 day'");
     await db.query("delete from email_outbox where created_at < now() - interval '30 days'");
     await db.query("delete from jobs where status in ('done', 'cancelled') and updated_at < now() - interval '30 days'");
+    await db.query("delete from metric_points where granularity = 'None' and source = 'roblox' and fetched_at < now() - interval '90 days'");
+    await db.query("delete from analytics_sync_runs where started_at < now() - interval '90 days'");
+    await db.query("delete from analytics_events where at < now() - interval '400 days'");
     await db.query("delete from subscription_events where received_at < now() - interval '400 days' and status in ('processed', 'ignored')");
   });
 }

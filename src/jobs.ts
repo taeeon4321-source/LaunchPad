@@ -43,6 +43,7 @@ export function startWorker() {
     const h = new Date().toISOString().slice(0, 13), d = h.slice(0, 10);
     enqueue('reconcile_subscriptions', {}, { key: `reconcile:${h}` }).catch(() => {});
     enqueue('retention_cleanup', {}, { key: `retention:${d}` }).catch(() => {});
+    enqueue('analytics_schedule', {}, { key: `analytics-schedule:${h}` }).catch(() => {});
   };
   tick(); const t = setInterval(tick, 15 * 60e3); t.unref();
   return () => { stopped = true; clearInterval(t); };

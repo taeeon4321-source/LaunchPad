@@ -13,6 +13,11 @@
 | Admin audit log | `admin_audit_log` | Append-only; retention period to be set with counsel |
 | Billing references (Paddle IDs, amounts) | billing tables | Kept with `user_id` cleared after deletion, for the legally required period |
 | Emails | `email_outbox` | Body replaced after sending; rows deleted after 30 days |
+| Roblox Open Cloud API keys (encrypted, hint only shown) | `analytics_credentials` | Until removed or deletion |
+| Aggregated game analytics (Roblox sync, uploads, benchmarks; no player-level data) | `metric_points`, `analytics_datasets` | Until deleted (Settings → Data & forecasts) or account deletion; Roblox 28-day snapshots 90 days |
+| Sync history, forecasts, saved charts, dashboards | `analytics_sync_runs`, `analytics_forecasts`, `saved_charts`, `dashboards` | Sync runs 90 days; others until deleted or account deletion |
+
+The privacy policy draft (`legal/privacy.html`) doesn't yet describe the analytics data above; add it before publishing (see LEGAL_REVIEW_CHECKLIST).
 
 ## Source code
 The plugin reads scripts only when the user allows "script inspection" (Settings → Privacy). Reading happens inside Studio; only feature names, script paths and numbers from configuration tables are sent. Raw source is never transmitted, stored or sent to any AI provider. The server rejects scans marked as code-reading when consent is off.

@@ -19,6 +19,7 @@ import billingRoutes from './routes/billing.ts';
 import robloxRoutes from './routes/roblox.ts';
 import adminRoutes from './routes/admin.ts';
 import analyticsRoutes from './routes/analytics.ts';
+import insightRoutes from './routes/insights.ts';
 
 declare module 'fastify' { interface FastifyReply { cspNonce: string } }
 
@@ -101,14 +102,14 @@ export async function buildApp(opts: { memoryDb?: boolean; worker?: boolean } = 
     return reply.code(500).send({ error: 'Something went wrong on our side. Please try again.' });
   });
 
-  for (const r of [authRoutes, meRoutes, dataRoutes, legalRoutes, billingRoutes, robloxRoutes, adminRoutes, analyticsRoutes]) await app.register(r);
+  for (const r of [authRoutes, meRoutes, dataRoutes, legalRoutes, billingRoutes, robloxRoutes, adminRoutes, analyticsRoutes, insightRoutes]) await app.register(r);
   app.get('/healthz', async () => ({ ok: true }));
 
   // Pages: inline scripts get this response's CSP nonce; app.css/app.js get a content version so browsers can cache them for a year.
   const html = (f: string) => readFileSync(join('public', f), 'utf8');
   const ver = (f: string) => { const e = entry(join('public', f)); return e.hash ??= createHash('sha256').update(e.body).digest('hex').slice(0, 12); };
   const sendPage = (f: string) => async (req: any, reply: any) => sendText(req, reply.type('text/html; charset=utf-8').header('Cache-Control', 'no-cache'),
-    html(f).replace('__V_CSS__', () => ver('app.css')).replace('__V_JS__', () => ver('app.js')).replace(/<script(?=[\s>])/g, `<script nonce="${reply.cspNonce}"`));
+    html(f).replace('__V_CSS__', () => ver('app.css')).replace('__V_JS__', () => ver('app.js')).replace('__V_AX__', () => ver('analytics.js')).replace(/<script(?=[\s>])/g, `<script nonce="${reply.cspNonce}"`));
   app.get('/', sendPage('index.html'));
   app.get('/admin', sendPage('admin.html'));
   // The plugin is served with this deployment's address filled in; it contains no secrets.

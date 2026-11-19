@@ -1493,28 +1493,6 @@ function recProgress(gameId) {
 function emptyGames() {
   return `<div class="card empty">${orbitBuddy(128)}<h2>No games yet</h2><p class="muted" style="max-width:44ch;margin:0 auto 16px">Add the game you're working on.</p><button class="btn" data-addgame>${icon('plus', 18)} Add your first game</button></div>`;
 }
-function pageHome() {
-  const g = selectedGame(), acct = isAuthed() ? S().account : null;
-  const latest = g ? OPTIMIZERS.map(o => latestReport(g.id, o.id)) : [], ran = latest.filter(Boolean);
-  const avgScore = ran.length ? Math.round(avg(ran.map(r => r.score))) : null;
-  const rp = g ? recProgress(g.id) : { done: 0, total: 0 };
-  const open = g ? OPTIMIZERS.flatMap(o => { const r = latestReport(g.id, o.id); return r ? r.recs.filter(x => !x.done).map(x => ({ x, r })) : []; }).sort((a, b) => PRI[a.x.priority] - PRI[b.x.priority]).slice(0, 5) : [];
-  const recent = [...S().reports].sort((a, b) => b.createdAt - a.createdAt).slice(0, 4);
-  // Stepper is derived from real progress: ran any optimizer → ran all five → finished a recommendation → finished all of them.
-  const steps = [['Analyze', ran.length > 0], ['Review', ran.length === OPTIMIZERS.length], ['Optimize', rp.done > 0], ['Complete', rp.total > 0 && rp.done === rp.total]];
-  const stat = (ic, val, lbl) => `<div class="card stat-card">${icon(ic, 28)}<div><b>${val}</b><span>${lbl}</span></div></div>`;
-  const scoreCard = (o, r) => `<a class="card card-hover score-card" href="${r ? '#/reports/' + r.id : '#/optimizers/' + o.id}"><span class="lbl">${o.name}</span><span class="big">${r ? r.score : '—'}${r ? '<small> / 100</small>' : ''}</span>${statusBadge(r ? r.score : null)}</a>`;
-  $('#view').innerHTML = `<header class="page-head row between"><div><p class="eyebrow">${acct ? `Welcome back, ${esc(acct.name)}` : 'Welcome to LaunchPad'}</p><h1>Dashboard</h1></div><div class="row" style="gap:10px"><button class="btn ghost" data-addgame>${icon("plus", 18)} New Game</button><a class="btn" href="#/studio">${icon("play", 18)} Scan from Studio</a></div></header>${ME && ME.entitlement.features.includes('studio_plugin') && !ME.roblox ? `<div class="hint"><span>Connect Roblox Studio to enable the automatic scanning features available on your plan.</span><a class="btn sm" href="#/studio">Connect Studio</a></div>` : S().games.some(x => x.studio) ? "" : `<div class="card sunk row between" style="margin-bottom:20px;gap:12px"><div style="min-width:0;flex:1"><b>Skip the forms: scan your game in Roblox Studio</b><p class="small muted" style="margin:2px 0 0">The read-only plugin scores all five areas in about two minutes.</p></div><a class="btn sm" href="#/studio">Set it up</a></div>`}
-  <div class="grid g4">${stat('games', S().games.length, plural(S().games.length, 'Game').replace(/^\d+ /, ''))}${stat('bars', S().reports.length, 'Saved reports')}${stat('trend', avgScore ?? '—', 'Avg. latest score')}${stat('staro', g ? rp.total - rp.done : 0, 'Needs work')}</div>
-  ${g ? `<section class="section split"><div class="card gcard"><a class="gcard-top" href="#/games/${g.id}"><div class="game-art" style="width:64px;height:64px;border-radius:14px">${gameArt(g)}</div><div style="min-width:0;flex:1"><div class="row" style="gap:8px"><h3 style="margin:0;font-size:1.15rem">${esc(g.name)}</h3>${sampleChip(g)}</div><span class="muted">${esc(GENRES[g.genre]?.label || g.genre)}</span></div>${icon('chev', 20)}</a>
-    <div class="gcard-stats"><div>${icon('bars', 24)}<div><b>${avgScore ?? '—'}</b><span>Avg. score</span></div></div><div>${icon('layers', 24)}<div><b>${ran.length}/${OPTIMIZERS.length}</b><span>Optimizers run</span></div></div><div>${icon('trend', 24)}<div><b>${rp.done}/${rp.total}</b><span>Recs done</span></div></div></div></div>
-    <div class="card"><h3>Progress</h3><p class="muted small">${ran.length} of ${OPTIMIZERS.length} optimizers run for this game</p>${pbar(Math.round(ran.length / OPTIMIZERS.length * 100), false)}<div class="stepper" style="margin-top:22px">${steps.map(([l, d]) => `<div class="step ${d ? 'done' : ''}"><span class="dot">${d ? icon('check', 15) : ''}</span>${l}</div>`).join('')}</div></div></section>
-  <section class="section"><div class="section-title"><h2>Scores</h2><a class="link-more" href="#/optimizers">All optimizers ${icon('chev', 16)}</a></div><div class="grid g5">${OPTIMIZERS.map((o, i) => scoreCard(o, latest[i])).join('')}</div></section>
-  <section class="section split"><div class="card"><div class="section-title"><h3 style="margin:0">Recent Analysis</h3><a class="link-more" href="#/reports">View all ${icon('chev', 16)}</a></div>${recent.length ? recent.map(r => `<a class="lrow" href="#/reports/${r.id}"><span class="game-art" style="width:46px;height:46px;border-radius:11px">${gameArt(gameById(r.gameId) || { name: r.gameName })}</span><span style="min-width:0"><b style="display:block">${esc(OPT[r.optimizer].name)}</b><span class="small muted">${esc(r.gameName)} · ${timeAgo(r.createdAt)}</span></span>${statusBadge(r.score)}<span class="lbar">${pbar(r.score)}</span><span class="chev">${icon('chev', 18)}</span></a>`).join('') : '<p class="muted small" style="margin:0">No reports yet.</p>'}</div>
-    <div class="card"><h3>Next Up</h3>${open.length ? open.map(({ x, r }) => `<label class="check"><input type="checkbox" data-rec="${x.id}" data-report="${r.id}" data-rerender="home"><span style="flex:1;min-width:0">${esc(x.title)}<br><span class="tiny muted">${esc(OPT[r.optimizer].name)} · ${x.priority} priority · <a href="#/reports/${r.id}">open</a></span></span></label>`).join('') : `<p class="muted small" style="margin:0">${rp.total ? 'Everything in your latest reports is done. Run the optimizers again to see how your scores changed.' : 'No recommendations yet. Run an optimizer to get started.'}</p>`}</div></section>` : `<section class="section">${emptyGames()}</section>`}
-  <section class="section"><div class="card"><h3>Recent activity</h3>${S().activity.length ? `<ul class="list-plain">${S().activity.slice(0, 6).map(a => `<li class="small"><a href="${esc(a.link || '#/home')}" style="color:inherit;text-decoration:none">${esc(a.text)}</a><br><span class="tiny muted">${timeAgo(a.t)}</span></li>`).join('')}</ul>` : '<p class="muted small" style="margin:0">Nothing yet.</p>'}</div></section>`;
-  animateCounts($('#view'));
-}
 function pageGames() {
   const games = S().games, sel = S().selectedGameId;
   const hint = isAuthed() && !ownGames().length ? `<div class="hint"><span>Your games will appear here once you add your first Roblox experience.</span><button class="btn sm" data-addgame>${icon('plus', 16)} Add your first game</button></div>` : '';
@@ -1634,7 +1612,7 @@ async function syncNow() {
     for (const r of reports) { const j = JSON.stringify(r); if (SYNC.reports.get(r.id) !== j) { await api('PUT', `/api/reports/${encodeURIComponent(r.id)}`, { data: r }); SYNC.reports.set(r.id, j); } }
     for (const id of [...SYNC.reports.keys()]) if (!reports.some(r => r.id === id)) { await api('DELETE', `/api/reports/${encodeURIComponent(id)}`).catch(gone); SYNC.reports.delete(id); }
     for (const id of [...SYNC.games.keys()]) if (!games.some(g => g.id === id)) { await api('DELETE', `/api/games/${encodeURIComponent(id)}`).catch(gone); SYNC.games.delete(id); }
-    const p = JSON.stringify({ theme: S().prefs.theme, reduceMotion: S().prefs.reduceMotion, selectedGameId: S().selectedGameId, onboarding: S().prefs.onboarding || null });
+    const p = JSON.stringify({ theme: S().prefs.theme, reduceMotion: S().prefs.reduceMotion, selectedGameId: S().selectedGameId, onboarding: S().prefs.onboarding || null, ax: S().prefs.ax || null, axGame: S().prefs.axGame || null });
     if (p !== SYNC.prefs) { await api('PUT', '/api/me/preferences', { prefs: JSON.parse(p) }); SYNC.prefs = p; }
   } catch (e) { if (e.status === 401) { toast('You were signed out. Log in again to keep saving.', 'warn'); ME = null; } else toast(`Couldn't save to your account: ${e.message}`, 'warn'); }
 }
@@ -1754,7 +1732,7 @@ function tourSteps() {
     { target: () => [$('#sidebar a[href="#/optimizers"]'), $('#sidebar .nav .sub')], title: 'Five ways to improve your game', body: 'Five areas of analysis:',
       list: [['Game Page', 'presentation'], ['Thumbnail & Icon', 'visual identity'], ['First Session', 'first minutes'], ['Retention', 'reasons to return'], ['Progression', 'goals and rewards']] },
     { target: () => $('#sidebar a[href="#/reports"]'), title: 'Understand your results', body: 'Scores, ranked recommendations and the evidence behind them. Suggestions, not guarantees.' },
-    { target: () => $('#view .stepper')?.closest('.card'), title: 'Measure your improvements', body: 'Tick off fixes, follow score history and compare reports.' },
+    { target: () => $('#view .ax-grid') || $('#view .ax-bar'), title: 'Measure your improvements', body: 'Charts, comparisons and forecasts for your game. Customize this dashboard any time.' },
   ];
 }
 // One timeline per step change: content out (160ms) → commit step, open/close drawer, scroll, measure →
@@ -1933,7 +1911,8 @@ function pricingCards(ctx = 'app') {
     ['Roblox Studio automation', '—', 'Plugin sync and automatic analysis', 'Plugin sync and automatic analysis'],
     ['Scan capacity', '—', `${scans(L)} · ${games(L)}`, `${scans(M)} · ${games(M)}`],
     ['Advanced analysis', '—', 'Standard scan queue', 'Priority scan queue'],
-    ['Monitoring and history', 'Saved reports', `${sync(L)} · saved reports`, `${sync(M)} · saved reports`]];
+    ['Monitoring and history', 'Saved reports', `${sync(L)} · saved reports`, `${sync(M)} · saved reports`],
+    ['Analytics', 'Uploads, charts, one dashboard', 'Roblox analytics sync, forecasts, more dashboards', '+ calculated metrics, compare games']];
   return `<div class="pz" data-ctx="${ctx}">
     <div class="pz-head"><div class="pz-toggle" role="radiogroup" aria-label="Billing period"><span class="pz-pill" aria-hidden="true"></span>
       <button type="button" role="radio" data-int="month" aria-checked="true">Monthly</button><button type="button" role="radio" data-int="year" aria-checked="false">Annually</button></div></div>
@@ -2011,7 +1990,7 @@ function pagePricing() {
 function download(name, text) { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([text], { type: 'application/json' })); a.download = name; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500); }
 
 /* ===== SETTINGS ===== */
-const SET_TABS = [['profile', 'Profile'], ['security', 'Security'], ['connected', 'Connected accounts'], ['privacy', 'Privacy'], ['billing', 'Billing'], ['appearance', 'Appearance']];
+const SET_TABS = [['profile', 'Profile'], ['security', 'Security'], ['connected', 'Connected accounts'], ['games', 'Games'], ['dashboard', 'Dashboard & charts'], ['data', 'Data & forecasts'], ['privacy', 'Privacy'], ['billing', 'Billing'], ['appearance', 'Appearance']];
 function pageSettings(tab = 'profile') {
   const v = $('#view'), p = S().prefs;
   if (!isAuthed()) tab = 'appearance';
@@ -2024,6 +2003,9 @@ function pageSettings(tab = 'profile') {
 const card = (title, body) => `<section class="card section"><h2>${title}</h2>${body}</section>`;
 const refreshMe = async () => { await loadMe(); route(); };
 const SETTINGS = {
+  games: el => axLoad().then(() => AX.settings.games(el)),
+  dashboard: el => axLoad().then(() => AX.settings.dashboard(el)),
+  data: el => axLoad().then(() => AX.settings.data(el)),
   async profile(el) {
     const u = ME.user;
     el.innerHTML = card('Profile', `<div class="row" style="gap:16px;flex-wrap:nowrap"><span class="avatar" style="width:64px;height:64px;font-size:1.4rem;overflow:hidden">${u.hasAvatar ? `<img src="/api/me/avatar?${Date.now()}" alt="" style="width:100%;height:100%;object-fit:cover">` : esc(u.displayName[0].toUpperCase())}</span>
@@ -2215,7 +2197,18 @@ function lpIntroSVG(d, wide) {
 function lpIntro(el) {
   if (!el || reducedMotion()) return;
   // Numbers count up when their element appears (the CSS delays above), landing on the real value.
-  $$('[data-at]', el).forEach(n => { if (n.getClientRects().length) setTimeout(() => n.isConnected && lpCount(n), +n.dataset.at); });
+  const counts = () => $$('[data-at]', el).forEach(n => { if (n.getClientRects().length) setTimeout(() => n.isConnected && lpCount(n), +n.dataset.at); });
+  counts();
+  // Seamless loop: every 5.4 s the finished frame dips to transparent and the same CSS timeline restarts underneath.
+  // It only restarts while visible, so an off-screen hero or a background tab costs nothing.
+  let seen = true; const io = 'IntersectionObserver' in window ? new IntersectionObserver(es => { seen = es[0].isIntersecting; }) : null; io?.observe(el);
+  const t = setInterval(() => {
+    if (!el.isConnected) { clearInterval(t); io?.disconnect(); return; }
+    if (!seen || document.hidden || reducedMotion()) return;
+    const svg = $$('.lpi', el).find(x => x.getClientRects().length); if (!svg) return;
+    svg.animate([{ opacity: 1 }, { opacity: 0, offset: 0.45 }, { opacity: 0, offset: 0.55 }, { opacity: 1 }], { duration: 560, easing: 'ease-in-out' });
+    setTimeout(() => { svg.getAnimations({ subtree: true }).forEach(a => { if (a.effect?.target !== svg) { a.currentTime = 0; a.play(); } }); counts(); }, 280);
+  }, 5400);
 }
 
 function pageLanding() {
@@ -2601,7 +2594,15 @@ function studioRun() {
   setTimeout(tick, reducedMotion() ? 0 : 220);
 }
 
-const NAV = [['home', 'Dashboard', 'home'], ['games', 'My Games', 'games'], ['optimizers', 'Optimizers', 'layers'], ['reports', 'Reports', 'bars'], ['studio', 'Roblox Studio', 'play'], ['settings', 'Settings', 'gear']];
+const NAV = [['home', 'Overview', 'home'], ['analytics/retention', 'Retention', 'repeat'], ['analytics/playtime', 'Playtime', 'calendar'], ['analytics/progression', 'Progression', 'stairs'], ['charts', 'Chart Builder', 'bars'], ['data', 'Data', 'upload'], ['games', 'My Games', 'games'], ['optimizers', 'Optimizers', 'layers'], ['reports', 'Reports', 'reports'], ['studio', 'Roblox Studio', 'play'], ['settings', 'Settings', 'gear']];
+// Analytics pages load their module on first use (one cached, versioned file).
+let AXP = null;
+const axLoad = () => AXP ||= loadScript(new URL('/analytics.js?v=' + (document.querySelector('meta[name="lp-ax"]')?.content || ''), location.href).href).catch(e => { AXP = null; throw e; });
+function axRoute(page, ...args) {
+  const want = curHash;
+  if (!window.AX) $('#view').innerHTML = '<div class="ax-loading" aria-busy="true"><div class="ax-skel"></div><div class="ax-skel"></div></div>';
+  axLoad().then(() => { if (curHash === want) return AX.pages[page](...args); }).catch(e => { $('#view').innerHTML = `<div class="card empty"><h1>Couldn't load this page</h1><p class="muted">${esc(e.message)}</p><button class="btn" id="axReload">Reload</button></div>`; $('#axReload').onclick = () => location.reload(); });
+}
 function currentPath() { return (curHash.replace(/^#/, '').split('?')[0] || '/home'); }
 function renderSidebar() {
   const p = currentPath(), a = isAuthed() ? S().account : null, g = selectedGame();
@@ -2643,7 +2644,11 @@ function route() {
   if (p === '/welcome') { pageLanding(); const lp = $('#lpPricing'); lp && bindPricing(lp, () => { lp.innerHTML = pricingCards('landing'); }); title = 'Find what\'s holding your Roblox game back'; if (auth && !isAuthed()) authModal(auth); }
   else if (p === '/verify') { pageVerify(q); title = 'Confirm email'; }
   else if (p === '/reset') { pageReset(q); title = 'Reset password'; }
-  else if (p === '/home') { pageHome(); title = 'Dashboard'; }
+  else if (p === '/home') { axRoute('home'); title = 'Overview'; }
+  else if ((m = p.match(/^\/analytics\/(retention|playtime|progression)$/))) { axRoute(m[1]); title = m[1][0].toUpperCase() + m[1].slice(1); }
+  else if (p === '/charts') { axRoute('charts', q); title = 'Chart Builder'; }
+  else if ((m = p.match(/^\/charts\/([\w-]+)$/))) { axRoute('charts', q, m[1]); title = 'Chart Builder'; }
+  else if (p === '/data') { axRoute('data', q); title = 'Data'; }
   else if (p === '/games') { pageGames(); title = 'My Games'; }
   else if ((m = p.match(/^\/games\/([\w-]+)$/))) { pageGame(m[1]); title = gameById(m[1])?.name || 'Game'; }
   else if (p === '/studio') { pageStudio(); title = 'Roblox Studio'; }
@@ -2671,8 +2676,7 @@ document.addEventListener('change', e => {
   $$(`[data-rec="${rec.id}"]`).forEach(x => { x.checked = rec.done; const card = x.closest('.rec'); if (card) card.classList.toggle('done', rec.done); });
   if (!reducedMotion()) c.classList.add('done-pop');
   $$(`[data-reccount="${rep.id}"]`).forEach(el => el.innerHTML = recProgressHTML(rep.recs.filter(x => x.done).length, rep.recs.length)); if ($('#rpProg')) $('#rpProg').innerHTML = progInner(rep.recs.filter(x => x.done).length, rep.recs.length); $$(`[data-rec="${rec.id}"]`).forEach(x => { const m = x.closest('.rec')?.querySelector('.rec-mark'); if (m) m.innerHTML = recMark(rec); }); if (rep.recs.every(x => x.done)) toast('Every recommendation in this report is done. Nice work!');
-  if (c.dataset.rerender === 'home') { toast(rec.done ? 'Nice, marked as done' : 'Marked as not done'); setTimeout(pageHome, 350); }
-  else if (rec.done) toast('Nice, marked as done');
+  if (rec.done) toast('Nice, marked as done');
 });
 // Broken image: try the Roblox CDN copy of a local asset once, then show a neutral initials placeholder.
 document.addEventListener('error', e => {
