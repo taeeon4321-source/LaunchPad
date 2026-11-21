@@ -479,8 +479,8 @@ function readImage(file) {
       const w = img.naturalWidth, h = img.naturalHeight, sc = Math.min(1, CONFIG.previewMaxPx / Math.max(w, h)), c = document.createElement('canvas');
       c.width = Math.max(1, Math.round(w * sc)); c.height = Math.max(1, Math.round(h * sc));
       const ctx = c.getContext('2d'); ctx.fillStyle = '#efe7d8'; ctx.fillRect(0, 0, c.width, c.height); ctx.drawImage(img, 0, 0, c.width, c.height);
-      let preview = ''; try { preview = c.toDataURL('image/jpeg', 0.8); } catch (e) { }
-      URL.revokeObjectURL(url); res({ name: file.name, type: file.type, size: file.size, w, h, preview });
+      let preview = '', hi = ''; try { preview = c.toDataURL('image/jpeg', 0.8); const s2 = Math.min(1, 1024 / Math.max(w, h)), c2 = document.createElement('canvas'); c2.width = Math.round(w * s2); c2.height = Math.round(h * s2); c2.getContext('2d').drawImage(img, 0, 0, c2.width, c2.height); hi = c2.toDataURL('image/jpeg', 0.85); } catch (e) { }
+      URL.revokeObjectURL(url); res({ name: file.name, type: file.type, size: file.size, w, h, preview, hi });
     };
     img.onerror = () => { URL.revokeObjectURL(url); rej(`Couldn't read "${file.name}". The file might be damaged.`); };
     img.src = url;
@@ -1117,6 +1117,8 @@ function showResults(id, inputs, result, { quiet = false, keepSaved = false } = 
   if (prevSaved) markSaved(prevSaved);
   bindResults(res, id, result, { mode: 'live', inputs });
   if (!quiet) animateCounts(res); else res.classList.add('no-anim');
+  const ap = document.createElement('div'); res.prepend(ap); const cc = $('[data-ai-concepts]', res);
+  aiLoad().then(() => { AIX.panel(ap, id, inputs); if (cc) AIX.concepts(cc, inputs.genre); }).catch(() => {});
 }
 function markSaved(rid) { $$('[data-act=save]').forEach(b => { b.innerHTML = icon('check', 18) + ' Saved · View report'; b.classList.add('soft'); b.dataset.rid = rid; }); }
 function saveReport(id) {
@@ -1232,10 +1234,9 @@ function drawCompare(root, r, ctx) {
 EXTRAS.thumbnail = (r, ctx) => {
   const e = r.extras;
   const checks = e.checks.length ? e.checks.map(c => `<div class="card flat"><h4>${c.kind === 'icon' ? 'Icon' : 'Thumbnail'} · ${esc(c.name)}</h4><ul class="list-plain">${c.items.map(it => `<li class="row" style="flex-wrap:nowrap;align-items:flex-start"><span class="chip ${it.ok ? 'good' : 'warn'}">${it.ok ? 'OK' : 'Check'}</span><span><b>${esc(it.label)}</b><br><span class="small muted">${esc(it.note)}</span></span></li>`).join('')}</ul></div>`).join('') : '<div class="card flat muted">No images were uploaded, so there are no file checks.</div>';
-  return `<section class="section"><div class="section-title"><h2>What LaunchPad actually checked</h2></div><div class="banner" style="background:var(--blue-soft);border-color:transparent">${icon('info', 18)}<div>LaunchPad can't see what's inside your images yet. The file checks below (format, size, ratio, resolution) are real. Clarity, contrast and emotion scores come from your own answers, so they're only as accurate as those answers.</div></div><div class="grid g2">${checks}</div></section>
-  <section class="section"><div class="section-title"><h2>Concepts to try</h2><span class="small muted">Original rough mockups, not finished art</span></div><h3>Thumbnails</h3><div class="grid g3">${e.concepts.filter(c => c.kind === 'thumbnail').map(conceptCard).join('')}</div><h3 style="margin-top:24px">Icons</h3><div class="grid g3">${e.concepts.filter(c => c.kind === 'icon').map(conceptCard).join('')}</div></section>
-  <section class="section"><div class="section-title"><h2>Compare</h2><span class="small muted">Your originals next to the concepts you tick</span></div><div id="cmpPanel"></div></section>
-  ${ctx.mode === 'live' ? `<section class="section"><h2>Saved favourites</h2><div id="favList">${favListHTML()}</div></section>` : ''}`;
+  return `<section class="section"><div class="section-title"><h2>What LaunchPad actually checked</h2></div><div class="banner" style="background:var(--blue-soft);border-color:transparent">${icon('info', 18)}<div>This quick check doesn't look inside your images: file checks (format, size, ratio, resolution) are real, and clarity, contrast and emotion scores come from your answers. The AI analysis above inspects the images themselves.</div></div><div class="grid g2">${checks}</div></section>
+  <div data-ai-concepts></div><section class="section" hidden><div class="section-title"><h2>Concepts to try</h2></div><h3>Thumbnails</h3><div class="grid g3">${e.concepts.filter(c => c.kind === 'thumbnail').map(conceptCard).join('')}</div><h3 style="margin-top:24px">Icons</h3><div class="grid g3">${e.concepts.filter(c => c.kind === 'icon').map(conceptCard).join('')}</div></section>
+`;
 };
 // --- First session extras
 function journeyHTML(stages) {
@@ -1912,6 +1913,7 @@ function pricingCards(ctx = 'app') {
     ['Scan capacity', '—', `${scans(L)} · ${games(L)}`, `${scans(M)} · ${games(M)}`],
     ['Advanced analysis', '—', 'Standard scan queue', 'Priority scan queue'],
     ['Monitoring and history', 'Saved reports', `${sync(L)} · saved reports`, `${sync(M)} · saved reports`],
+    ['AI analysis', '1 per day', 'Unlimited', 'Unlimited + full game audit'],
     ['Analytics', 'Uploads, charts, one dashboard', 'Roblox analytics sync, forecasts, more dashboards', '+ calculated metrics, compare games']];
   return `<div class="pz" data-ctx="${ctx}">
     <div class="pz-head"><div class="pz-toggle" role="radiogroup" aria-label="Billing period"><span class="pz-pill" aria-hidden="true"></span>
@@ -2594,10 +2596,17 @@ function studioRun() {
   setTimeout(tick, reducedMotion() ? 0 : 220);
 }
 
-const NAV = [['home', 'Overview', 'home'], ['analytics/retention', 'Retention', 'repeat'], ['analytics/playtime', 'Playtime', 'calendar'], ['analytics/progression', 'Progression', 'stairs'], ['charts', 'Chart Builder', 'bars'], ['data', 'Data', 'upload'], ['games', 'My Games', 'games'], ['optimizers', 'Optimizers', 'layers'], ['reports', 'Reports', 'reports'], ['studio', 'Roblox Studio', 'play'], ['settings', 'Settings', 'gear']];
+const NAV = [['home', 'Overview', 'home'], ['analytics/retention', 'Retention', 'repeat'], ['analytics/playtime', 'Playtime', 'calendar'], ['analytics/progression', 'Progression', 'stairs'], ['charts', 'Chart Builder', 'bars'], ['data', 'Data', 'upload'], ['actions', 'Action Center', 'check'], ['prompts', 'Prompt Generator', 'sparkle'], ['references', 'Reference games', 'image'], ['games', 'My Games', 'games'], ['optimizers', 'Optimizers', 'layers'], ['reports', 'Reports', 'reports'], ['studio', 'Roblox Studio', 'play'], ['settings', 'Settings', 'gear']];
 // Analytics pages load their module on first use (one cached, versioned file).
 let AXP = null;
 const axLoad = () => AXP ||= loadScript(new URL('/analytics.js?v=' + (document.querySelector('meta[name="lp-ax"]')?.content || ''), location.href).href).catch(e => { AXP = null; throw e; });
+let AIP = null;
+const aiLoad = () => AIP ||= loadScript(new URL('/ai.js?v=' + (document.querySelector('meta[name="lp-ai"]')?.content || ''), location.href).href).catch(e => { AIP = null; throw e; });
+function aiRoute(page, ...args) {
+  const want = curHash;
+  if (!window.AIX) $('#view').innerHTML = '<div class="ax-loading" aria-busy="true"><div class="ax-skel"></div></div>';
+  aiLoad().then(() => { if (curHash === want) return AIX.pages[page](...args); }).catch(e => { $('#view').innerHTML = `<div class="card empty"><h1>Couldn't load this page</h1><p class="muted">${esc(e.message)}</p></div>`; });
+}
 function axRoute(page, ...args) {
   const want = curHash;
   if (!window.AX) $('#view').innerHTML = '<div class="ax-loading" aria-busy="true"><div class="ax-skel"></div><div class="ax-skel"></div></div>';
@@ -2649,6 +2658,9 @@ function route() {
   else if (p === '/charts') { axRoute('charts', q); title = 'Chart Builder'; }
   else if ((m = p.match(/^\/charts\/([\w-]+)$/))) { axRoute('charts', q, m[1]); title = 'Chart Builder'; }
   else if (p === '/data') { axRoute('data', q); title = 'Data'; }
+  else if (p === '/actions') { aiRoute('actions'); title = 'Action Center'; }
+  else if (p === '/prompts') { aiRoute('prompts'); title = 'Prompt Generator'; }
+  else if (p === '/references') { aiRoute('references', q); title = 'Reference games'; }
   else if (p === '/games') { pageGames(); title = 'My Games'; }
   else if ((m = p.match(/^\/games\/([\w-]+)$/))) { pageGame(m[1]); title = gameById(m[1])?.name || 'Game'; }
   else if (p === '/studio') { pageStudio(); title = 'Roblox Studio'; }

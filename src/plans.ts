@@ -11,16 +11,18 @@ export const PRICES: Record<'light' | 'max', Record<Interval, number>> = {
 };
 
 const FEATURES: Record<Plan, string[]> = {
-  free: ['manual_optimizers', 'manual_scan_import', 'saved_reports', 'analytics_uploads', 'chart_builder'],
+  free: ['manual_optimizers', 'manual_scan_import', 'saved_reports', 'analytics_uploads', 'chart_builder', 'ai_analysis'],
   light: ['manual_optimizers', 'manual_scan_import', 'saved_reports', 'roblox_connection', 'studio_plugin', 'studio_automatic_scanning', 'automatic_analysis', 'report_history_standard', 'overrides', 'scheduled_sync',
-    'analytics_uploads', 'chart_builder', 'roblox_analytics_sync', 'forecasts', 'multiple_dashboards'],
+    'analytics_uploads', 'chart_builder', 'roblox_analytics_sync', 'forecasts', 'multiple_dashboards', 'ai_analysis'],
   max: ['manual_optimizers', 'manual_scan_import', 'saved_reports', 'roblox_connection', 'studio_plugin', 'studio_automatic_scanning', 'automatic_analysis', 'report_history_standard', 'overrides', 'scheduled_sync',
     'advanced_script_analysis', 'report_history_extended', 'priority_queue', 'advanced_monitoring', 'cross_experience_overview',
-    'analytics_uploads', 'chart_builder', 'roblox_analytics_sync', 'forecasts', 'multiple_dashboards', 'calculated_metrics'],
+    'analytics_uploads', 'chart_builder', 'roblox_analytics_sync', 'forecasts', 'multiple_dashboards', 'calculated_metrics', 'ai_analysis', 'ai_comprehensive'],
 };
 
 // Limits are configured per deployment (PLAN_LIMITS_JSON). Unset = no limit configured; LaunchPad doesn't invent numbers.
 const LIMIT_KEYS = ['connected_experiences', 'monthly_scans', 'sync_interval_minutes', 'report_history_days', 'analytics_history_days', 'dashboards'] as const;
+// AI analyses per day on Free. Light and Max have no limit.
+export const FREE_AI_ANALYSES_PER_DAY = 1;
 export type LimitKey = typeof LIMIT_KEYS[number];
 
 export function planFeatures(plan: Plan) { return FEATURES[plan]; }

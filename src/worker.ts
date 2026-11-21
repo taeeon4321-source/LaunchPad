@@ -7,12 +7,18 @@ import { provider, reconcileSubscriptions } from './billing.ts';
 import { decrypt, securityEvent } from './security.ts';
 import { changedSections, sectionHashes } from './scan.ts';
 import { syncGame } from './sync.ts';
+import { refreshReferences } from './references.ts';
 import { canAccess, getUsageLimit } from './entitlements.ts';
 import { enqueue } from './jobs.ts';
 
 export function registerHandlers() {
   registerJob('send_email', p => deliver(p.id));
   registerJob('analytics_sync', async p => { await syncGame(p); });
+  // Daily: refresh public stats and assets of the oldest reference entries (tags are kept; no AI cost).
+  registerJob('references_refresh', async () => {
+    const ids = (await db.query("select universe_id::text id from reference_games where active and (refreshed_at is null or refreshed_at < now() - interval '7 days') order by refreshed_at nulls first limit 50")).rows.map(r => r.id);
+    if (ids.length) await refreshReferences(ids, { tag: false });
+  });
   // Hourly: plans with scheduled sync refresh every linked game once its plan interval has passed.
   registerJob('analytics_schedule', async () => {
     const links = (await db.query("select user_id, game_id, last_sync_at from analytics_links where credential_id is not null and status <> 'unauthorized'")).rows;

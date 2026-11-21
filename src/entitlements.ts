@@ -36,7 +36,7 @@ export async function entitlementSummary(userId: string) {
 }
 
 // Usage counting for configurable allowances (e.g. monthly scans). Returns false when the configured limit is reached.
-export async function useAllowance(userId: string, metric: LimitKey & 'monthly_scans') {
+export async function useAllowance(userId: string, metric: 'monthly_scans') {
   const limit = await getUsageLimit(userId, metric), period = new Date().toISOString().slice(0, 7);
   const r = await db.one(`insert into usage_counters (user_id, metric, period, count) values ($1, $2, $3, 1)
     on conflict (user_id, metric, period) do update set count = usage_counters.count + 1 returning count`, [userId, metric, period]);

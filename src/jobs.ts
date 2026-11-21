@@ -44,6 +44,7 @@ export function startWorker() {
     enqueue('reconcile_subscriptions', {}, { key: `reconcile:${h}` }).catch(() => {});
     enqueue('retention_cleanup', {}, { key: `retention:${d}` }).catch(() => {});
     enqueue('analytics_schedule', {}, { key: `analytics-schedule:${h}` }).catch(() => {});
+    enqueue('references_refresh', {}, { key: `references:${d}` }).catch(() => {});
   };
   tick(); const t = setInterval(tick, 15 * 60e3); t.unref();
   return () => { stopped = true; clearInterval(t); };

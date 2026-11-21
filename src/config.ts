@@ -43,6 +43,13 @@ export const config = {
     products: { light: env('PADDLE_PRODUCT_LIGHT'), max: env('PADDLE_PRODUCT_MAX') } as Record<string, string>,
     pastDueGraceDays: Number(env('PAST_DUE_GRACE_DAYS', '0')), // business decision, not a legal requirement
   },
+  // OpenAI (server-side only). Models are chosen per task tier in src/ai.ts; override here without code changes.
+  openai: {
+    apiKey: env('OPENAI_API_KEY'),
+    models: { fast: env('OPENAI_MODEL_FAST', 'gpt-6-luna'), vision: env('OPENAI_MODEL_VISION', 'gpt-6.1-terra'), deep: env('OPENAI_MODEL_DEEP', 'gpt-6.2-sol') },
+    // USD per 1M tokens [input, cached input, output]; JSON override e.g. {"gpt-6-luna":[0.1,0.01,0.5]}.
+    prices: JSON.parse(env('OPENAI_PRICES_JSON', '{}')) as Record<string, [number, number, number]>,
+  },
   email: { provider: env('EMAIL_PROVIDER', 'outbox'), apiKey: env('EMAIL_API_KEY'), from: env('EMAIL_FROM', 'LaunchPad <no-reply@example.invalid>') },
   // Plan limits are business decisions; unset (null) means "no limit configured yet". See BILLING.md.
   planLimits: JSON.parse(env('PLAN_LIMITS_JSON', '{}')) as Record<string, Record<string, number | null>>,
@@ -68,4 +75,5 @@ export const configured = {
   roblox: () => !!(config.roblox.clientId && config.roblox.clientSecret),
   paddle: () => !!(config.paddle.apiKey && config.paddle.clientToken && config.paddle.webhookSecret && Object.values(config.paddle.prices).every(Boolean)),
   email: () => config.email.provider !== 'outbox' && !!config.email.apiKey,
+  openai: () => !!config.openai.apiKey,
 };
